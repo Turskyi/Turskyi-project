@@ -1,12 +1,6 @@
 # Site settings
-title:
-email:
-description: > # this means to ignore newlines until "baseurl:"
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "" # the base hostname & protocol for your site
+title: Dmytro Turskyi
+email: dmitriy.turskiy@gmail.com
 
-twitter_username:
-github_username:
-
-# Build settings
-markdown: kramdown
+twitter_username: DmytroTurskyi
+github_username: Turskyi
