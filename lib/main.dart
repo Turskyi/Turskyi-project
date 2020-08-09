@@ -8,7 +8,6 @@ void main() {
 }
 
 class PersonalWebsiteApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,9 +25,9 @@ class PersonalWebsiteApp extends StatelessWidget {
           800: Color(0xFF424443),
           900: Color(0xFF424443),
         }),
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
+        /* This makes the visual density adapt to the platform that app is
+        running  on. For desktop platforms, the controls will be smaller and
+         closer together (more dense) than on mobile platforms. */
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(title: _title),

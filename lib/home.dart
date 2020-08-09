@@ -16,38 +16,64 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Dmytro Turskyi',
-                style: TextStyle(
-                  color: _colorBody,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.headline4.fontSize,
+    return Stack(children: <Widget>[
+      Image.asset(
+        "resources/personal_header_background.png",
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+      ),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Dmytro Turskyi',
+                  style: TextStyle(
+                    color: _colorBody,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Theme.of(context).textTheme.headline4.fontSize,
+                  ),
                 ),
-              ),
-              Text(
-                'Android Developer',
-                style: TextStyle(
-                  color: _colorBody,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.headline5.fontSize,
+                Text(
+                  'Android Developer',
+                  style: TextStyle(
+                    color: _colorBody,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Theme.of(context).textTheme.headline5.fontSize,
+                  ),
                 ),
-              ),
-              buildHyperLink(
-                  context, 'Git Hub', 'https://github.com/Turskyi', 20.0),
-              buildHyperLink(context, 'LinkedIn',
-                  'https://www.linkedin.com/in/dmytroturskyi', 0.0)
-            ],
+                buildHyperLink(
+                    context, 'Git Hub', 'https://github.com/Turskyi', 20.0),
+                buildHyperLink(context, 'LinkedIn',
+                    'https://www.linkedin.com/in/dmytroturskyi', 0.0),
+                new Expanded(
+                    child: new Align(
+                      alignment: FractionalOffset.bottomCenter,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: _borderRadius,
+                      onTap: () => launch(
+                          'https://play.google.com/store/apps/dev?id=6867856033872987263'),
+                      child: Image.asset(
+                        "resources/pic_google_play_grey.png",
+                        color: Colors.white,
+                        width: 140,
+
+                      ),
+                    ),
+                  ),
+                ))
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      )
+    ]);
   }
 
   Container buildHyperLink(BuildContext context, text, link, topPadding) {
