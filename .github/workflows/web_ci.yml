@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to GitHub pages
         with:
           args: deploy --only hosting --public web-build
-          run: |
+          run:
             cd turskyi/build/web
             git init
             git config user.name  "Dmytro Turskyi"
