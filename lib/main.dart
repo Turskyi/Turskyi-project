@@ -1,36 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/home.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/utils/app_colors.dart';
 
-const _title = 'Developer Turskyi';
+import 'home/home_page.dart';
 
-void main() {
-  runApp(PersonalWebsiteApp());
+const _title = 'title';
+
+void main() async {
+  var delegate = await LocalizationDelegate.create(
+      fallbackLocale: "en", supportedLocales: ["en"]);
+  runApp(LocalizedApp(delegate, PersonalWebsiteApp()));
 }
 
 class PersonalWebsiteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
+      title: translate(_title),
       theme: ThemeData(
-        primarySwatch: MaterialColor(0xFF424443, {
-          50: Color(0xFF424443),
-          100: Color(0xFF424443),
-          200: Color(0xFF424443),
-          300: Color(0xFF424443),
-          400: Color(0xFF424443),
-          500: Color(0xFF424443),
-          600: Color(0xFF424443),
-          700: Color(0xFF424443),
-          800: Color(0xFF424443),
-          900: Color(0xFF424443),
-        }),
-        /* This makes the visual density adapt to the platform that app is
-        running  on. For desktop platforms, the controls will be smaller and
-         closer together (more dense) than on mobile platforms. */
+        primarySwatch: AppColors.colorPrimary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: _title),
+      home: HomePage(),
     );
   }
 }
