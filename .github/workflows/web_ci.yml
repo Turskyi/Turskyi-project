@@ -40,13 +40,12 @@ jobs:
       - name: Deploy to GitHub pages
         with:
           args: deploy --only hosting --public web-build
-          run:
-            cd turskyi/build/web
-            git init
-            git config user.name  "Dmytro Turskyi"
-            git config user.email "dmitriy.turskiy@gmail.com"
-            git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
-            git checkout -b master
-            git add .
-            git commit -m "Updated personal website"
-            git push --force secure-origin gh-pagesipa
+      - run: cd turskyi/build/web
+      - run: git init
+      - run: git config user.name  "Dmytro Turskyi"
+      - run: git config user.email "dmitriy.turskiy@gmail.com"
+      - run: git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
+      - run: git checkout -b master
+      - run: git add .
+      - run: git commit -m "Updated personal website"
+      - run: git push --force secure-origin gh-pagesipa
