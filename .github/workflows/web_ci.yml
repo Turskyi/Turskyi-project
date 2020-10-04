@@ -22,13 +22,13 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter pub get
       - run: flutter build web --release
-      - run: cd turskyi/build/web/
+      - run: cd build/web/
       - run: git init
       - run: git config --global user.name  "Dmytro Turskyi"
       - run: git config --global user.email "dmitriy.turskiy@gmail.com"
       - run: git status
       - run: git remote set-url origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
       - run: git checkout -b master
-      - run: git add .
+      - run: git add --all
       - run: git diff-index --quiet HEAD || git commit -m "Updated personal website"
       - run: git push --force origin master
