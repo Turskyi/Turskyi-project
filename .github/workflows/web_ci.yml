@@ -17,9 +17,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev'
-      - run: flutter pub get
       - run: flutter config --enable-web
-      - run: flutter build web
+      - run: flutter pub get
+      - run: flutter build web --release
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -37,12 +37,16 @@ jobs:
         with:
           name: web-build
           path: web-build
-      - run: cd ~turskyi/build/web
+      - name: Deploy to Github pages
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+      - run: cd build/web
       - run: git init
-      - run: git config user.name  "Dmytro Turskyi"
-      - run: git config user.email "dmitriy.turskiy@gmail.com"
+      - run: git config --global user.name  "Dmytro Turskyi"
+      - run: git config --global user.email "dmitriy.turskiy@gmail.com"
+      - run: git status
       - run: git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
       - run: git checkout -b master
       - run: git add .
       - run: git commit -m "Updated personal website"
-      - run: git push --force secure-origin gh-pagesipa
+      - run: git push --force secure-origin master
