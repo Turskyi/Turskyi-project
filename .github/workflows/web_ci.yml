@@ -39,8 +39,6 @@ jobs:
           path: web-build
       - name: Deploy to GitHub pages
         uses: JamesIves/github-pages-deploy-action@3.6.2
-        with:
-          args: deploy --only hosting --public web-build
       - run: cd turskyi/build/web
       - run: git init
       - run: git config user.name  "Dmytro Turskyi"
