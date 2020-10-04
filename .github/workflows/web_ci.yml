@@ -31,4 +31,4 @@ jobs:
       - run: git checkout -b master
       - run: git add .
       - run: git commit -m "Updated personal website"
-      - run: git push origin master -f
+      - run: git push --force origin master
