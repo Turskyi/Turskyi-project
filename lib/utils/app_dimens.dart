@@ -14,6 +14,7 @@ class AppDimens {
 
   /* widths */
   static const widthGooglePlayButton = 140.0;
+  static const widthFacebook = 68.0;
 
   /* paddings */
   static const paddingTopGitHub = 10.0;
