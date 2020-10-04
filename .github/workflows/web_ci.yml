@@ -26,7 +26,6 @@ jobs:
           name: web-build
           path: build/web
   deploy_web:
-    name: Deploy Web to Github pages
     needs: build_web
     runs-on: ubuntu-latest
     steps:
