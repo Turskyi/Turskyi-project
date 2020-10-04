@@ -37,7 +37,7 @@ jobs:
         with:
           name: web-build
           path: web-build
-      - run: cd turskyi/build/web
+      - run: cd /Users/dmytro/AndroidStudioProjects/turskyi/build/web
       - run: git init
       - run: git config user.name  "Dmytro Turskyi"
       - run: git config user.email "dmitriy.turskiy@gmail.com"
