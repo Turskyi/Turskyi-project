@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
+import 'package:turskyi/constants.dart';
 import 'package:turskyi/home/home_model.dart';
 import 'package:turskyi/home/home_view.dart';
+import 'package:turskyi/utils/app_colors.dart';
 import 'package:turskyi/utils/app_dimens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,7 +47,7 @@ class _HomePageState extends State<HomePage> implements HomeView {
 
   Image _buildBackground(BuildContext context) {
     return Image.asset(
-      "assets/images/bg_home.png",
+      "${Constants.ASSETS_IMAGES}bg_home.png",
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       fit: BoxFit.cover,
@@ -65,13 +69,14 @@ class _HomePageState extends State<HomePage> implements HomeView {
             _buildHyperLink(
                 context: context,
                 title: 'Git Hub',
-                link: 'https://github.com/Turskyi',
-                topPadding: 20.0),
+                link: Constants.GITHUB_PAGE,
+                topPadding: AppDimens.paddingTopGitHub),
             _buildHyperLink(
                 context: context,
                 title: 'LinkedIn',
-                link: 'https://www.linkedin.com/in/dmytroturskyi',
+                link: Constants.LINKEDIN_PAGE,
                 topPadding: 0.0),
+            _buildFacebookButton(),
             _buildGooglePlayButton(),
           ],
         ),
@@ -109,12 +114,11 @@ class _HomePageState extends State<HomePage> implements HomeView {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: _imageButtonRadius,
-            onTap: () => launch(
-                'https://play.google.com/store/apps/dev?id=6867856033872987263'),
+            onTap: () => launch(Constants.GOOGLE_PLAY_APPS),
             child: Image.asset(
-              "assets/images/pic_google_play_grey.png",
+              "${Constants.ASSETS_IMAGES}pic_google_play_grey.png",
               color: Colors.white,
-              width: 140,
+              width: AppDimens.widthGooglePlayButton,
             ),
           ),
         ),
@@ -156,6 +160,37 @@ class _HomePageState extends State<HomePage> implements HomeView {
             ),
           ),
           onTap: () => launch(link),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFacebookButton() {
+    return Container(
+      padding: AppDimens.insetsAll4,
+      height: AppDimens.heightImageButton,
+      decoration: BoxDecoration(
+        borderRadius: AppDimens.radiusButton,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: AppColors.colorFacebookWithOpacity,
+            blurRadius: AppDimens.radiusBlur,
+            offset: AppDimens.offsetShadow,
+          ),
+        ],
+      ),
+      child: FlatButton(
+        disabledColor: AppColors.colorFacebook,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppDimens.radiusButton,
+          side: BorderSide(color: AppColors.colorFacebook),
+        ),
+        color: AppColors.colorFacebook,
+        onPressed: () => launch(Constants.FACEBOOK_PAGE),
+        child: kIsWeb ? Image.network(
+          "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+        ) : SvgPicture.asset(
+          "${Constants.ASSETS_IMAGES}pic_facebook.svg",
         ),
       ),
     );
