@@ -22,7 +22,7 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter pub get
       - run: flutter build web --release
-      - run: cd build/web
+      - run: cd ./build/web
       - run: git init
       - run: git config --global user.name  "Dmytro Turskyi"
       - run: git config --global user.email "dmitriy.turskiy@gmail.com"
