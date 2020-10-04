@@ -189,6 +189,7 @@ class _HomePageState extends State<HomePage> implements HomeView {
         child: Image.asset(
           "${Constants.ASSETS_IMAGES}pic_facebook.png",
           width: AppDimens.widthFacebook,
+          fit: BoxFit.cover,
         ) ,
       ),
     );

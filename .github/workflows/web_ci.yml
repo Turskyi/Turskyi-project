@@ -21,13 +21,13 @@ jobs:
           channel: 'dev'
       - run: flutter config --enable-web
       - run: flutter pub get
-      - run: flutter build web
+      - run: flutter build web --release
       - run: cd build/web
       - run: git init
       - run: git config --global user.name  "Dmytro Turskyi"
       - run: git config --global user.email "dmitriy.turskiy@gmail.com"
       - run: git status
-      - run: git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
+      - run: git remote set-url origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
       - run: git checkout -b master
       - run: git add .
       - run: git commit -m "Updated personal website"
