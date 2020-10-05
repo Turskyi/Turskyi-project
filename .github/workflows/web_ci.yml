@@ -42,7 +42,7 @@ jobs:
           git config --global user.email "dmitriy.turskiy@gmail.com"
           git status
           git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
-          git checkout -b gh-pages
+          git checkout -b master
           git add --all
           git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push --force origin gh-pages
+          git push --force origin master
