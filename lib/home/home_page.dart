@@ -48,8 +48,14 @@ class _HomePageState extends State<HomePage> implements HomeView {
   Image _buildBackground(BuildContext context) {
     return Image.asset(
       "${Constants.ASSETS_IMAGES}bg_home.png",
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       fit: BoxFit.cover,
     );
   }
@@ -90,7 +96,11 @@ class _HomePageState extends State<HomePage> implements HomeView {
       style: TextStyle(
         color: _colorBody,
         fontWeight: FontWeight.bold,
-        fontSize: Theme.of(context).textTheme.headline5.fontSize,
+        fontSize: Theme
+            .of(context)
+            .textTheme
+            .headline5
+            .fontSize,
       ),
     );
   }
@@ -101,7 +111,11 @@ class _HomePageState extends State<HomePage> implements HomeView {
       style: TextStyle(
         color: _colorBody,
         fontWeight: FontWeight.bold,
-        fontSize: Theme.of(context).textTheme.headline4.fontSize,
+        fontSize: Theme
+            .of(context)
+            .textTheme
+            .headline4
+            .fontSize,
       ),
     );
   }
@@ -137,11 +151,10 @@ class _HomePageState extends State<HomePage> implements HomeView {
     );
   }
 
-  Container _buildHyperLink(
-      {BuildContext context,
-      @required title,
-      @required link,
-      @required topPadding}) {
+  Container _buildHyperLink({BuildContext context,
+    @required title,
+    @required link,
+    @required topPadding}) {
     return Container(
       padding: EdgeInsets.only(top: topPadding),
       child: Material(
@@ -155,7 +168,11 @@ class _HomePageState extends State<HomePage> implements HomeView {
               style: TextStyle(
                 color: _colorBody,
                 decoration: TextDecoration.underline,
-                fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
+                fontSize: Theme
+                    .of(context)
+                    .textTheme
+                    .subtitle1
+                    .fontSize,
               ),
             ),
           ),
@@ -188,16 +205,15 @@ class _HomePageState extends State<HomePage> implements HomeView {
         color: AppColors.colorFacebook,
         onPressed: () => launch(Constants.FACEBOOK_PAGE),
         child: kIsWeb
-            ? Image.network(
-                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
-                width: AppDimens.widthFacebook,
-                fit: BoxFit.cover,
-              )
-            : SvgPicture.asset(
-                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
-                width: AppDimens.widthFacebook,
-                fit: BoxFit.cover,
-              ),
+             ? Image.asset(
+          "${Constants.ASSETS_IMAGES}pic_facebook.png",
+          width: AppDimens.widthFacebook,
+          fit: BoxFit.cover,
+        ) : SvgPicture.asset(
+          "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+          width: AppDimens.widthFacebook,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
