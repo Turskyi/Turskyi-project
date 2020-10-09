@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/constants.dart';
@@ -186,11 +187,17 @@ class _HomePageState extends State<HomePage> implements HomeView {
         ),
         color: AppColors.colorFacebook,
         onPressed: () => launch(Constants.FACEBOOK_PAGE),
-        child: Image.asset(
-          "${Constants.ASSETS_IMAGES}pic_facebook.png",
-          width: AppDimens.widthFacebook,
-          fit: BoxFit.cover,
-        ) ,
+        child: kIsWeb
+            ? Image.network(
+                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+                width: AppDimens.widthFacebook,
+                fit: BoxFit.cover,
+              )
+            : SvgPicture.asset(
+                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+                width: AppDimens.widthFacebook,
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
