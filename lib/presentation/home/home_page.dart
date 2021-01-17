@@ -3,40 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
-import 'package:turskyi/constants.dart';
-import 'package:turskyi/home/home_model.dart';
-import 'package:turskyi/home/home_view.dart';
-import 'package:turskyi/utils/app_colors.dart';
-import 'package:turskyi/utils/app_dimens.dart';
+import 'package:turskyi/presentation/configs/app_configs.dart';
+import 'package:turskyi/presentation/constants.dart';
+import 'package:turskyi/presentation/home/home_model.dart';
+import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _colorBody = Colors.white;
-final _imageButtonRadius = AppDimens.radiusButton;
-
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> implements HomeView {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+class _HomePageState extends State<HomePage> {
+  final _imageButtonRadius = AppDimens.radiusButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Colors.transparent,
       body: Stack(
         children: <Widget>[
           _buildBackground(context),
           ChangeNotifierProvider(
-            create: (context) => HomeModel(this),
+            create: (context) => HomeModel(),
             child: Consumer<HomeModel>(
               builder: (context, model, widget) {
-                if (model.isLoading) return _buildLoadingWidget();
-                return _buildHomePage(model);
+                return model.isLoading
+                    ? _buildLoadingWidget()
+                    : _buildHomePage(model);
               },
             ),
           ),
@@ -45,22 +39,20 @@ class _HomePageState extends State<HomePage> implements HomeView {
     );
   }
 
-  Image _buildBackground(BuildContext context) {
-    return Image.asset(
-      "${Constants.ASSETS_IMAGES}bg_home.png",
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      fit: BoxFit.cover,
+  Widget _buildBackground(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Image.asset(
+          "${Constants.ASSETS_IMAGES}bg_home.png",
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          fit: BoxFit.cover,
+        );
+      },
     );
   }
 
-  Center _buildHomePage(HomeModel model) {
+  Widget _buildHomePage(HomeModel model) {
     return Center(
       /**
        *  Init view
@@ -72,16 +64,29 @@ class _HomePageState extends State<HomePage> implements HomeView {
           children: <Widget>[
             _buildName(),
             _buildTitle(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildHyperLink(
+                  context: context,
+                  title: 'GitHub',
+                  link: Constants.GITHUB_PAGE,
+                  topPadding: AppDimens.paddingTopGitHub,
+                ),
+                _buildHyperLink(
+                  context: context,
+                  title: 'Gists',
+                  link: Constants.GISTS_PAGE,
+                  topPadding: AppDimens.paddingTopGitHub,
+                ),
+              ],
+            ),
             _buildHyperLink(
-                context: context,
-                title: 'Git Hub',
-                link: Constants.GITHUB_PAGE,
-                topPadding: AppDimens.paddingTopGitHub),
-            _buildHyperLink(
-                context: context,
-                title: 'LinkedIn',
-                link: Constants.LINKEDIN_PAGE,
-                topPadding: 0.0),
+              context: context,
+              title: 'LinkedIn',
+              link: Constants.LINKEDIN_PAGE,
+              topPadding: 0.0,
+            ),
             _buildFacebookButton(),
             _buildGooglePlayButton(),
           ],
@@ -90,37 +95,29 @@ class _HomePageState extends State<HomePage> implements HomeView {
     );
   }
 
-  Text _buildTitle() {
+  Widget _buildTitle() {
     return Text(
       translate("home.title"),
       style: TextStyle(
-        color: _colorBody,
+        color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: Theme
-            .of(context)
-            .textTheme
-            .headline5
-            .fontSize,
+        fontSize: Theme.of(context).textTheme.headline5?.fontSize,
       ),
     );
   }
 
-  Text _buildName() {
+  Widget _buildName() {
     return Text(
       translate("home.name"),
       style: TextStyle(
-        color: _colorBody,
+        color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: Theme
-            .of(context)
-            .textTheme
-            .headline4
-            .fontSize,
+        fontSize: Theme.of(context).textTheme.headline4?.fontSize,
       ),
     );
   }
 
-  Expanded _buildGooglePlayButton() {
+  Widget _buildGooglePlayButton() {
     return Expanded(
       child: Align(
         alignment: FractionalOffset.bottomCenter,
@@ -151,10 +148,12 @@ class _HomePageState extends State<HomePage> implements HomeView {
     );
   }
 
-  Container _buildHyperLink({BuildContext context,
+  Widget _buildHyperLink({
+    required BuildContext context,
     @required title,
     @required link,
-    @required topPadding}) {
+    @required topPadding,
+  }) {
     return Container(
       padding: EdgeInsets.only(top: topPadding),
       child: Material(
@@ -166,13 +165,9 @@ class _HomePageState extends State<HomePage> implements HomeView {
             child: Text(
               title,
               style: TextStyle(
-                color: _colorBody,
+                color: Colors.white,
                 decoration: TextDecoration.underline,
-                fontSize: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1
-                    .fontSize,
+                fontSize: Theme.of(context).textTheme.subtitle1?.fontSize,
               ),
             ),
           ),
@@ -190,36 +185,32 @@ class _HomePageState extends State<HomePage> implements HomeView {
         borderRadius: AppDimens.radiusButton,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: AppColors.colorFacebookWithOpacity,
+            color: AppConfigs.of(context).colors.colorFacebookWithOpacity,
             blurRadius: AppDimens.radiusBlur,
             offset: AppDimens.offsetShadow,
           ),
         ],
       ),
       child: FlatButton(
-        disabledColor: AppColors.colorFacebook,
+        disabledColor: AppConfigs.of(context).colors.colorFacebook,
         shape: RoundedRectangleBorder(
           borderRadius: AppDimens.radiusButton,
-          side: BorderSide(color: AppColors.colorFacebook),
+          side: BorderSide(color: AppConfigs.of(context).colors.colorFacebook),
         ),
-        color: AppColors.colorFacebook,
+        color: AppConfigs.of(context).colors.colorFacebook,
         onPressed: () => launch(Constants.FACEBOOK_PAGE),
         child: kIsWeb
-             ? Image.asset(
-          "${Constants.ASSETS_IMAGES}pic_facebook.png",
-          width: AppDimens.widthFacebook,
-          fit: BoxFit.cover,
-        ) : SvgPicture.asset(
-          "${Constants.ASSETS_IMAGES}pic_facebook.svg",
-          width: AppDimens.widthFacebook,
-          fit: BoxFit.cover,
-        ),
+            ? Image.asset(
+                "${Constants.ASSETS_IMAGES}pic_facebook.png",
+                width: AppDimens.widthFacebook,
+                fit: BoxFit.cover,
+              )
+            : SvgPicture.asset(
+                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+                width: AppDimens.widthFacebook,
+                fit: BoxFit.cover,
+              ),
       ),
     );
-  }
-
-  @override
-  void displayMessage(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
   }
 }

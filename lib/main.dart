@@ -1,27 +1,26 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/utils/app_colors.dart';
+import 'package:turskyi/presentation/configs/app_configs.dart';
+import 'package:turskyi/presentation/configs/builds/main/main_colors.dart';
+import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
+import 'package:turskyi/presentation/constants.dart';
+import 'package:turskyi/setup.dart';
 
-import 'home/home_page.dart';
-
-const _title = 'title';
-
-void main() async {
+Future<void> main() async {
   var delegate = await LocalizationDelegate.create(
-      fallbackLocale: "en", supportedLocales: ["en"]);
-  runApp(LocalizedApp(delegate, PersonalWebsiteApp()));
-}
+    fallbackLocale: Constants.COUNTRY_CODE_DEFAULT,
+    supportedLocales: [Constants.COUNTRY_CODE_DEFAULT],
+  );
 
-class PersonalWebsiteApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: translate(_title),
-      theme: ThemeData(
-        primarySwatch: AppColors.colorPrimary,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: HomePage(),
-    );
-  }
+  var configs = MainConfigs();
+
+  runApp(LocalizedApp(
+    delegate,
+    AppConfigs(
+      configs: configs,
+      colors: MainColors(),
+      child: setup(configs),
+    ),
+  ));
 }
