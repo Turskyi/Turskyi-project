@@ -2,7 +2,8 @@
   "title": "Developer Dmytro Turskyi",
   "home": {
     "name": "Dmytro Turskyi",
-    "title": "Mobile Developer",
-    "error": "error"
+    "title": "Flutter/Android Developer",
+    "error": "error",
+    "cannot_launch": "Could not launch"
   }
 }

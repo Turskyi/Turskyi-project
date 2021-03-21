@@ -5,6 +5,22 @@
     android:versionName="1.0.0"
     tools:ignore="GradleOverrides">
 
+    <!-- for launching new web pages from the app in google chrome -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Turskyi"
