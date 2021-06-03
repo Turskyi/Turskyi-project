@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/global.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/presentation/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,7 +18,7 @@ class HomeModel with ChangeNotifier {
 
   HomeModel(this._view, {required TickerProvider tickerProvider}) {
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 3000),
+      duration: const Duration(seconds: 4),
       vsync: tickerProvider,
     );
     _curvedAnimation = CurvedAnimation(

@@ -7,9 +7,11 @@ class AppConfigs extends InheritedWidget {
   final BaseConfigs configs;
   final Widget child;
 
-  AppConfigs(
-      {required this.colors, required this.configs, required this.child})
-      : super(child: child);
+  AppConfigs({
+    required this.colors,
+    required this.configs,
+    required this.child,
+  }) : super(child: child);
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;

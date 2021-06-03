@@ -7,19 +7,15 @@ import 'package:turskyi/presentation/constants.dart';
 import 'package:turskyi/setup.dart';
 
 Future<void> main() async {
-  var delegate = await LocalizationDelegate.create(
+  LocalizationDelegate delegate = await LocalizationDelegate.create(
     fallbackLocale: Constants.COUNTRY_CODE_DEFAULT,
     supportedLocales: [Constants.COUNTRY_CODE_DEFAULT],
   );
 
-  var configs = MainConfigs();
+  MainConfigs configs = MainConfigs();
 
   runApp(LocalizedApp(
     delegate,
-    AppConfigs(
-      configs: configs,
-      colors: MainColors(),
-      child: setup(configs),
-    ),
+    AppConfigs(configs: configs, colors: MainColors(), child: setup(configs)),
   ));
 }

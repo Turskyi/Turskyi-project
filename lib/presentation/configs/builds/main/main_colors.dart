@@ -23,6 +23,7 @@ class MainColors implements BaseColors {
   Color colorFacebook = Color(0xFF405A94);
 
   @override
-  Color colorFacebookWithOpacity =
-      Color(0xFF405A94).withOpacity(AppDimens.opacityShadow);
+  Color colorFacebookWithOpacity = Color(0xFF405A94).withOpacity(
+    AppDimens.opacityShadow,
+  );
 }

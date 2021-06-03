@@ -61,43 +61,38 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildHomePage({required HomeModel model}) {
-    return Center(
-      /**
-       *  Init view
-       */
-      child: Padding(
-        padding: AppDimens.insetsAll24,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _buildName(),
-            _buildTitle(curve: model.curvedAnimation),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildHyperlink(
-                  title: 'GitHub',
-                  link: Constants.GITHUB_PAGE,
-                  topPadding: AppDimens.paddingTopGitHub,
-                  model: model,
-                ),
-                _buildHyperlink(
-                  title: 'Gists',
-                  link: Constants.GISTS_PAGE,
-                  topPadding: AppDimens.paddingTopGitHub,
-                  model: model,
-                ),
-              ],
-            ),
-            _buildHyperlink(
-              title: 'LinkedIn',
-              link: Constants.LINKEDIN_PAGE,
-              model: model,
-            ),
-            _buildFacebookButton(),
-            _buildGooglePlayButton(),
-          ],
-        ),
+    return Padding(
+      padding: AppDimens.insetsAll24,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _buildName(),
+          _buildTitle(curve: model.curvedAnimation),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildHyperlink(
+                title: 'GitHub',
+                link: Constants.GITHUB_PAGE,
+                topPadding: AppDimens.paddingTopGitHub,
+                model: model,
+              ),
+              _buildHyperlink(
+                title: 'Gists',
+                link: Constants.GISTS_PAGE,
+                topPadding: AppDimens.paddingTopGitHub,
+                model: model,
+              ),
+            ],
+          ),
+          _buildHyperlink(
+            title: 'LinkedIn',
+            link: Constants.LINKEDIN_PAGE,
+            model: model,
+          ),
+          _buildFacebookButton(),
+          _buildGooglePlayButton(),
+        ],
       ),
     );
   }
@@ -197,15 +192,15 @@ class _HomePageState extends State<HomePage>
           BoxShadow(
             color: AppConfigs.of(context).colors.colorFacebookWithOpacity,
             blurRadius: AppDimens.radiusBlur,
-            offset: AppDimens.offsetShadow,
+            offset: Offset.zero,
           ),
         ],
       ),
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: AppConfigs.of(context).colors.colorFacebook,
-          minimumSize: Size(88, 36),
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          minimumSize: const Size(88, 36),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(
             borderRadius: AppDimens.radiusButton,
             side: BorderSide(color: AppConfigs.of(context).colors.colorFacebook),
