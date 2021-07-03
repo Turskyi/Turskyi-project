@@ -4,7 +4,6 @@ import 'package:turskyi/presentation/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeModel with ChangeNotifier {
-  final HomeView _view;
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -15,10 +14,11 @@ class HomeModel with ChangeNotifier {
   late CurvedAnimation _curvedAnimation;
 
   CurvedAnimation get curvedAnimation => _curvedAnimation;
+  final HomeView _view;
 
   HomeModel(this._view, {required TickerProvider tickerProvider}) {
     _animationController = AnimationController(
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 5),
       vsync: tickerProvider,
     );
     _curvedAnimation = CurvedAnimation(
@@ -31,6 +31,6 @@ class HomeModel with ChangeNotifier {
   Future<void> onHyperlinkTapped(String link) async {
     await canLaunch(link)
         ? await launch(link)
-        :  _view.displayMessage("${translate("home.cannot_launch")} $link");
+        : _view.displayMessage("${translate("home.cannot_launch")} $link");
   }
 }

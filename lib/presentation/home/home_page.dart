@@ -49,7 +49,8 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildBackground(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
         return Image.asset(
           "${Constants.ASSETS_IMAGES}bg_home.png",
           width: constraints.maxWidth,
@@ -203,7 +204,9 @@ class _HomePageState extends State<HomePage>
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(
             borderRadius: AppDimens.radiusButton,
-            side: BorderSide(color: AppConfigs.of(context).colors.colorFacebook),
+            side: BorderSide(
+              color: AppConfigs.of(context).colors.colorFacebook,
+            ),
           ),
         ),
         onPressed: () => launch(Constants.FACEBOOK_PAGE),

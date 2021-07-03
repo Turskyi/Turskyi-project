@@ -8,11 +8,15 @@ class PersonalWebsiteApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: translate('title'),
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => HomePage(),
+      },
       theme: ThemeData(
         primarySwatch: AppConfigs.of(context).colors.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
     );
   }
 }
