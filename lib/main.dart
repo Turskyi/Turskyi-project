@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/domain/language.dart';
 import 'package:turskyi/presentation/configs/app_configs.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_colors.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
-import 'package:turskyi/presentation/constants.dart';
 import 'package:turskyi/setup.dart';
 
 Future<void> main() async {
-  LocalizationDelegate delegate = await LocalizationDelegate.create(
-    fallbackLocale: Constants.COUNTRY_CODE_DEFAULT,
-    supportedLocales: [Constants.COUNTRY_CODE_DEFAULT],
+  /// init language
+  final LocalizationDelegate delegate = await LocalizationDelegate.create(
+    fallbackLocale: Language.en.code,
+    supportedLocales: <String>[Language.en.code],
   );
 
-  MainConfigs configs = MainConfigs();
+  final MainConfigs configs = MainConfigs();
 
+  /// start project
   runApp(LocalizedApp(
     delegate,
     AppConfigs(configs: configs, colors: MainColors(), child: setup(configs)),

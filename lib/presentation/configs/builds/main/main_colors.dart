@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:turskyi/presentation/configs/base/base_colors.dart';
-import 'package:turskyi/presentation/values/app_dimens.dart';
 
+/// [MainColors] is a class containing list of project specific color values
 class MainColors implements BaseColors {
   @override
-  MaterialColor primarySwatch = MaterialColor(0xFF424443, {
+  MaterialColor primarySwatch = const MaterialColor(0xFF424443, <int, Color>{
     50: Color(0xFF424443),
     100: Color(0xFF424443),
     200: Color(0xFF424443),
@@ -20,10 +20,8 @@ class MainColors implements BaseColors {
   });
 
   @override
-  Color colorFacebook = Color(0xFF405A94);
+  Color colorFacebook = const Color(0xFF405A94);
 
   @override
-  Color colorFacebookWithOpacity = Color(0xFF405A94).withOpacity(
-    AppDimens.opacityShadow,
-  );
+  Color colorFacebookWithOpacity = const Color(0xFF405A94).withOpacity(0.6);
 }

@@ -4,12 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/presentation/configs/app_configs.dart';
-import 'package:turskyi/presentation/constants.dart';
 import 'package:turskyi/presentation/home/home_model.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
+import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'home_view.dart';
 
+/// [HomePage] class represents a presenter of a landing page
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
-  final BorderRadius _imageButtonRadius = AppDimens.radiusButton;
+  final BorderRadius _imageButtonRadius = AppStyles.radiusButton;
 
   @override
   void displayMessage(String message) {
@@ -31,12 +32,12 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: ChangeNotifierProvider(
-        create: (context) => HomeModel(this, tickerProvider: this),
+      body: ChangeNotifierProvider<HomeModel>(
+        create: (BuildContext context) => HomeModel(this, tickerProvider: this),
         child: Consumer<HomeModel>(
-          builder: (context, model, widget) {
+          builder: (BuildContext context, HomeModel model, Widget? widget) {
             return Stack(
-              children: [
+              children: <Widget>[
                 _buildBackground(context),
                 _buildHomePage(model: model),
                 if (model.isLoading) _buildLoadingWidget(),
@@ -50,9 +51,9 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildBackground(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (BuildContext context, BoxConstraints constraints) {
         return Image.asset(
-          "${Constants.ASSETS_IMAGES}bg_home.png",
+          '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
           width: constraints.maxWidth,
           height: constraints.maxHeight,
           fit: BoxFit.cover,
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildHomePage({required HomeModel model}) {
     return Padding(
-      padding: AppDimens.insetsAll24,
+      padding: const EdgeInsets.all(24.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -71,24 +72,24 @@ class _HomePageState extends State<HomePage>
           _buildTitle(curve: model.curvedAnimation),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               _buildHyperlink(
                 title: 'GitHub',
-                link: Constants.GITHUB_PAGE,
-                topPadding: AppDimens.paddingTopGitHub,
+                link: 'https://github.com/Turskyi',
+                topPadding: 10.0,
                 model: model,
               ),
               _buildHyperlink(
                 title: 'Gists',
-                link: Constants.GISTS_PAGE,
-                topPadding: AppDimens.paddingTopGitHub,
+                link: 'https://gist.github.com/Turskyi',
+                topPadding: 10.0,
                 model: model,
               ),
             ],
           ),
           _buildHyperlink(
             title: 'LinkedIn',
-            link: Constants.LINKEDIN_PAGE,
+            link: 'https://www.linkedin.com/in/dmytroturskyi',
             model: model,
           ),
           _buildFacebookButton(),
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage>
     return FadeTransition(
       opacity: curve,
       child: Text(
-        translate("home.title"),
+        translate('home.title'),
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildName() {
     return Text(
-      translate("home.name"),
+      translate('home.name'),
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -131,11 +132,16 @@ class _HomePageState extends State<HomePage>
           color: Colors.transparent,
           child: InkWell(
             borderRadius: _imageButtonRadius,
-            onTap: () => launch(Constants.GOOGLE_PLAY_APPS),
+            onTap: () {
+              launch(
+                'https://play.google.com/store/apps/dev?id=6867856033872987263',
+              );
+            },
             child: Image.asset(
-              "${Constants.ASSETS_IMAGES}pic_google_play_grey.png",
+              '${AppConfigs.of(context).configs.imageAssents}'
+              'pic_google_play_grey.png',
               color: Colors.white,
-              width: AppDimens.widthGooglePlayButton,
+              width: 140.0,
             ),
           ),
         ),
@@ -144,8 +150,8 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildLoadingWidget() {
-    return Padding(
-      padding: AppDimens.insetsAll64,
+    return const Padding(
+      padding: EdgeInsets.all(64.0),
       child: Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -166,8 +172,9 @@ class _HomePageState extends State<HomePage>
         color: Colors.transparent,
         child: InkWell(
           borderRadius: _imageButtonRadius,
+          onTap: () => model.onHyperlinkTapped(link),
           child: Container(
-            padding: AppDimens.insetsAll12,
+            padding: const EdgeInsets.all(12),
             child: Text(
               title,
               style: TextStyle(
@@ -177,7 +184,6 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           ),
-          onTap: () => model.onHyperlinkTapped(link),
         ),
       ),
     );
@@ -185,15 +191,14 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildFacebookButton() {
     return Container(
-      padding: AppDimens.insetsAll4,
-      height: AppDimens.heightImageButton,
+      padding: const EdgeInsets.all(4),
+      height: 40.0,
       decoration: BoxDecoration(
-        borderRadius: AppDimens.radiusButton,
+        borderRadius: AppStyles.radiusButton,
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppConfigs.of(context).colors.colorFacebookWithOpacity,
-            blurRadius: AppDimens.radiusBlur,
-            offset: Offset.zero,
+            blurRadius: 12.0,
           ),
         ],
       ),
@@ -203,21 +208,23 @@ class _HomePageState extends State<HomePage>
           minimumSize: const Size(88, 36),
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(
-            borderRadius: AppDimens.radiusButton,
+            borderRadius: AppStyles.radiusButton,
             side: BorderSide(
               color: AppConfigs.of(context).colors.colorFacebook,
             ),
           ),
         ),
-        onPressed: () => launch(Constants.FACEBOOK_PAGE),
+        onPressed: () => launch('https://www.facebook.com/Dmytro.Turskyi'),
         child: kIsWeb
             ? Image.asset(
-                "${Constants.ASSETS_IMAGES}pic_facebook.png",
+                '${AppConfigs.of(context).configs.imageAssents}'
+                'pic_facebook.png',
                 width: AppDimens.widthFacebook,
                 fit: BoxFit.cover,
               )
             : SvgPicture.asset(
-                "${Constants.ASSETS_IMAGES}pic_facebook.svg",
+                '${AppConfigs.of(context).configs.imageAssents}'
+                'pic_facebook.svg',
                 width: AppDimens.widthFacebook,
                 fit: BoxFit.cover,
               ),

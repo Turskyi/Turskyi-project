@@ -14,22 +14,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # for launching new web page on web browser
-  url_launcher: ^6.0.5
+  # display svg images
+  flutter_svg: ^0.22.0
 
   #  localization
   flutter_translate: ^3.0.1
 
-  #  add  ChangeNotifierProvider and Consumer for implementing
-  #    MVP structural design pattern
+  #  add  ChangeNotifierProvider and Consumer for implementing MVP structural design pattern
   provider: ^5.0.0
 
-  # display svg images
-  flutter_svg: ^0.22.0
+  # for launching new web page on web browser
+  url_launcher: ^6.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # The set of rules follows the Effective Dart: Style Guide.
+  lint: ^1.5.3
 
 flutter:
 

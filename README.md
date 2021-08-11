@@ -1,16 +1,18 @@
-# Dmytro Turskyi landing page
+# Developer Dmytro Turskyi landing page
 
-A Simple showcase for using the web, desktop, iOS and Android, all in one project with flutter.
-
-Personal project for supporting personal web page [turskyi.github.io](https://turskyi.github.io)
+Flutter project for supporting personal web site [turskyi.github.io](https://turskyi.github.io)
 
 ## PROJECT SPECIFICATION
 
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
+
+• Site hosting and domain: [github.io](https://github.io);
+
+• Programming language: [Dart](https://dart.dev/);
+
+• SDK: [Flutter](https://flutter.dev/);
+
 • CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy updated site to [GitHub Pages](https://pages.github.com/) after every push to the master branch;
-
-• Programming language: **Dart**;
-
-• SDK: **Flutter**
 
 • Architectural pattern: [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter);
 
