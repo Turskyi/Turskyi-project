@@ -9,7 +9,6 @@ import 'package:turskyi/presentation/views/home/home_model.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'home_view.dart';
 
 /// [HomePage] class represents a presenter of a landing page
@@ -48,6 +47,8 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildHomePage(HomeModel model) {
+    // The equivalent of the "smallestWidth" qualifier on Android.
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
     return DecoratedBox(
       decoration: BoxDecoration(
           // build background picture
@@ -95,7 +96,8 @@ class _HomePageState extends State<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buildGooglePlayButton(),
-                    if (kIsWeb) _buildUnityButton(),
+                    // Determine if we should show game button.
+                    if (shortestSide > 600) _buildUnityButton(),
                   ],
                 ),
               ),
