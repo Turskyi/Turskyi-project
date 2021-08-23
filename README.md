@@ -6,9 +6,9 @@ Flutter project for supporting personal web site [turskyi.github.io](https://tur
 
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
-• Site hosting and domain: [github.io](https://github.io);
-
 • Programming language: [Dart](https://dart.dev/);
+
+• Web content hosting and domain: [github.io](https://github.io);
 
 • SDK: [Flutter](https://flutter.dev/);
 

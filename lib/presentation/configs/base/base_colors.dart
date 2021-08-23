@@ -7,9 +7,12 @@ abstract class BaseColors {
   ///  the different shades of a color a material app will use.
   late MaterialColor primarySwatch;
 
-  /// color of the shadow behind facebook button
+  /// [Color] of the shadow behind facebook button
   late Color colorFacebookWithOpacity;
 
-  /// backgroundColor for "facebook" button
+  /// background [Color] for "facebook" button
   late Color colorFacebook;
+
+  /// default background [Color] of any page
+  late Color background;
 }

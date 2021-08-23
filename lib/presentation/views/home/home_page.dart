@@ -4,10 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/presentation/configs/app_configs.dart';
-import 'package:turskyi/presentation/home/home_model.dart';
+import 'package:turskyi/presentation/routes.dart';
+import 'package:turskyi/presentation/views/home/home_model.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'home_view.dart';
 
 /// [HomePage] class represents a presenter of a landing page
@@ -36,65 +38,86 @@ class _HomePageState extends State<HomePage>
         create: (BuildContext context) => HomeModel(this, tickerProvider: this),
         child: Consumer<HomeModel>(
           builder: (BuildContext context, HomeModel model, Widget? widget) {
-            return Stack(
-              children: <Widget>[
-                _buildBackground(context),
-                _buildHomePage(model: model),
-                if (model.isLoading) _buildLoadingWidget(),
-              ],
-            );
+            return model.isLoading
+                ? _buildLoadingWidget()
+                : _buildHomePage(model);
           },
         ),
       ),
     );
   }
 
-  Widget _buildBackground(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Image.asset(
+  Widget _buildHomePage(HomeModel model) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          // build background picture
+          image: DecorationImage(
+        alignment: Alignment.topCenter,
+        fit: BoxFit.cover,
+        image: ExactAssetImage(
           '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
-          width: constraints.maxWidth,
-          height: constraints.maxHeight,
-          fit: BoxFit.cover,
-        );
-      },
+        ),
+      )),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildName(),
+            _buildTitle(curve: model.curvedAnimation),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _buildHyperlink(
+                  title: 'GitHub',
+                  link: 'https://github.com/Turskyi',
+                  topPadding: 10.0,
+                  model: model,
+                ),
+                _buildHyperlink(
+                  title: 'Gists',
+                  link: 'https://gist.github.com/Turskyi',
+                  topPadding: 10.0,
+                  model: model,
+                ),
+              ],
+            ),
+            _buildHyperlink(
+              title: 'LinkedIn',
+              link: 'https://www.linkedin.com/in/dmytroturskyi',
+              model: model,
+            ),
+            _buildFacebookButton(),
+            Expanded(
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildGooglePlayButton(),
+                    if (kIsWeb) _buildUnityButton(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildHomePage({required HomeModel model}) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _buildName(),
-          _buildTitle(curve: model.curvedAnimation),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _buildHyperlink(
-                title: 'GitHub',
-                link: 'https://github.com/Turskyi',
-                topPadding: 10.0,
-                model: model,
-              ),
-              _buildHyperlink(
-                title: 'Gists',
-                link: 'https://gist.github.com/Turskyi',
-                topPadding: 10.0,
-                model: model,
-              ),
-            ],
-          ),
-          _buildHyperlink(
-            title: 'LinkedIn',
-            link: 'https://www.linkedin.com/in/dmytroturskyi',
-            model: model,
-          ),
-          _buildFacebookButton(),
-          _buildGooglePlayButton(),
-        ],
+  Widget _buildUnityButton() {
+    return RawMaterialButton(
+      onPressed: () {
+        // Navigate to the second screen using a named route.
+        Navigator.pushNamed(context, Routes.game);
+      },
+      padding: const EdgeInsets.all(20.0),
+      shape: const CircleBorder(),
+      child: SvgPicture.asset(
+        '${AppConfigs.of(context).configs.imageAssents}'
+        'unity_logo.svg',
+        height: 40,
       ),
     );
   }
@@ -125,25 +148,20 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildGooglePlayButton() {
-    return Expanded(
-      child: Align(
-        alignment: FractionalOffset.bottomCenter,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: _imageButtonRadius,
-            onTap: () {
-              launch(
-                'https://play.google.com/store/apps/dev?id=6867856033872987263',
-              );
-            },
-            child: Image.asset(
-              '${AppConfigs.of(context).configs.imageAssents}'
-              'pic_google_play_grey.png',
-              color: Colors.white,
-              width: 140.0,
-            ),
-          ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: _imageButtonRadius,
+        onTap: () {
+          launch(
+            'https://play.google.com/store/apps/dev?id=6867856033872987263',
+          );
+        },
+        child: Image.asset(
+          '${AppConfigs.of(context).configs.imageAssents}'
+          'pic_google_play_grey.png',
+          color: Colors.white,
+          width: 140.0,
         ),
       ),
     );

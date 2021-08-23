@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/presentation/home/home_view.dart';
+import 'package:turskyi/presentation/views/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// [HomeModel] class is business logic of the [HomePage], storing all the

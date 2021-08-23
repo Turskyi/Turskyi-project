@@ -5,4 +5,7 @@ import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
 abstract class BaseConfigs {
   /// [String] path to location of the images in project tree structure
   late String imageAssents;
+
+  /// [String] name of the html page
+  late String htmlName;
 }

@@ -24,4 +24,7 @@ class MainColors implements BaseColors {
 
   @override
   Color colorFacebookWithOpacity = const Color(0xFF405A94).withOpacity(0.6);
+
+  @override
+  Color background = const Color(0xFFA6A7A7);
 }

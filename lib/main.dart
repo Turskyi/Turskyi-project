@@ -5,6 +5,7 @@ import 'package:turskyi/presentation/configs/app_configs.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_colors.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
 import 'package:turskyi/setup.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
   /// init language
@@ -14,6 +15,10 @@ Future<void> main() async {
   );
 
   final MainConfigs configs = MainConfigs();
+
+  /* Here we set the URL strategy for our web app. It is safe to call
+     * this function when running on mobile or desktop as well.*/
+  setPathUrlStrategy();
 
   /// start project
   runApp(LocalizedApp(

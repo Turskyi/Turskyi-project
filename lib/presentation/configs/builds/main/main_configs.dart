@@ -4,4 +4,7 @@ import 'package:turskyi/presentation/configs/base/base_configs.dart';
 class MainConfigs implements BaseConfigs {
   @override
   String imageAssents = 'assets/images/';
+
+  @override
+  String htmlName = 'game-html';
 }

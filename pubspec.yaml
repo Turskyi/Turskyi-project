@@ -26,6 +26,9 @@ dependencies:
   # for launching new web page on web browser
   url_launcher: ^6.0.5
 
+  #  Flutter package that allows setting the web app URL strategy with a single line of code.
+  url_strategy: ^0.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/presentation/home/home_model.dart';
-import 'package:turskyi/presentation/home/home_page.dart';
+import 'package:turskyi/presentation/views/home/home_model.dart';
+import 'package:turskyi/presentation/views/home/home_page.dart';
 
 /// [HomeView] is an interface for accessing [HomePage] from [HomeModel]
 abstract class HomeView {

@@ -1,5 +1,8 @@
 include: package:lint/analysis_options.yaml
 
+analyzer:
+  errors:
+    undefined_prefixed_name: ignore
 linter:
   rules:
     # ------ Disabling individual rules ----- #
@@ -9,6 +12,8 @@ linter:
 
     prefer_constructors_over_static_methods: false
     overridden_fields: false
+    avoid_web_libraries_in_flutter: false
+    unsafe_html: false
 
     # ------------------------------------- #
 
