@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/views/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,15 +9,25 @@ import 'package:url_launcher/url_launcher.dart';
 class HomeModel with ChangeNotifier {
   /// constructor for [HomeModel] class
   HomeModel(this._view, {required TickerProvider tickerProvider}) {
-    _animationController = AnimationController(
+    _fadeAnimationController = AnimationController(
       duration: const Duration(seconds: 5),
       vsync: tickerProvider,
     );
+    _rotationAnimationController = AnimationController(
+      duration: expandDuration,
+      vsync: tickerProvider,
+    );
     _curvedAnimation = CurvedAnimation(
-      parent: _animationController,
+      parent: _fadeAnimationController,
       curve: Curves.easeIn,
     );
-    _animationController.forward();
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 1).animate(
+      CurvedAnimation(
+        parent: _rotationAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
+    _fadeAnimationController.forward();
     _flutterExperience = _setExperience(firstTime: _flutterFirstCommit);
     _androidExperience = _setExperience(firstTime: _androidFirstCommit);
   }
@@ -28,17 +39,27 @@ class HomeModel with ChangeNotifier {
   /// [isLoading] variable is storing a current state of the progress bar
   bool get isLoading => _isLoading;
 
+  late final Animation<double> _rotationAnimation;
+
+  /// controls degree of the rotation
+  Animation<double> get rotationAnimation => _rotationAnimation;
+
+  final Duration _expandDuration = const Duration(milliseconds: 400);
+
+  /// controls duration of the expanded animation
+  Duration get expandDuration => _expandDuration;
   final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
   final DateTime _androidFirstCommit = DateTime(2019, 10);
 
-  late AnimationController _animationController;
+  late AnimationController _fadeAnimationController;
+  late AnimationController _rotationAnimationController;
 
   /// [animationController] variable is storing an animation [Duration]
   /// and [TickerProvider] for one of the text views
-  AnimationController get animationController => _animationController;
+  AnimationController get animationController => _fadeAnimationController;
   late CurvedAnimation _curvedAnimation;
 
-  /// [curvedAnimation] is a variable which storing [_animationController]
+  /// [curvedAnimation] is a variable which storing [_fadeAnimationController]
   /// and type of [Curves]
   CurvedAnimation get curvedAnimation => _curvedAnimation;
 
@@ -51,6 +72,15 @@ class HomeModel with ChangeNotifier {
 
   /// time passed since first commercial code was written
   String get androidExperience => _androidExperience;
+
+  /// controls color of the background of the wishlist button
+  Color wishListColor = Colors.transparent;
+
+  /// contains value of days left until birthday
+  String daysToBirthday = '';
+
+  /// controls the width of the "wishlist" button
+  double wishlistWidth = AppDimens.widthColorButton;
 
   /// [onHyperlinkTapped] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
@@ -91,5 +121,40 @@ class HomeModel with ChangeNotifier {
       experienceStringBuffer.write('$days day${days == 1 ? '' : 's'}');
     }
     return experienceStringBuffer.toString();
+  }
+
+  /// rotates "wishlist" logo and expands text
+  void onWishListLongPressed() {
+    if (daysToBirthday.isEmpty) {
+      final DateTime today = DateTime.now();
+      final DateTime nextBirthday = DateTime(today.year, 1, 13);
+      final int days = _daysBetween(
+        today,
+        today.isAfter(nextBirthday)
+            ? DateTime(today.year + 1, 1, 13)
+            : nextBirthday,
+      );
+      daysToBirthday = '$days days to birthday';
+      wishListColor = const Color(0xFFC93806);
+      wishlistWidth = 180;
+      _rotationAnimationController.forward();
+    } else {
+      daysToBirthday = '';
+      wishListColor = Colors.transparent;
+      wishlistWidth = AppDimens.widthColorButton;
+      _rotationAnimationController.reverse();
+    }
+    notifyListeners();
+  }
+
+  int _daysBetween(DateTime from, DateTime to) {
+    return (to.difference(from).inHours / 24).round();
+  }
+
+  @override
+  void dispose() {
+    _fadeAnimationController.dispose();
+    _rotationAnimationController.dispose();
+    super.dispose();
   }
 }

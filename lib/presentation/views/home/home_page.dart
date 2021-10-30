@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage>
   Widget _buildHomePage(HomeModel model) {
     // The equivalent of the "smallestWidth" qualifier on Android.
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isLarge = shortestSide > 600.0;
     return DecoratedBox(
       decoration: BoxDecoration(
         // build background picture
@@ -89,43 +90,14 @@ class _HomePageState extends State<HomePage>
                 ),
               ],
             ),
-            _buildFacebookButton(),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        translate('home.experience'),
-                        style: Theme.of(context).textTheme.headline3?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              height: 3,
-                            ),
-                      ),
-                      Text(
-                        '${translate('home.flutter_sdk')}'
-                        ' ${model.flutterExperience}',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                      SizedBox(
-                        width: shortestSide / 1.6,
-                        child: const Divider(
-                          color: Colors.white,
-                          indent: 12,
-                        ),
-                      ),
-                      Text(
-                        '${translate('home.android_sdk')}'
-                        ' ${model.androidExperience}',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ],
-                  ),
-                ),
+                _buildFacebookButton(),
+                _buildWishlistButton(model: model),
               ],
             ),
+            _buildSkills(isLarge, model),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -134,7 +106,7 @@ class _HomePageState extends State<HomePage>
                   children: <Widget>[
                     _buildGooglePlayButton(),
                     // Determine if we should show game button.
-                    if (shortestSide > 600) _buildUnityButton(),
+                    if (isLarge) _buildUnityButton(),
                   ],
                 ),
               ),
@@ -142,6 +114,101 @@ class _HomePageState extends State<HomePage>
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildWishlistButton({required HomeModel model}) {
+    return AnimatedContainer(
+      margin: const EdgeInsets.all(8),
+      width: model.wishlistWidth,
+      height: AppDimens.heightColorButton,
+      decoration: BoxDecoration(
+        borderRadius: AppStyles.radiusButton,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: AppConfigs.of(context).colors.colorWishlistWithOpacity,
+            blurRadius: AppDimens.blurRadius,
+          ),
+        ],
+      ),
+      duration: model.expandDuration,
+      child: TextButton(
+        onLongPress: model.onWishListLongPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: model.wishListColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppStyles.radiusButton,
+          ),
+        ),
+        onPressed: () {
+          launch('https://mywishboard.com/@turskyi');
+        },
+        child: Row(
+          children: <Widget>[
+            RotationTransition(
+              turns: model.rotationAnimation,
+              child: ClipRRect(
+                borderRadius: AppStyles.radiusButton,
+                child: Image.asset(
+                  '${AppConfigs.of(context).configs.imageAssents}'
+                  'mywishboard_logo.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Flexible(
+              child: Text(
+                model.daysToBirthday,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkills(bool isLarge, HomeModel model) {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                translate('home.experience'),
+                style: isLarge
+                    ? Theme.of(context).textTheme.headline3
+                    : Theme.of(context).textTheme.headline5,
+              ),
+              Text(
+                '${translate('home.flutter_sdk')}'
+                ' ${model.flutterExperience}',
+                style: isLarge
+                    ? Theme.of(context).textTheme.headline4
+                    : Theme.of(context).textTheme.headline6,
+              ),
+              Row(
+                children: <Widget>[
+                  const Expanded(
+                    flex: 10,
+                    child: Divider(color: Colors.white, indent: 12),
+                  ),
+                  Spacer(flex: isLarge ? 18 : 15)
+                ],
+              ),
+              Text(
+                '${translate('home.android_sdk')}'
+                ' ${model.androidExperience}',
+                style: isLarge
+                    ? Theme.of(context).textTheme.headline4
+                    : Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -246,14 +313,14 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildFacebookButton() {
     return Container(
-      padding: const EdgeInsets.all(4),
-      height: 40.0,
+      height: AppDimens.heightColorButton,
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: AppStyles.radiusButton,
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppConfigs.of(context).colors.colorFacebookWithOpacity,
-            blurRadius: 12.0,
+            blurRadius: AppDimens.blurRadius,
           ),
         ],
       ),

@@ -8,7 +8,7 @@ import 'package:turskyi/presentation/views/home/home_page.dart';
 
 /// [App] contains main settings of the web page and returns
 /// [MaterialApp] with all project specific instructions
-class App extends StatelessWidget{
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,9 +23,11 @@ class App extends StatelessWidget{
         primarySwatch: AppConfigs.of(context).colors.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: const TextTheme(
-            headline4: AppStyles.headline4,
-            headline3: AppStyles.headline3,
-        )
+          headline6: AppStyles.headline6,
+          headline5: AppStyles.headline5,
+          headline4: AppStyles.headline4,
+          headline3: AppStyles.headline3,
+        ),
       ),
     );
   }

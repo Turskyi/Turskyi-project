@@ -5,6 +5,26 @@ import 'package:turskyi/presentation/values/app_dimens.dart';
 /// Util class containing commonly used widget styles
 class AppStyles {
   // START: [Text] styles
+  /// custom H6 font style from https://material.io/design/typography/the-type-system.html#type-scale
+  static const TextStyle headline6 = TextStyle(
+    fontSize: AppDimens.headline6,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.15,
+    color: Colors.white,
+    height: 1.3,
+    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+  );
+
+  /// custom H5 font style from https://material.io/design/typography/the-type-system.html#type-scale
+  static const TextStyle headline5 = TextStyle(
+    fontSize: AppDimens.headline5,
+    fontStyle: FontStyle.normal,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    height: 3,
+    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+  );
 
   /// custom H4 font style from https://material.io/design/typography/the-type-system.html#type-scale
   static const TextStyle headline4 = TextStyle(

@@ -45,5 +45,18 @@ class AppDimens {
   // START: widths
   /// [widthFacebook] variable contains specific width of the "facebook" logo
   static const double widthFacebook = 68.0;
+  /// [widthColorButton] variable contains specific width of the "wishlist" logo
+  static const double widthColorButton = 52.0;
+
 // END: widths
+
+  // START: heights
+  /// height for "facebook" and "wishlist" buttons
+  static const double heightColorButton = 32.0;
+  // END: heights
+
+// START: radii
+  /// shadow blur radius for "facebook" and "wishlist" buttons
+  static const double blurRadius = 12.0;
+// END: radii
 }
