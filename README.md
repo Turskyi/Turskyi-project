@@ -10,13 +10,21 @@ Flutter project for supporting personal web site [turskyi.github.io](https://tur
 
 • Web content hosting and domain: [github.io](https://github.io);
 
+• Generated release build: https://github.com/Turskyi/turskyi.github.io;
+
 • SDK: [Flutter](https://flutter.dev/);
+
+• Interface: [Flutter](https://flutter.dev/docs/development/ui);
 
 • CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy updated site to [GitHub Pages](https://pages.github.com/) after every push to the master branch;
 
 • Architectural pattern: [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter);
 
-• State management approach: [Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
+• State management approach: [Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple);
+
+• Screenshot:
+
+<img src="/screenshots/homepage-2021-10-30.png?raw=true" width="600" >
 
 
 

@@ -5,9 +5,9 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/presentation/configs/app_configs.dart';
 import 'package:turskyi/presentation/routes.dart';
-import 'package:turskyi/presentation/views/home/home_model.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_styles.dart';
+import 'package:turskyi/presentation/views/home/home_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'home_view.dart';
 
@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
-  final BorderRadius _imageButtonRadius = AppStyles.radiusButton;
+  final double _buttonTopIndent = 10.0;
 
   @override
   void displayMessage(String message) {
@@ -51,14 +51,15 @@ class _HomePageState extends State<HomePage>
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     return DecoratedBox(
       decoration: BoxDecoration(
-          // build background picture
-          image: DecorationImage(
-        alignment: Alignment.topCenter,
-        fit: BoxFit.cover,
-        image: ExactAssetImage(
-          '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
+        // build background picture
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          fit: BoxFit.cover,
+          image: ExactAssetImage(
+            '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
+          ),
         ),
-      )),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -66,29 +67,65 @@ class _HomePageState extends State<HomePage>
           children: <Widget>[
             _buildName(),
             _buildTitle(curve: model.curvedAnimation),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
               children: <Widget>[
                 _buildHyperlink(
                   title: 'GitHub',
                   link: 'https://github.com/Turskyi',
-                  topPadding: 10.0,
+                  topPadding: _buttonTopIndent,
                   model: model,
                 ),
                 _buildHyperlink(
                   title: 'Gists',
                   link: 'https://gist.github.com/Turskyi',
-                  topPadding: 10.0,
+                  topPadding: _buttonTopIndent,
+                  model: model,
+                ),
+                _buildHyperlink(
+                  title: 'LinkedIn',
+                  link: 'https://www.linkedin.com/in/dmytroturskyi',
+                  topPadding: _buttonTopIndent,
                   model: model,
                 ),
               ],
             ),
-            _buildHyperlink(
-              title: 'LinkedIn',
-              link: 'https://www.linkedin.com/in/dmytroturskyi',
-              model: model,
-            ),
             _buildFacebookButton(),
+            Row(
+              children: <Widget>[
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        translate('home.experience'),
+                        style: Theme.of(context).textTheme.headline3?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              height: 3,
+                            ),
+                      ),
+                      Text(
+                        '${translate('home.flutter_sdk')}'
+                        ' ${model.flutterExperience}',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      SizedBox(
+                        width: shortestSide / 1.6,
+                        child: const Divider(
+                          color: Colors.white,
+                          indent: 12,
+                        ),
+                      ),
+                      Text(
+                        '${translate('home.android_sdk')}'
+                        ' ${model.androidExperience}',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -110,10 +147,8 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildUnityButton() {
     return RawMaterialButton(
-      onPressed: () {
-        // Navigate to the second screen using a named route.
-        Navigator.pushNamed(context, Routes.game);
-      },
+      // Navigate to the second screen using a named route.
+      onPressed: () => Navigator.pushNamed(context, Routes.game),
       padding: const EdgeInsets.all(20.0),
       shape: const CircleBorder(),
       child: SvgPicture.asset(
@@ -153,7 +188,7 @@ class _HomePageState extends State<HomePage>
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: _imageButtonRadius,
+        borderRadius: AppStyles.radiusButton,
         onTap: () {
           launch(
             'https://play.google.com/store/apps/dev?id=6867856033872987263',
@@ -191,7 +226,7 @@ class _HomePageState extends State<HomePage>
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: _imageButtonRadius,
+          borderRadius: AppStyles.radiusButton,
           onTap: () => model.onHyperlinkTapped(link),
           child: Container(
             padding: const EdgeInsets.all(12),

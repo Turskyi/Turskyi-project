@@ -2,6 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:turskyi/app.dart';
 import 'package:turskyi/presentation/configs/base/base_configs.dart';
 
-/// [setup] function accepts [BaseConfigs] and returns [PersonalWebsiteApp]
+/// [setup] function accepts [BaseConfigs] and returns [App]
 /// accordingly
-Widget setup(BaseConfigs configs) => PersonalWebsiteApp();
+Widget setup(BaseConfigs configs) => App();

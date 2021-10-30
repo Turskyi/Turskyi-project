@@ -4,6 +4,9 @@
     "name": "Dmytro Turskyi",
     "title": "Flutter/Android Developer",
     "error": "error",
-    "cannot_launch": "Could not launch"
+    "cannot_launch": "Could not launch",
+    "experience": "Experience",
+    "flutter_sdk": "Flutter SDK:",
+    "android_sdk": "Android SDK:"
   }
 }

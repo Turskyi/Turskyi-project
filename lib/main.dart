@@ -8,7 +8,8 @@ import 'package:turskyi/setup.dart';
 
 Future<void> main() async {
   /// init language
-  final LocalizationDelegate delegate = await LocalizationDelegate.create(
+  final LocalizationDelegate localizationDelegate =
+      await LocalizationDelegate.create(
     fallbackLocale: Language.en.code,
     supportedLocales: <String>[Language.en.code],
   );
@@ -17,7 +18,7 @@ Future<void> main() async {
 
   /// start project
   runApp(LocalizedApp(
-    delegate,
+    localizationDelegate,
     AppConfigs(configs: configs, colors: MainColors(), child: setup(configs)),
   ));
 }
