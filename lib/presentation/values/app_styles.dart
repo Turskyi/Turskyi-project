@@ -13,7 +13,7 @@ class AppStyles {
     letterSpacing: 0.15,
     color: Colors.white,
     height: 1.3,
-    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+    shadows: <Shadow>[topRightTextShadow, bottomLeftTextShadow],
   );
 
   /// custom H5 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -23,7 +23,7 @@ class AppStyles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
     height: 3,
-    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+    shadows: <Shadow>[topRightTextShadow, bottomLeftTextShadow],
   );
 
   /// custom H4 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -34,7 +34,7 @@ class AppStyles {
     letterSpacing: 0.25,
     color: Colors.white,
     height: 1.3,
-    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+    shadows: <Shadow>[topRightTextShadow, bottomLeftTextShadow],
   );
 
   /// custom H3 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -44,7 +44,7 @@ class AppStyles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
     height: 3,
-    shadows: <Shadow>[darkTextShadow, lightTextShadow],
+    shadows: <Shadow>[topRightTextShadow, bottomLeftTextShadow],
   );
 
 // END: [Text] styles
@@ -57,22 +57,20 @@ class AppStyles {
 // END: [BorderRadius] styles
 
 // START: [Shadow] styles
-  /// dark [Shadow] variable for "shadows" parameter of [TextStyle],
-  /// to give a shadow to a [Text]
-  static const Shadow darkTextShadow = Shadow(
+  /// [topRightTextShadow] [Shadow] variable for "shadows" parameter
+  /// of [TextStyle], to give a shadow to a [Text]
+  static const Shadow topRightTextShadow = Shadow(
     // topRight
     offset: Offset(1.0, 1.0),
     blurRadius: 4.0,
-    color: Colors.black87,
   );
 
-  /// light [Shadow] variable for "shadows" parameter of [TextStyle],
-  /// to give a shadow to a [Text]
-  static const Shadow lightTextShadow = Shadow(
+  /// [bottomLeftTextShadow] [Shadow] variable for "shadows" parameter
+  /// of [TextStyle], to give a shadow to a [Text]
+  static const Shadow bottomLeftTextShadow = Shadow(
     // bottomLeft
     offset: Offset(-1.0, -1.0),
     blurRadius: 4.0,
-    color: Colors.grey,
   );
 
 // END: [Shadow] styles

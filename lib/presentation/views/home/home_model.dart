@@ -34,34 +34,31 @@ class HomeModel with ChangeNotifier {
 
   final HomeView _view;
 
-  final bool _isLoading = false;
-
-  /// [isLoading] variable is storing a current state of the progress bar
-  bool get isLoading => _isLoading;
-
   late final Animation<double> _rotationAnimation;
 
   /// controls degree of the rotation
   Animation<double> get rotationAnimation => _rotationAnimation;
 
-  final Duration _expandDuration = const Duration(milliseconds: 400);
-
-  /// controls duration of the expanded animation
-  Duration get expandDuration => _expandDuration;
-  final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
-  final DateTime _androidFirstCommit = DateTime(2019, 10);
-
   late AnimationController _fadeAnimationController;
   late AnimationController _rotationAnimationController;
-
-  /// [animationController] variable is storing an animation [Duration]
-  /// and [TickerProvider] for one of the text views
-  AnimationController get animationController => _fadeAnimationController;
   late CurvedAnimation _curvedAnimation;
 
   /// [curvedAnimation] is a variable which storing [_fadeAnimationController]
   /// and type of [Curves]
   CurvedAnimation get curvedAnimation => _curvedAnimation;
+
+  final bool _isLoading = false;
+
+  /// [isLoading] variable is storing a current state of the progress bar
+  bool get isLoading => _isLoading;
+
+  final Duration _expandDuration = const Duration(milliseconds: 400);
+
+  /// controls duration of the expanded animation
+  Duration get expandDuration => _expandDuration;
+
+  final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
+  final DateTime _androidFirstCommit = DateTime(2019, 10);
 
   String _flutterExperience = '';
 
@@ -73,18 +70,19 @@ class HomeModel with ChangeNotifier {
   /// time passed since first commercial code was written
   String get androidExperience => _androidExperience;
 
-  /// controls color of the background of the wishlist button
-  Color wishListColor = Colors.transparent;
+  String _daysToBirthday = '';
 
   /// contains value of days left until birthday
-  String daysToBirthday = '';
+  String get daysToBirthday => _daysToBirthday;
+
+  double _wishlistWidth = AppDimens.widthColorButton;
 
   /// controls the width of the "wishlist" button
-  double wishlistWidth = AppDimens.widthColorButton;
+  double get wishlistWidth => _wishlistWidth;
 
-  /// [onHyperlinkTapped] accepts "link", checks if this link can be launched
+  /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
-  Future<void> onHyperlinkTapped(String link) async {
+  Future<void> onLaunchLink(String link) async {
     await canLaunch(link)
         ? await launch(link)
         : _view.displayMessage("${translate("home.cannot_launch")} $link");
@@ -127,21 +125,17 @@ class HomeModel with ChangeNotifier {
   void onWishListLongPressed() {
     if (daysToBirthday.isEmpty) {
       final DateTime today = DateTime.now();
-      final DateTime nextBirthday = DateTime(today.year, 1, 13);
+      final DateTime birthday = DateTime(today.year, 1, 13);
       final int days = _daysBetween(
         today,
-        today.isAfter(nextBirthday)
-            ? DateTime(today.year + 1, 1, 13)
-            : nextBirthday,
+        today.isAfter(birthday) ? DateTime(today.year + 1, 1, 13) : birthday,
       );
-      daysToBirthday = '$days days to birthday';
-      wishListColor = const Color(0xFFC93806);
-      wishlistWidth = 180;
+      _daysToBirthday = '$days days to birthday';
+      _wishlistWidth = 168;
       _rotationAnimationController.forward();
     } else {
-      daysToBirthday = '';
-      wishListColor = Colors.transparent;
-      wishlistWidth = AppDimens.widthColorButton;
+      _daysToBirthday = '';
+      _wishlistWidth = AppDimens.widthColorButton;
       _rotationAnimationController.reverse();
     }
     notifyListeners();

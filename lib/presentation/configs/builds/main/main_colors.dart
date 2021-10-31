@@ -30,4 +30,7 @@ class MainColors implements BaseColors {
 
   @override
   Color colorWishlistWithOpacity = const Color(0xFFC93806).withOpacity(0.3);
+
+  @override
+  Color colorWishlist = const Color(0xFFC93806);
 }

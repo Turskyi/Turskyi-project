@@ -8,7 +8,6 @@ import 'package:turskyi/presentation/routes.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:turskyi/presentation/views/home/home_model.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'home_view.dart';
 
 /// [HomePage] class represents a presenter of a landing page
@@ -93,7 +92,7 @@ class _HomePageState extends State<HomePage>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _buildFacebookButton(),
+                _buildFacebookButton(model: model),
                 _buildWishlistButton(model: model),
               ],
             ),
@@ -104,7 +103,7 @@ class _HomePageState extends State<HomePage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _buildGooglePlayButton(),
+                    _buildGooglePlayButton(model: model),
                     // Determine if we should show game button.
                     if (isLarge) _buildUnityButton(),
                   ],
@@ -135,15 +134,12 @@ class _HomePageState extends State<HomePage>
       child: TextButton(
         onLongPress: model.onWishListLongPressed,
         style: TextButton.styleFrom(
-          backgroundColor: model.wishListColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppStyles.radiusButton,
-          ),
+          backgroundColor: AppConfigs.of(context).colors.colorWishlist,
+          shape: RoundedRectangleBorder(borderRadius: AppStyles.radiusButton),
         ),
-        onPressed: () {
-          launch('https://mywishboard.com/@turskyi');
-        },
+        onPressed: () => model.onLaunchLink('https://mywishboard.com/@turskyi'),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RotationTransition(
               turns: model.rotationAnimation,
@@ -251,13 +247,13 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget _buildGooglePlayButton() {
+  Widget _buildGooglePlayButton({required HomeModel model}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: AppStyles.radiusButton,
         onTap: () {
-          launch(
+          model.onLaunchLink(
             'https://play.google.com/store/apps/dev?id=6867856033872987263',
           );
         },
@@ -294,7 +290,7 @@ class _HomePageState extends State<HomePage>
         color: Colors.transparent,
         child: InkWell(
           borderRadius: AppStyles.radiusButton,
-          onTap: () => model.onHyperlinkTapped(link),
+          onTap: () => model.onLaunchLink(link),
           child: Container(
             padding: const EdgeInsets.all(12),
             child: Text(
@@ -311,7 +307,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget _buildFacebookButton() {
+  Widget _buildFacebookButton({required HomeModel model}) {
     return Container(
       height: AppDimens.heightColorButton,
       margin: const EdgeInsets.all(8),
@@ -336,7 +332,9 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        onPressed: () => launch('https://www.facebook.com/Dmytro.Turskyi'),
+        onPressed: () {
+          model.onLaunchLink('https://www.facebook.com/Dmytro.Turskyi');
+        },
         child: kIsWeb
             ? Image.asset(
                 '${AppConfigs.of(context).configs.imageAssents}'

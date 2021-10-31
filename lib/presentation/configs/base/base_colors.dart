@@ -18,4 +18,7 @@ abstract class BaseColors {
 
   /// [Color] of the shadow behind "wishlist" button
   late Color colorWishlistWithOpacity;
+
+  /// background [Color] behind "wishlist" button
+  late Color colorWishlist;
 }
