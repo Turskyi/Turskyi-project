@@ -24,7 +24,9 @@ Flutter project for supporting personal web site [turskyi.github.io](https://tur
 
 • Screenshot:
 
-<img src="/screenshots/homepage-2021-10-30.png?raw=true" width="600" >
+<img src="/screenshots/home-2021-11-01.png?raw=true" width="600" >
+<img src="/screenshots/game-2021-11-01.png?raw=true" width="600" >
+<img src="/screenshots/phone-2021-11-01.png?raw=true" width="300" >
 
 
 
