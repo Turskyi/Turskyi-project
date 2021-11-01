@@ -22,7 +22,7 @@ Flutter project for supporting personal web site [turskyi.github.io](https://tur
 
 • State management approach: [Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple);
 
-• Screenshot:
+• Screenshots:
 
 <img src="/screenshots/home-2021-11-01.png?raw=true" width="600" >
 <img src="/screenshots/game-2021-11-01.png?raw=true" width="600" >
