@@ -4,7 +4,7 @@ import 'package:turskyi/presentation/values/app_dimens.dart';
 
 /// Util class containing commonly used widget styles
 class AppStyles {
-  // START: [Text] styles
+  // START: [TextStyle]s
   /// custom H6 font style from https://material.io/design/typography/the-type-system.html#type-scale
   static const TextStyle headline6 = TextStyle(
     fontSize: AppDimens.headline6,
@@ -47,7 +47,7 @@ class AppStyles {
     shadows: <Shadow>[topRightTextShadow, bottomLeftTextShadow],
   );
 
-// END: [Text] styles
+// END: [TextStyle]s
 
   // START: [BorderRadius] styles
   /// [radiusButton] variable contains specific circular [BorderRadius] value,

@@ -33,12 +33,19 @@ dev_dependencies:
   # The set of rules follows the Effective Dart: Style Guide.
   lint: ^1.5.3
 
+# The following section is specific to Flutter.
 flutter:
 
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
   uses-material-design: true
 
+  # assets of the application
   assets:
+    #    strings
     - assets/i18n/
+    #    picture files
     - assets/images/
 
 

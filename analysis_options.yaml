@@ -7,7 +7,7 @@ linter:
   rules:
     # ------ Disabling individual rules ----- #
 
-    # Util classes are awesome!
+    # Allow Util classes
     avoid_classes_with_only_static_members: false
 
     prefer_constructors_over_static_methods: false
@@ -35,5 +35,5 @@ linter:
     # Blindly follow the Flutter code style, which prefers types everywhere
     always_specify_types: true
 
-    # Back to the 80s
+    # Do not allow code lines longer than 80 characters
     lines_longer_than_80_chars: true
