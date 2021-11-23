@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/gestures/events.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,12 @@ import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:turskyi/presentation/views/home/home_model.dart';
 import 'home_view.dart';
 
-/// [HomePage] class represents a presenter of a landing page
+/// [HomePage] class represents a presenter of a landing page.
+/// It extends [StatefulWidget] for the reason of using
+/// [TickerProviderStateMixin], which must be mixed onto 'StatefulWidget',
+/// because 'StatefulWidget' implement 'State<StatefulWidget>.
+/// And we need to use [TickerProviderStateMixin] to work with
+/// [AnimationController].
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -19,8 +25,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
-  final double _buttonTopIndent = 10.0;
-
   @override
   void displayMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -72,19 +76,16 @@ class _HomePageState extends State<HomePage>
                 _buildHyperlink(
                   title: 'GitHub',
                   link: 'https://github.com/Turskyi',
-                  topPadding: _buttonTopIndent,
                   model: model,
                 ),
                 _buildHyperlink(
                   title: 'Gists',
                   link: 'https://gist.github.com/Turskyi',
-                  topPadding: _buttonTopIndent,
                   model: model,
                 ),
                 _buildHyperlink(
                   title: 'LinkedIn',
                   link: 'https://www.linkedin.com/in/dmytroturskyi',
-                  topPadding: _buttonTopIndent,
                   model: model,
                 ),
               ],
@@ -93,7 +94,18 @@ class _HomePageState extends State<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buildFacebookButton(model: model),
-                _buildWishlistButton(model: model),
+                if (kIsWeb)
+                  MouseRegion(
+                    onEnter: (PointerEnterEvent _) {
+                      model.onWishListButtonAnimate();
+                    },
+                    onExit: (PointerExitEvent _) {
+                      model.onWishListButtonAnimate();
+                    },
+                    child: _buildWishlistButton(model: model),
+                  )
+                else
+                  _buildWishlistButton(model: model),
               ],
             ),
             _buildSkills(isLarge, model),
@@ -132,7 +144,7 @@ class _HomePageState extends State<HomePage>
       ),
       duration: model.expandDuration,
       child: TextButton(
-        onLongPress: model.onWishListLongPressed,
+        onLongPress: model.onWishListButtonAnimate,
         style: TextButton.styleFrom(
           backgroundColor: AppConfigs.of(context).colors.colorWishlist,
           shape: RoundedRectangleBorder(borderRadius: AppStyles.radiusButton),
@@ -281,11 +293,10 @@ class _HomePageState extends State<HomePage>
   Widget _buildHyperlink({
     required String title,
     required String link,
-    double topPadding = 0.0,
     required HomeModel model,
   }) {
     return Container(
-      padding: EdgeInsets.only(top: topPadding),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

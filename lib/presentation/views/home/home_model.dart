@@ -122,7 +122,7 @@ class HomeModel with ChangeNotifier {
   }
 
   /// rotates "wishlist" logo and expands text
-  void onWishListLongPressed() {
+  void onWishListButtonAnimate() {
     if (daysToBirthday.isEmpty) {
       final DateTime today = DateTime.now();
       final DateTime birthday = DateTime(today.year, 1, 13);
