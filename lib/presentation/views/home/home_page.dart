@@ -40,9 +40,7 @@ class _HomePageState extends State<HomePage>
         create: (BuildContext context) => HomeModel(this, tickerProvider: this),
         child: Consumer<HomeModel>(
           builder: (BuildContext context, HomeModel model, Widget? widget) {
-            return model.isLoading
-                ? _buildLoadingWidget()
-                : _buildHomePage(model);
+            return _buildHomePage(model);
           },
         ),
       ),
@@ -70,7 +68,7 @@ class _HomePageState extends State<HomePage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _buildName(),
-            _buildTitle(curve: model.curvedAnimation),
+            _buildTitle(model: model),
             Wrap(
               children: <Widget>[
                 _buildHyperlink(
@@ -96,12 +94,8 @@ class _HomePageState extends State<HomePage>
                 _buildFacebookButton(model: model),
                 if (kIsWeb)
                   MouseRegion(
-                    onEnter: (PointerEnterEvent _) {
-                      model.onWishListButtonAnimate();
-                    },
-                    onExit: (PointerExitEvent _) {
-                      model.onWishListButtonAnimate();
-                    },
+                    onEnter: model.onWishListButtonAnimate,
+                    onExit: model.onWishListButtonAnimate,
                     child: _buildWishlistButton(model: model),
                   )
                 else
@@ -109,6 +103,7 @@ class _HomePageState extends State<HomePage>
               ],
             ),
             _buildSkills(isLarge, model),
+            if (model.isLoading) _buildLoadingWidget(),
             Expanded(
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
@@ -144,7 +139,9 @@ class _HomePageState extends State<HomePage>
       ),
       duration: model.expandDuration,
       child: TextButton(
-        onLongPress: model.onWishListButtonAnimate,
+        onLongPress: () {
+          model.onWishListButtonAnimate(const PointerMoveEvent());
+        },
         style: TextButton.styleFrom(
           backgroundColor: AppConfigs.of(context).colors.colorWishlist,
           shape: RoundedRectangleBorder(borderRadius: AppStyles.radiusButton),
@@ -184,34 +181,39 @@ class _HomePageState extends State<HomePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                translate('home.experience'),
-                style: isLarge
-                    ? Theme.of(context).textTheme.headline3
-                    : Theme.of(context).textTheme.headline5,
+              Container(
+                padding: AppStyles.textPadding,
+                margin: const EdgeInsets.only(top: 40, bottom: 4),
+                decoration: AppStyles.textDecoration,
+                child: Text(
+                  translate('home.experience'),
+                  style: isLarge
+                      ? Theme.of(context).textTheme.headline4
+                      : Theme.of(context).textTheme.headline6,
+                ),
               ),
-              Text(
-                '${translate('home.flutter_sdk')}'
-                ' ${model.flutterExperience}',
-                style: isLarge
-                    ? Theme.of(context).textTheme.headline4
-                    : Theme.of(context).textTheme.headline6,
+              Container(
+                padding: AppStyles.textPadding,
+                decoration: AppStyles.textDecoration,
+                margin: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${translate('home.flutter_sdk')}'
+                  ' ${model.flutterExperience}',
+                  style: isLarge
+                      ? Theme.of(context).textTheme.headline4
+                      : Theme.of(context).textTheme.headline6,
+                ),
               ),
-              Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 10,
-                    child: Divider(color: Colors.white, indent: 12),
-                  ),
-                  Spacer(flex: isLarge ? 18 : 15)
-                ],
-              ),
-              Text(
-                '${translate('home.android_sdk')}'
-                ' ${model.androidExperience}',
-                style: isLarge
-                    ? Theme.of(context).textTheme.headline4
-                    : Theme.of(context).textTheme.headline6,
+              Container(
+                padding: AppStyles.textPadding,
+                decoration: AppStyles.textDecoration,
+                child: Text(
+                  '${translate('home.android_sdk')}'
+                  ' ${model.androidExperience}',
+                  style: isLarge
+                      ? Theme.of(context).textTheme.headline4
+                      : Theme.of(context).textTheme.headline6,
+                ),
               ),
             ],
           ),
@@ -234,15 +236,42 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget _buildTitle({required CurvedAnimation curve}) {
-    return FadeTransition(
-      opacity: curve,
-      child: Text(
-        translate('home.title'),
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: Theme.of(context).textTheme.headline5?.fontSize,
+  Widget _buildTitle({required HomeModel model}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: FadeTransition(
+        opacity: model.curvedAnimation,
+        child: MouseRegion(
+          onEnter: model.onTitleHover,
+          onExit: model.onTitleHover,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              AnimatedContainer(
+                width: model.suffixWidth,
+                duration: model.expandDuration,
+                padding: const EdgeInsets.only(right: 4),
+                child: Text(
+                  translate('home.suffix_title'),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: Theme.of(context).textTheme.headline5?.fontSize,
+                  ),
+                ),
+              ),
+              Text(
+                translate('home.title'),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: Theme.of(context).textTheme.headline5?.fontSize,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -284,6 +313,8 @@ class _HomePageState extends State<HomePage>
       padding: EdgeInsets.all(64.0),
       child: Center(
         child: CircularProgressIndicator(
+          backgroundColor: Colors.black87,
+          color: Colors.grey,
           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
         ),
       ),

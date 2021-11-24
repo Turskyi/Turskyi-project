@@ -75,4 +75,36 @@ class AppStyles {
 
 // END: [Shadow] styles
 
+// START: [EdgeInsets] styles
+  /// [EdgeInsets] attribute, used in [Container] to add padding
+  /// around [Text]
+  static const EdgeInsets textPadding = EdgeInsets.only(
+    left: 12,
+    right: 12,
+    bottom: 4.0,
+  );
+
+// END: [EdgeInsets] styles
+
+// START: [BoxDecoration] styles
+  /// decoration attribute which used in [Container] around [Text] to
+  /// set dark background
+static  BoxDecoration textDecoration = BoxDecoration(
+  color: Colors.black,
+  border: Border.all(color: Colors.white),
+  boxShadow: const <BoxShadow>[BoxShadow(
+    // topRight
+    offset: Offset(1.0, 1.0),
+    color: Colors.white,
+    blurRadius: 8.0,
+  ), BoxShadow(
+    // bottomLeft
+    offset: Offset(-1.0, -1.0),
+    color: Colors.white,
+    blurRadius: 8.0,
+  )],
+  borderRadius: BorderRadius.circular(40),
+);
+// END: [BoxDecoration] styles
+
 }

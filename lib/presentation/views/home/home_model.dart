@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
@@ -80,6 +81,11 @@ class HomeModel with ChangeNotifier {
   /// controls the width of the "wishlist" button
   double get wishlistWidth => _wishlistWidth;
 
+  double _suffixWidth = 0;
+
+  /// controls the width of the "suffix" of the title
+  double get suffixWidth => _suffixWidth;
+
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
   Future<void> onLaunchLink(String link) async {
@@ -122,7 +128,7 @@ class HomeModel with ChangeNotifier {
   }
 
   /// rotates "wishlist" logo and expands text
-  void onWishListButtonAnimate() {
+  void onWishListButtonAnimate(PointerEvent event) {
     if (daysToBirthday.isEmpty) {
       final DateTime today = DateTime.now();
       final DateTime birthday = DateTime(today.year, 1, 13);
@@ -137,6 +143,16 @@ class HomeModel with ChangeNotifier {
       _daysToBirthday = '';
       _wishlistWidth = AppDimens.widthColorButton;
       _rotationAnimationController.reverse();
+    }
+    notifyListeners();
+  }
+
+  /// rotates "wishlist" logo and expands text
+  void onTitleHover(PointerEvent event) {
+    if (_suffixWidth == 0) {
+      _suffixWidth = 172;
+    } else {
+      _suffixWidth = 0;
     }
     notifyListeners();
   }
