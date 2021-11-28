@@ -63,12 +63,17 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: isLarge ? 24.0 : 12.0,
+          vertical: 24.0,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _buildName(),
+            // build name of the occupation
             _buildTitle(model: model),
+            // build github, gists and linkedin hyperlinks
             Wrap(
               children: <Widget>[
                 _buildHyperlink(
@@ -88,6 +93,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ],
             ),
+            // build facebook and wishlist button
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
