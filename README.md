@@ -1,6 +1,6 @@
 # Developer Dmytro Turskyi landing page
 
-Flutter project for supporting personal web site [turskyi.github.io](https://turskyi.github.io)
+The Flutter project for supporting personal website [turskyi.github.io](https://turskyi.github.io)
 
 ## PROJECT SPECIFICATION
 
