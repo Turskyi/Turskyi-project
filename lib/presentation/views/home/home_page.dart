@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/gestures/events.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import 'package:turskyi/presentation/routes.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_styles.dart';
 import 'package:turskyi/presentation/views/home/home_model.dart';
+
 import 'home_view.dart';
 
 /// [HomePage] class represents a presenter of a landing page.
@@ -18,6 +18,8 @@ import 'home_view.dart';
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -37,93 +39,91 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: ChangeNotifierProvider<HomeModel>(
-        create: (BuildContext context) => HomeModel(this, tickerProvider: this),
+        create: (_) => HomeModel(this, tickerProvider: this),
         child: Consumer<HomeModel>(
-          builder: (BuildContext context, HomeModel model, Widget? widget) {
-            return _buildHomePage(model);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHomePage(HomeModel model) {
-    // The equivalent of the "smallestWidth" qualifier on Android.
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isLarge = shortestSide > 600.0;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        // build background picture
-        image: DecorationImage(
-          alignment: Alignment.topCenter,
-          fit: BoxFit.cover,
-          image: ExactAssetImage(
-            '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: isLarge ? 24.0 : 12.0,
-          vertical: 24.0,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _buildName(),
-            // build name of the occupation
-            _buildTitle(model: model),
-            // build github, gists and linkedin hyperlinks
-            Wrap(
-              children: <Widget>[
-                _buildHyperlink(
-                  title: 'GitHub',
-                  link: 'https://github.com/Turskyi',
-                  model: model,
+          builder: (BuildContext context, HomeModel model, _) {
+            // The equivalent of the "smallestWidth" qualifier on Android.
+            final double shortestSide = MediaQuery.of(
+              context,
+            ).size.shortestSide;
+            final bool isLarge = shortestSide > 600.0;
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                // build background picture
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  image: ExactAssetImage(
+                    '${AppConfigs.of(context).configs.imageAssents}bg_home.png',
+                  ),
                 ),
-                _buildHyperlink(
-                  title: 'Gists',
-                  link: 'https://gist.github.com/Turskyi',
-                  model: model,
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isLarge ? 24.0 : 12.0,
+                  vertical: 24.0,
                 ),
-                _buildHyperlink(
-                  title: 'LinkedIn',
-                  link: 'https://www.linkedin.com/in/dmytroturskyi',
-                  model: model,
-                ),
-              ],
-            ),
-            // build facebook and wishlist button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildFacebookButton(model: model),
-                if (kIsWeb)
-                  MouseRegion(
-                    onEnter: model.onWishListButtonAnimate,
-                    onExit: model.onWishListButtonAnimate,
-                    child: _buildWishlistButton(model: model),
-                  )
-                else
-                  _buildWishlistButton(model: model),
-              ],
-            ),
-            _buildSkills(isLarge, model),
-            if (model.isLoading) _buildLoadingWidget(),
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _buildGooglePlayButton(model: model),
-                    // Determine if we should show game button.
-                    if (isLarge) _buildUnityButton(),
+                    _buildName(),
+                    // build name of the occupation
+                    _buildTitle(model: model),
+                    // build github, gists and linkedin hyperlinks
+                    Wrap(
+                      children: <Widget>[
+                        _buildHyperlink(
+                          title: 'GitHub',
+                          link: 'https://github.com/Turskyi',
+                          model: model,
+                        ),
+                        _buildHyperlink(
+                          title: 'Gists',
+                          link: 'https://gist.github.com/Turskyi',
+                          model: model,
+                        ),
+                        _buildHyperlink(
+                          title: 'LinkedIn',
+                          link: 'https://www.linkedin.com/in/dmytroturskyi',
+                          model: model,
+                        ),
+                      ],
+                    ),
+                    // build facebook and wishlist button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _buildFacebookButton(model: model),
+                        if (kIsWeb)
+                          MouseRegion(
+                            onEnter: model.onWishListButtonAnimate,
+                            onExit: model.onWishListButtonAnimate,
+                            child: _buildWishlistButton(model: model),
+                          )
+                        else
+                          _buildWishlistButton(model: model),
+                      ],
+                    ),
+                    _buildSkills(isLarge, model),
+                    if (model.isLoading) _buildLoadingWidget(),
+                    Expanded(
+                      child: Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _buildGooglePlayButton(model: model),
+                            // Determine if we should show game button.
+                            if (isLarge) _buildUnityButton(),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

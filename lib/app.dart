@@ -9,6 +9,10 @@ import 'package:turskyi/presentation/views/home/home_page.dart';
 /// [App] contains main settings of the web page and returns
 /// [MaterialApp] with all project specific instructions
 class App extends StatelessWidget {
+  /// It's a good practice to expose the ability to provide a key
+  /// when creating public widgets.
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,8 +20,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.home,
       routes: <String, Widget Function(BuildContext)>{
-        Routes.home: (BuildContext context) => HomePage(),
-        Routes.game: (BuildContext context) => GamePage(),
+        Routes.home: (BuildContext context) => const HomePage(),
+        Routes.game: (BuildContext context) => const GamePage(),
       },
       theme: ThemeData(
         primarySwatch: AppConfigs.of(context).colors.primarySwatch,

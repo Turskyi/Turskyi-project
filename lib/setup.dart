@@ -4,4 +4,4 @@ import 'package:turskyi/presentation/configs/base/base_configs.dart';
 
 /// [setup] function accepts [BaseConfigs] and returns [App]
 /// accordingly
-Widget setup(BaseConfigs configs) => App();
+Widget setup(BaseConfigs configs) => const App();

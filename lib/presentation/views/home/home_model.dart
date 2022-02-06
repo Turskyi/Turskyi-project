@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
@@ -30,7 +29,7 @@ class HomeModel with ChangeNotifier {
     );
     _fadeAnimationController.forward();
     _flutterExperience = _setExperience(firstTime: _flutterFirstCommit);
-    _androidExperience = _setExperience(firstTime: _androidFirstCommit);
+    // _androidExperience = _setExperience(firstTime: _androidFirstCommit);
   }
 
   final HomeView _view;
@@ -59,14 +58,14 @@ class HomeModel with ChangeNotifier {
   Duration get expandDuration => _expandDuration;
 
   final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
-  final DateTime _androidFirstCommit = DateTime(2019, 10);
+  // final DateTime _androidFirstCommit = DateTime(2019, 10);
 
   String _flutterExperience = '';
 
   /// time passed since first commercial code was written
   String get flutterExperience => _flutterExperience;
 
-  String _androidExperience = '';
+  final String _androidExperience = '2 years';
 
   /// time passed since first commercial code was written
   String get androidExperience => _androidExperience;
@@ -137,7 +136,7 @@ class HomeModel with ChangeNotifier {
         today.isAfter(birthday) ? DateTime(today.year + 1, 1, 13) : birthday,
       );
       _daysToBirthday = '$days days to birthday';
-      _wishlistWidth = 168;
+      _wishlistWidth = 176;
       _rotationAnimationController.forward();
     } else {
       _daysToBirthday = '';
