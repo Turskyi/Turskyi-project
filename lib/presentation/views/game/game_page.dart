@@ -9,6 +9,7 @@ class GamePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_dynamic_calls
     ui.platformViewRegistry.registerViewFactory(
         AppConfigs.of(context).configs.htmlName, (int viewId) {
       return IFrameElement()

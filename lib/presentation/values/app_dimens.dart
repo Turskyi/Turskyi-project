@@ -52,6 +52,11 @@ class AppDimens {
 // END: widths
 
   // START: heights
+  static const double fontH6Height = 1.3;
+  static const double fontH4Height = 1.3;
+  static const double fontH5Height = 3;
+  static const double fontH3Height = 3;
+
   /// height for "facebook" and "wishlist" buttons
   static const double heightColorButton = 32.0;
 
@@ -59,6 +64,30 @@ class AppDimens {
 
 // START: radii
   /// shadow blur radius for "facebook" and "wishlist" buttons
+  static const double shadowRadius = 8.0;
   static const double blurRadius = 12.0;
+  static const double buttonRadius = 20.0;
+  static const double borderRadius = 40.0;
+
 // END: radii
+
+// START: letter spacing
+  static const double letterSpacingH6 = 0.15;
+  static const double letterSpacingH4 = 0.25;
+
+// END: letter spacing
+
+// START: indents
+  static const double indent1 = 1.0;
+  static const double indent4 = 4.0;
+  static const double indent12 = 12.0;
+
+// END: indents
+
+  // START: offset values
+  static const double offset1 = 1.0;
+  static const double offsetMinus1 = -1.0;
+
+// END: offset values
+
 }

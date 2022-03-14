@@ -17,8 +17,10 @@ Future<void> main() async {
   final MainConfigs configs = MainConfigs();
 
   /// start project
-  runApp(LocalizedApp(
-    localizationDelegate,
-    AppConfigs(configs: configs, colors: MainColors(), child: setup(configs)),
-  ));
+  runApp(
+    LocalizedApp(
+      localizationDelegate,
+      AppConfigs(configs: configs, colors: MainColors(), child: setup(configs)),
+    ),
+  );
 }

@@ -29,7 +29,10 @@ class HomeModel with ChangeNotifier {
     );
     _fadeAnimationController.forward();
     _flutterExperience = _setExperience(firstTime: _flutterFirstCommit);
-    // _androidExperience = _setExperience(firstTime: _androidFirstCommit);
+    _androidExperience = _setExperience(
+      firstTime: _androidFirstCommit,
+      lastTime: _androidLastCommit,
+    );
   }
 
   final HomeView _view;
@@ -58,14 +61,15 @@ class HomeModel with ChangeNotifier {
   Duration get expandDuration => _expandDuration;
 
   final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
-  // final DateTime _androidFirstCommit = DateTime(2019, 10);
+  final DateTime _androidFirstCommit = DateTime(2019, 10);
+  final DateTime _androidLastCommit = DateTime(2021, 2, 4);
 
   String _flutterExperience = '';
 
   /// time passed since first commercial code was written
   String get flutterExperience => _flutterExperience;
 
-  final String _androidExperience = '2 years';
+  String _androidExperience = '';
 
   /// time passed since first commercial code was written
   String get androidExperience => _androidExperience;
@@ -93,11 +97,10 @@ class HomeModel with ChangeNotifier {
         : _view.displayMessage("${translate("home.cannot_launch")} $link");
   }
 
-  String _setExperience({required DateTime firstTime}) {
-    final DateTime today = DateTime.now();
-
+  String _setExperience({required DateTime firstTime, DateTime? lastTime}) {
     //the first commit of commercial project
-    final int totalDays = today.difference(firstTime).inDays;
+    final int totalDays =
+        (lastTime ?? DateTime.now()).difference(firstTime).inDays;
     const int daysPerYear = 365;
     const int daysPerMonth = 30;
     /* "~/" is an integer division,
