@@ -58,18 +58,22 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: ChangeNotifierProvider<HomeModel>(
-        create: (_) => HomeModel(this, tickerProvider: this),
-        child: Consumer<HomeModel>(
-          builder: (BuildContext context, HomeModel model, _) {
-            // The equivalent of the "smallestWidth" qualifier on Android.
-            final double shortestSide = MediaQuery.of(
-              context,
-            ).size.shortestSide;
-            final bool isLarge = shortestSide > 600.0;
-            return DecoratedBox(
+    return ChangeNotifierProvider<HomeModel>(
+      create: (_) => HomeModel(this, tickerProvider: this),
+      child: Consumer<HomeModel>(
+        builder: (BuildContext context, HomeModel model, _) {
+          // The equivalent of the "smallestWidth" qualifier on Android.
+          final double shortestSide = MediaQuery.of(
+            context,
+          ).size.shortestSide;
+          final bool isLarge = shortestSide > AppDimens.maxPortraitWidth;
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            floatingActionButton: FloatingActionButton(
+              onPressed: model.onPhoneButtonPressed,
+              child: const Icon(Icons.phone),
+            ),
+            body: DecoratedBox(
               decoration: BoxDecoration(
                 // build background picture
                 image: DecorationImage(
@@ -383,9 +387,9 @@ class _HomePageState extends State<HomePage>
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

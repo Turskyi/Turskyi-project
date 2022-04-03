@@ -60,9 +60,14 @@ class HomeModel with ChangeNotifier {
   /// controls duration of the expanded animation
   Duration get expandDuration => _expandDuration;
 
-  final DateTime _flutterFirstCommit = DateTime(2020, 09, 11);
-  final DateTime _androidFirstCommit = DateTime(2019, 10);
-  final DateTime _androidLastCommit = DateTime(2021, 2, 4);
+  /// https://github.com/MyRoadStudio/text-to-speech-flutter/commits/master
+  final DateTime _flutterFirstCommit = DateTime(2020, 09, 08);
+
+  /// https://gitlab.com/IntSoftware/redbook/commits/master
+  final DateTime _androidFirstCommit = DateTime(2019, 09, 24, 9, 30);
+
+  /// https://github.com/MyRoadStudio/happy-life-android/commits/master
+  final DateTime _androidLastCommit = DateTime(2021, 2, 5);
 
   String _flutterExperience = '';
 
@@ -161,6 +166,16 @@ class HomeModel with ChangeNotifier {
 
   int _daysBetween(DateTime from, DateTime to) {
     return (to.difference(from).inHours / 24).round();
+  }
+
+  Future<void> onPhoneButtonPressed() async {
+    /* Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
+     Just using 'tel:$phoneNumber' would create invalid URLs in some cases,
+     such as spaces in the input, which would cause `launch` to fail on some
+     platforms.
+  */
+    final Uri launchUri = Uri(scheme: 'tel', path: '+14379852581');
+    await launch(launchUri.toString());
   }
 
   @override

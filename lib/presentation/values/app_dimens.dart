@@ -43,11 +43,14 @@ class AppDimens {
 // END: font sizes
 
   // START: widths
+  /// [widthColorButton] variable contains specific width of the "wishlist" logo
+  static const double widthColorButton = 52.0;
+
   /// [widthFacebook] variable contains specific width of the "facebook" logo
   static const double widthFacebook = 68.0;
 
-  /// [widthColorButton] variable contains specific width of the "wishlist" logo
-  static const double widthColorButton = 52.0;
+  /// maximum width of the screen in portrait mode
+  static const double maxPortraitWidth = 599.0;
 
 // END: widths
 
