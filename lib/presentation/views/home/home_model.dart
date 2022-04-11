@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/core/constants.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
+import 'package:turskyi/presentation/values/app_strings.dart';
 import 'package:turskyi/presentation/views/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,7 +12,7 @@ class HomeModel with ChangeNotifier {
   /// constructor for [HomeModel] class
   HomeModel(this._view, {required TickerProvider tickerProvider}) {
     _fadeAnimationController = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: AppDimens.fiveSeconds),
       vsync: tickerProvider,
     );
     _rotationAnimationController = AnimationController(
@@ -28,7 +30,10 @@ class HomeModel with ChangeNotifier {
       ),
     );
     _fadeAnimationController.forward();
-    _flutterExperience = _setExperience(firstTime: _flutterFirstCommit);
+    _flutterExperience = _setExperience(
+      firstTime: _flutterFirstCommit,
+      lastTime: _flutterLastCommit,
+    );
     _androidExperience = _setExperience(
       firstTime: _androidFirstCommit,
       lastTime: _androidLastCommit,
@@ -61,13 +66,14 @@ class HomeModel with ChangeNotifier {
   Duration get expandDuration => _expandDuration;
 
   /// https://github.com/MyRoadStudio/text-to-speech-flutter/commits/master
-  final DateTime _flutterFirstCommit = DateTime(2020, 09, 08);
+  final DateTime _flutterFirstCommit = flutterFirstCommit;
+  final DateTime _flutterLastCommit = flutterLastCommit;
 
   /// https://gitlab.com/IntSoftware/redbook/commits/master
-  final DateTime _androidFirstCommit = DateTime(2019, 09, 24, 9, 30);
+  final DateTime _androidFirstCommit = androidFirstCommit;
 
   /// https://github.com/MyRoadStudio/happy-life-android/commits/master
-  final DateTime _androidLastCommit = DateTime(2021, 2, 5);
+  final DateTime _androidLastCommit = androidLastCommit;
 
   String _flutterExperience = '';
 
@@ -144,7 +150,7 @@ class HomeModel with ChangeNotifier {
         today.isAfter(birthday) ? DateTime(today.year + 1, 1, 13) : birthday,
       );
       _daysToBirthday = '$days days to birthday';
-      _wishlistWidth = 176;
+      _wishlistWidth = AppDimens.wishlistButtonWidth;
       _rotationAnimationController.forward();
     } else {
       _daysToBirthday = '';
@@ -174,7 +180,10 @@ class HomeModel with ChangeNotifier {
      such as spaces in the input, which would cause `launch` to fail on some
      platforms.
   */
-    final Uri launchUri = Uri(scheme: 'tel', path: '+14379852581');
+    final Uri launchUri = Uri(
+      scheme: AppStrings.phoneScheme,
+      path: phoneNumber,
+    );
     await launch(launchUri.toString());
   }
 
