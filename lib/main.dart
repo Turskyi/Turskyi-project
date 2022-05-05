@@ -10,8 +10,8 @@ Future<void> main() async {
   /// init language
   final LocalizationDelegate localizationDelegate =
       await LocalizationDelegate.create(
-    fallbackLocale: Language.en.code,
-    supportedLocales: <String>[Language.en.code],
+    fallbackLocale: Language.en.name,
+    supportedLocales: <String>[Language.en.name],
   );
 
   final MainConfigs configs = MainConfigs();
