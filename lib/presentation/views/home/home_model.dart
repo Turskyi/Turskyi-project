@@ -5,6 +5,7 @@ import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_strings.dart';
 import 'package:turskyi/presentation/views/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// [HomeModel] class is business logic of the [HomePage], storing all the
 /// methods and variables
@@ -104,8 +105,8 @@ class HomeModel with ChangeNotifier {
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
   Future<void> onLaunchLink(String link) async {
-    await canLaunch(link)
-        ? await launch(link)
+    await canLaunchUrlString(link)
+        ? await launchUrlString(link)
         : _view.displayMessage("${translate("home.cannot_launch")} $link");
   }
 
@@ -189,7 +190,7 @@ class HomeModel with ChangeNotifier {
       scheme: AppStrings.phoneScheme,
       path: phoneNumber,
     );
-    await launch(launchUri.toString());
+    await launchUrl(launchUri);
   }
 
   @override
