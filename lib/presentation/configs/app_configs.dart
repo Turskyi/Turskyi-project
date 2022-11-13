@@ -9,7 +9,8 @@ import 'package:turskyi/setup.dart';
 /// [AppConfigs] is an object data class which contains configuration of the app
 class AppConfigs extends InheritedWidget {
   /// constructor for specifying values required for data class [AppConfigs]
-   const AppConfigs({Key? key,
+  const AppConfigs({
+    Key? key,
     required this.colors,
     required this.configs,
     required this.child,
@@ -47,7 +48,6 @@ class AppConfigs extends InheritedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Widget>('child', child));
     properties.add(DiagnosticsProperty<Widget>('child', child));
   }
 }
