@@ -22,13 +22,13 @@ jobs:
       - run: flutter build web --release
 
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@dev
+        uses: actions/upload-artifact@master
         with:
           name: web-build
           path: build/web
 
       - name: Download Artifact
-        uses: actions/download-artifact@dev
+        uses: actions/download-artifact@master
         with:
           name: web-build
 
