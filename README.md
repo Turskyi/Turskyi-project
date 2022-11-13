@@ -20,7 +20,8 @@ The Flutter project for supporting personal website [turskyi.github.io](https://
 
 • Generated release build https://github.com/Turskyi/turskyi.github.io;
 
-• CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy the updated site to [GitHub Pages](https://pages.github.com/) after every push to the master branch;
+• CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy the updated site
+to [GitHub Pages](https://pages.github.com/) after every push to the "dev" branch;
 
 • Screenshots:
 
