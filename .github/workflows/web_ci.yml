@@ -3,7 +3,7 @@ name: Build & upload to GitHub pages
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   build:
@@ -42,6 +42,7 @@ jobs:
           git init
           git config --global user.name  "Dmytro Turskyi"
           git config --global user.email "dmitriy.turskiy@gmail.com"
+          git config --global init.defaultBranch master
           git status
           git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
           git checkout -b master
