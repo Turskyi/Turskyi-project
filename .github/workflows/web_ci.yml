@@ -3,7 +3,7 @@ name: Build & upload to GitHub pages
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   build:
@@ -22,13 +22,13 @@ jobs:
       - run: flutter build web --release -t lib/main/main.dart --no-tree-shake-icons
 
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@dev
         with:
           name: web-build
           path: build/web
 
       - name: Download Artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@dev
         with:
           name: web-build
 
@@ -48,7 +48,7 @@ jobs:
           git config --global init.defaultBranch master
           git status
           git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
-          git checkout -b master
+          git checkout -b dev
           git add --all
           git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push --force origin master
+          git push --force origin dev
