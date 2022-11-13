@@ -6,6 +6,9 @@ import 'package:turskyi/presentation/configs/builds/main/main_colors.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
 import 'package:turskyi/setup.dart';
 
+/// Justification of using the 'async' after [main]
+/// is taken from the official documentation at
+/// https://pub.dev/packages/flutter_translate/example.
 Future<void> main() async {
   /// init language
   final LocalizationDelegate localizationDelegate =
@@ -16,7 +19,6 @@ Future<void> main() async {
 
   final MainConfigs configs = MainConfigs();
 
-  /// start project
   runApp(
     LocalizedApp(
       localizationDelegate,
