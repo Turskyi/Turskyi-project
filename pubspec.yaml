@@ -31,7 +31,7 @@ dev_dependencies:
     sdk: flutter
 
   # The set of rules follows the Effective Dart: Style Guide.
-  lint: ^1.10.0
+  lint: ^2.0.1
 
 # The following section is specific to Flutter.
 flutter:
