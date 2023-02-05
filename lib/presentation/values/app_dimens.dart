@@ -84,8 +84,12 @@ class AppDimens {
 
 // START: indents
   static const double indent1 = 1.0;
+  static const double indent2 = 2.0;
   static const double indent4 = 4.0;
+  static const double indent8 = 8.0;
   static const double indent12 = 12.0;
+  static const double indent16 = 16.0;
+  static const double indent24 = 24.0;
 
 // END: indents
 

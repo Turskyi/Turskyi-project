@@ -147,7 +147,9 @@ class HomeModel with ChangeNotifier {
   }
 
   /// rotates "wishlist" logo and expands text
-  void onWishListButtonAnimate(PointerEvent event) {
+  void onWishListButtonAnimate([
+    PointerEvent event = const PointerMoveEvent(),
+  ]) {
     if (daysToBirthday.isEmpty) {
       final DateTime today = DateTime.now();
       final DateTime birthday = DateTime(today.year, 1, 13);
