@@ -41,7 +41,7 @@ jobs:
           cd build/web
           git init
           git config --global user.name  "Dmytro Turskyi"
-          git config --global user.email "dmitriy.turskiy@gmail.com"
+          git config --global user.email "dmytro.turskyi@gmail.com"
           git config --global init.defaultBranch master
           git status
           git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
