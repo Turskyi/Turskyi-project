@@ -7,45 +7,15 @@ on:
 
 jobs:
   build:
-
-    name: Build Flutter (Web)
-    env:
-      my_secret: ${{secrets.ACCESS_TOKEN}}
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
         with:
-          channel: 'stable'
-      - run: flutter config --enable-web
+          channel: beta
       - run: flutter pub get
-      - run: flutter build web --release
-
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
+      - run: flutter test
+      - uses: bluefireteam/flutter-gh-pages@v7
         with:
-          name: web-build
-          path: build/web
-
-      - name: Download Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: web-build
-
-      - name: Display structure of build files
-        run: ls -R
-        working-directory: ./web
-
-      - name: Deploy to GitHub Pages
-        run: |
-          cd build/web
-          git init
-          git config --global user.name  "Dmytro Turskyi"
-          git config --global user.email "dmytro.turskyi@gmail.com"
-          git config --global init.defaultBranch master
-          git status
-          git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
-          git checkout -b master
-          git add --all
-          git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push --force origin master
+          baseHref: /#/
