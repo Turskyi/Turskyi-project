@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/">
+    <base href="$FLUTTER_BASE_HREF">
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta content="Personal website." name="description">
@@ -10,13 +10,13 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="turskyi" name="apple-mobile-web-app-title">
-    <link href="web/icons/Icon-192.png" rel="apple-touch-icon">
+    <link href="icons/Icon-192.png" rel="apple-touch-icon">
 
     <!-- Favicon -->
-    <link href="web/favicon.png" rel="shortcut icon" type="image/png"/>
+    <link href="favicon.png" rel="shortcut icon" type="image/png"/>
 
     <title>Turskyi</title>
-    <link href="web/manifest.json" rel="manifest">
+    <link href="manifest.json" rel="manifest">
     <meta content="VkHN9no44ctnoO6FahLWnNSIOyckCVYkdjffGbG8l-o" name="google-site-verification"/>
 </head>
 <body>
@@ -29,8 +29,6 @@
         navigator.serviceWorker.register('flutter_service_worker.js');
       });
     }
-
-
 
 </script>
 <script src="main.dart.js" type="application/javascript"></script>
