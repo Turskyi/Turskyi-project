@@ -12,4 +12,6 @@ class AppStrings {
   static const String wishBoardAddress = 'https://mywishboard.com/@turskyi';
   static const String goodReadsAddress =
       'https://www.goodreads.com/user/show/89268945-dmytro-turskyi';
+
+  static const String phoneNumber = '+14379852581';
 }

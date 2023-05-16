@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/core/constants.dart';
+import 'package:turskyi/core/app_date_times.dart';
 import 'package:turskyi/presentation/values/app_dimens.dart';
 import 'package:turskyi/presentation/values/app_strings.dart';
 import 'package:turskyi/presentation/views/home/home_view.dart';
@@ -68,14 +68,14 @@ class HomeModel with ChangeNotifier {
   Duration get expandDuration => _expandDuration;
 
   /// https://github.com/MyRoadStudio/text-to-speech-flutter/commits/master
-  final DateTime _flutterFirstCommit = flutterFirstCommit;
-  final DateTime _flutterLastCommit = flutterLastCommit;
+  final DateTime _flutterFirstCommit = AppDateTimes.flutterFirstCommit;
+  final DateTime _flutterLastCommit = AppDateTimes.flutterLastCommit;
 
   /// https://gitlab.com/IntSoftware/redbook/commits/master
-  final DateTime _androidFirstCommit = androidFirstCommit;
+  final DateTime _androidFirstCommit = AppDateTimes.androidFirstCommit;
 
   /// https://github.com/MyRoadStudio/happy-life-android/commits/master
-  final DateTime _androidLastCommit = androidLastCommit;
+  final DateTime _androidLastCommit = AppDateTimes.androidLastCommit;
 
   String _flutterExperience = '';
 
@@ -190,7 +190,7 @@ class HomeModel with ChangeNotifier {
   */
     final Uri launchUri = Uri(
       scheme: AppStrings.phoneScheme,
-      path: phoneNumber,
+      path: AppStrings.phoneNumber,
     );
     await launchUrl(launchUri);
   }
