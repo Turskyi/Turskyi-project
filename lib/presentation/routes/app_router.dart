@@ -7,8 +7,8 @@ import 'package:turskyi/presentation/views/home/home_page.dart';
 class AppRouter {
   static Map<String, WidgetBuilder> get routes {
     return <String, WidgetBuilder>{
-      AppRoute.home.path: (BuildContext context) => const HomePage(),
-      AppRoute.game.path: (BuildContext context) => const GamePage(),
+      AppRoute.home.path: (_) => const HomePage(),
+      AppRoute.game.path: (_) => const GamePage(),
     };
   }
 }
