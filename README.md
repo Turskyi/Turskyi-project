@@ -25,9 +25,9 @@ to [GitHub Pages](https://pages.github.com/) after every push to the "dev" branc
 
 • Screenshots:
 
-<img src="/screenshots/home.png?raw=true" width="600" >
-<img src="/screenshots/game-2021-11-01.png?raw=true" width="600" >
-<img src="/screenshots/phone.png?raw=true" width="300" >
+<img src="screenshots/home.png" width="600" >
+<img src="screenshots/game-2021-11-01.png" width="600" >
+<img src="screenshots/phone.png" width="300" >
 
 
 

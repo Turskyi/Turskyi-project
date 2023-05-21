@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/domain/language.dart';
+import 'package:turskyi/core/language.dart';
 import 'package:turskyi/presentation/configs/app_configs.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_colors.dart';
 import 'package:turskyi/presentation/configs/builds/main/main_configs.dart';
