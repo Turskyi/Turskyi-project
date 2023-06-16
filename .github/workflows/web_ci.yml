@@ -19,7 +19,7 @@ jobs:
           channel: 'stable'
       - run: flutter config --enable-web
       - run: flutter pub get
-      - run: flutter build web --release
+      - run: flutter build web --release -t lib/main/main.dart --no-tree-shake-icons
 
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
