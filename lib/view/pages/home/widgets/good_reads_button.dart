@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:turskyi/main/res/configs/configs.dart';
+import 'package:turskyi/main/res/values/dimens.dart';
+import 'package:turskyi/main/res/values/radii.dart';
+import 'package:turskyi/presenter/home_presenter.dart';
+import 'package:turskyi/view/routes/link.dart';
+
+class GoodReadsButton extends StatelessWidget {
+  const GoodReadsButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<HomePresenter>(
+      builder: (BuildContext context, HomePresenter model, Widget? image) {
+        return TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: const Color(0xFFE9E9E9),
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimens.indent16,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: Radii.borderRadius,
+              side: const BorderSide(color: Color(0xFFD8D5C2)),
+            ),
+          ),
+          onPressed: () => model.onLaunchLink(
+            Link.goodReads.address,
+          ),
+          child: image ?? const SizedBox(),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Dimens.indent4),
+        child: Image.asset(
+          '${Configs.of(context).configs.imageAssents}'
+          'good_reads_logo.png',
+          width: 112.0,
+        ),
+      ),
+    );
+  }
+}
