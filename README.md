@@ -1,6 +1,8 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
+
 # Developer Dmytro Turskyi landing page
 
-The Flutter project for supporting personal website [turskyi.github.io](https://turskyi.github.io)
+The Flutter project for supporting personal website [turskyi.github.io](https://turskyi.github.io).
 
 ## PROJECT SPECIFICATION
 
@@ -12,17 +14,27 @@ The Flutter project for supporting personal website [turskyi.github.io](https://
 
 • Interface: [Flutter](https://flutter.dev/docs/development/ui);
 
-• Architectural pattern: [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter);
+• State management approach:
+[Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple);
 
-• State management approach: [Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple);
+• CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy the updated site
+to [GitHub Pages](https://pages.github.com/) after every push to the **dev** branch;
+
+• **Code Readability:** code is easily readable with no unnecessary blank lines, no unused variables
+or methods, and no commented-out code, all variables, methods, and resource IDs are descriptively
+named such that
+another developer reading the code can easily understand their function.
 
 • Web content hosting and a domain: [github.io](https://github.io);
 
 • Generated release build https://github.com/Turskyi/turskyi.github.io;
 
-• CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy the updated site
-to [GitHub Pages](https://pages.github.com/) after every push to the "dev" branch;
-
+• Architectural pattern:
+<br>
+<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">
+<img src="documentation/monolithic_model_view_presenter.jpeg" width="800" >
+</a>
+</br>
 • Screenshots:
 
 <img src="screenshots/home.png" width="600" >

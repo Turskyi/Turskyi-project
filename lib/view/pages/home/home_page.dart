@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:provider/provider.dart';
+import 'package:turskyi/main/res/configs/configs.dart';
+import 'package:turskyi/main/res/values/decorations.dart';
+import 'package:turskyi/main/res/values/dimens.dart';
+import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/presenter/home_presenter.dart';
+import 'package:turskyi/view/pages/home/home_view.dart';
+import 'package:turskyi/view/pages/home/widgets/fab_widget.dart';
+import 'package:turskyi/view/pages/home/widgets/facebook_button.dart';
+import 'package:turskyi/view/pages/home/widgets/full_name_text.dart';
+import 'package:turskyi/view/pages/home/widgets/good_reads_button.dart';
+import 'package:turskyi/view/pages/home/widgets/hyperlink_widget.dart';
+import 'package:turskyi/view/pages/home/widgets/occupation_widget.dart';
+import 'package:turskyi/view/pages/home/widgets/wishlist_button_widget.dart';
+import 'package:turskyi/view/routes/app_route.dart';
+import 'package:turskyi/view/routes/link.dart';
+import 'package:turskyi/view/util/screen.dart';
+
+/// [HomePage] class represents a view of a landing page.
+/// It extends [StatefulWidget] for the reason of using
+/// [TickerProviderStateMixin], which must be mixed onto 'StatefulWidget',
+/// because 'StatefulWidget' implement 'State<StatefulWidget>.
+/// And we need to use [TickerProviderStateMixin] to work with
+/// [AnimationController].
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with TickerProviderStateMixin
+    implements HomeView {
+  @override
+  Widget build(BuildContext context) {
+    final bool isLarge = Screen.isWide(context);
+    return ChangeNotifierProvider<HomePresenter>(
+      create: (_) => HomePresenter(this, tickerProvider: this),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        floatingActionButton: const FabWidget(),
+        body: DecoratedBox(
+          decoration: BoxDecoration(
+            // build background picture
+            image: DecorationImage(
+              alignment: Alignment.topCenter,
+              fit: BoxFit.cover,
+              image: ExactAssetImage(
+                '${Configs.of(context).configs.imageAssents}bg_home.png',
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isLarge ? Dimens.indent24 : Dimens.indent12,
+              vertical: Dimens.indent24,
+            ),
+            child: Consumer<HomePresenter>(
+              builder: (BuildContext context, HomePresenter model, _) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const FullNameText(),
+                    const OccupationWidget(),
+                    // build github, gists and linkedin hyperlinks
+                    Wrap(
+                      children: <Widget>[
+                        HyperlinkWidget(
+                          title: Link.github.title,
+                          onTap: () => model.onLaunchLink(Link.github.address),
+                        ),
+                        HyperlinkWidget(
+                          title: Link.gists.title,
+                          onTap: () => model.onLaunchLink(Link.gists.address),
+                        ),
+                        HyperlinkWidget(
+                          title: Link.linkedin.title,
+                          onTap: () => model.onLaunchLink(
+                            Link.linkedin.address,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // build facebook and wishlist button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const GoodReadsButton(),
+                        const FacebookButton(),
+                        WishlistButtonWidget(
+                          dayCount: model.daysToBirthday,
+                          wishlistWidth: model.wishlistWidth,
+                          duration: model.expandDuration,
+                          onWishListButtonAnimate:
+                              model.onWishListButtonAnimate,
+                          onLaunchLink: () => model.onLaunchLink(
+                            Link.wishBoard.address,
+                          ),
+                          animationRotation: model.rotationAnimation,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                margin: const EdgeInsets.only(
+                                  top: Dimens.indent40,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: Decorations.textDecoration,
+                                child: Text(
+                                  translate('home.experience'),
+                                  style: isLarge
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                      : Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: Decorations.textDecoration,
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: Text(
+                                  '${translate('home.flutter_sdk')}'
+                                  ' ${model.flutterExperience}',
+                                  style: isLarge
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                      : Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: Decorations.textDecoration,
+                                child: Text(
+                                  '${translate('home.android_sdk')}'
+                                  ' ${model.androidExperience}',
+                                  style: isLarge
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                      : Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (model.isLoading)
+                      const Padding(
+                        padding: EdgeInsets.all(Dimens.indent64),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black87,
+                            color: Colors.grey,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    Expanded(
+                      child: Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                  Dimens.buttonRadius,
+                                ),
+                                onTap: () {
+                                  model.onLaunchLink(
+                                    Strings.androidDeveloperAddress,
+                                  );
+                                },
+                                child: Image.asset(
+                                  // ignore: lines_longer_than_80_chars
+                                  '${Configs.of(context).configs.imageAssents}'
+                                  'pic_google_play_grey.png',
+                                  color: Colors.white, width: Dimens.indent140,
+                                ),
+                              ),
+                            ),
+                            // Determine if we should show game button.
+                            if (isLarge)
+                              RawMaterialButton(
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  AppRoute.game.path,
+                                ),
+                                padding: const EdgeInsets.all(Dimens.indent20),
+                                shape: const CircleBorder(),
+                                child: SvgPicture.asset(
+                                  '${Configs.of(context).configs.imageAssents}'
+                                  'unity_logo.svg',
+                                  height: Dimens.indent40,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void displayMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+}
