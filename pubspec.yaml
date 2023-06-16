@@ -8,30 +8,30 @@ homepage: https://turskyi.github.io/#/
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # display svg images
-  flutter_svg: ^1.1.1+1
+  flutter_svg: ^2.0.7
 
   #  localization
-  flutter_translate: ^4.0.3
+  flutter_translate: ^4.0.4
 
   #  add  ChangeNotifierProvider and Consumer for implementing MVP structural design pattern
-  provider: ^6.0.3
+  provider: ^6.0.5
 
   # for launching new web page on web browser
-  url_launcher: ^6.1.5
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # The set of rules follows the Effective Dart: Style Guide.
-  lint: ^2.0.1
+  lint: ^2.1.2
 
 # The following section is specific to Flutter.
 flutter:
