@@ -17,13 +17,12 @@ The Flutter project for supporting personal website [turskyi.github.io](https://
 • State management approach:
 [Provider](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple);
 
+• Version control system: [Git](https://git-scm.com);
+
+• Git Hosting Service: [GitHub](https://github.com);
+
 • CI/CD: [GitHub Actions](https://docs.github.com/en/actions) is used to deploy the updated site
 to [GitHub Pages](https://pages.github.com/) after every push to the **dev** branch;
-
-• **Code Readability:** code is easily readable with no unnecessary blank lines, no unused variables
-or methods, and no commented-out code, all variables, methods, and resource IDs are descriptively
-named such that
-another developer reading the code can easily understand their function.
 
 • Web content hosting and a domain: [github.io](https://github.io);
 
@@ -40,6 +39,10 @@ another developer reading the code can easily understand their function.
 <img src="screenshots/home.png" width="600" >
 <img src="screenshots/game-2021-11-01.png" width="600" >
 <img src="screenshots/phone.png" width="300" >
+
+• **Code Readability:** code is easily readable with no unnecessary blank lines, no unused variables
+or methods, and no commented-out code, all variables, methods, and resource IDs are descriptively
+named such that another developer reading the code can easily understand their function.
 
 
 
