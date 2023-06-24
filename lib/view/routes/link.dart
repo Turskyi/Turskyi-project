@@ -1,4 +1,5 @@
 import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/model/links.dart';
 
 enum Link { github, gists, linkedin, goodReads, facebook, wishBoard }
 
@@ -23,17 +24,17 @@ extension LinkExtension on Link {
   String get address {
     switch (this) {
       case Link.github:
-        return Strings.githubAddress;
+        return Links.githubAddress;
       case Link.gists:
-        return Strings.gistsAddress;
+        return Links.gistsAddress;
       case Link.linkedin:
-        return Strings.gistsAddress;
+        return Links.gistsAddress;
       case Link.facebook:
-        return Strings.facebookAddress;
+        return Links.facebookAddress;
       case Link.wishBoard:
-        return Strings.wishBoardAddress;
+        return Links.wishBoardAddress;
       case Link.goodReads:
-        return Strings.goodReadsAddress;
+        return Links.goodReadsAddress;
     }
   }
 }
