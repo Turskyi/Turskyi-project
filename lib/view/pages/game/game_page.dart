@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/model/links.dart';
 
 /// [GamePage] class represents a view of a game page
 class GamePage extends StatelessWidget {
@@ -34,7 +35,7 @@ class GamePage extends StatelessWidget {
     ui.platformViewRegistry.registerViewFactory(
       Configs.of(context).configs.htmlName,
       (_) => IFrameElement()
-        ..src = Strings.unityThreeDAddress
+        ..src = Links.unityThreeDAddress
         ..style.border = Strings.noBorder
         ..style.height = Strings.oneHundredPercent
         ..style.width = Strings.oneHundredPercent,

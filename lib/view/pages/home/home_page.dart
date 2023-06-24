@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/decorations.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/model/links.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/pages/home/home_view.dart';
 import 'package:turskyi/view/pages/home/widgets/fab_widget.dart';
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage>
                                 ),
                                 onTap: () {
                                   model.onLaunchLink(
-                                    Strings.androidDeveloperAddress,
+                                    Links.androidDeveloperAddress,
                                   );
                                 },
                                 child: Image.asset(
