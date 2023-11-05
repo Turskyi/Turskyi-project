@@ -36,6 +36,9 @@ jobs:
         run: ls -R
         working-directory: ./web
 
+      - name: Create CNAME file
+        run: echo "turskyi.com" > build/web/CNAME
+
       - name: Deploy to GitHub Pages
         run: |
           cd build/web
