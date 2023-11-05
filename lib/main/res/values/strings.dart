@@ -13,4 +13,6 @@ class Strings {
   static const String googlePlayLogo = 'pic_google_play_grey.png';
 
   static const String homeBackground = 'bg_home.png';
+
+  static const String gpt = 'gpt.png';
 }
