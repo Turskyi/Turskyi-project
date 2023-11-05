@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -6,6 +7,7 @@ import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/decorations.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/model/links.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/pages/home/home_view.dart';
 import 'package:turskyi/view/pages/home/widgets/fab_widget.dart';
@@ -50,7 +52,8 @@ class _HomePageState extends State<HomePage>
               alignment: Alignment.topCenter,
               fit: BoxFit.cover,
               image: ExactAssetImage(
-                '${Configs.of(context).configs.imageAssents}bg_home.png',
+                '${Configs.of(context).configs.imageAssents}'
+                '${Strings.homeBackground}',
               ),
             ),
           ),
@@ -96,7 +99,7 @@ class _HomePageState extends State<HomePage>
                           wishlistWidth: model.wishlistWidth,
                           duration: model.expandDuration,
                           onWishListButtonAnimate:
-                              model.onWishListButtonAnimate,
+                          model.onWishListButtonAnimate,
                           onLaunchLink: () => model.onLaunchLink(
                             Link.wishBoard.address,
                           ),
@@ -125,8 +128,8 @@ class _HomePageState extends State<HomePage>
                                   translate('home.experience'),
                                   style: isLarge
                                       ? Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
+                                      .textTheme
+                                      .headlineMedium
                                       : Theme.of(context).textTheme.titleLarge,
                                 ),
                               ),
@@ -140,11 +143,11 @@ class _HomePageState extends State<HomePage>
                                 margin: const EdgeInsets.only(bottom: 4),
                                 child: Text(
                                   '${translate('home.flutter_sdk')}'
-                                  ' ${model.flutterExperience}',
+                                      ' ${model.flutterExperience}',
                                   style: isLarge
                                       ? Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
+                                      .textTheme
+                                      .headlineMedium
                                       : Theme.of(context).textTheme.titleLarge,
                                 ),
                               ),
@@ -157,11 +160,11 @@ class _HomePageState extends State<HomePage>
                                 decoration: Decorations.textDecoration,
                                 child: Text(
                                   '${translate('home.android_sdk')}'
-                                  ' ${model.androidExperience}',
+                                      ' ${model.androidExperience}',
                                   style: isLarge
                                       ? Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
+                                      .textTheme
+                                      .headlineMedium
                                       : Theme.of(context).textTheme.titleLarge,
                                 ),
                               ),
@@ -195,21 +198,19 @@ class _HomePageState extends State<HomePage>
                                 borderRadius: BorderRadius.circular(
                                   Dimens.buttonRadius,
                                 ),
-                                onTap: () {
-                                  model.onLaunchLink(
-                                    Strings.androidDeveloperAddress,
-                                  );
-                                },
+                                onTap: () => model.onLaunchLink(
+                                  Links.androidDeveloperAddress,
+                                ),
                                 child: Image.asset(
                                   // ignore: lines_longer_than_80_chars
                                   '${Configs.of(context).configs.imageAssents}'
-                                  'pic_google_play_grey.png',
+                                  '${Strings.googlePlayLogo}',
                                   color: Colors.white, width: Dimens.indent140,
                                 ),
                               ),
                             ),
                             // Determine if we should show game button.
-                            if (isLarge)
+                            if (kIsWeb)
                               RawMaterialButton(
                                 onPressed: () => Navigator.pushNamed(
                                   context,
@@ -219,8 +220,22 @@ class _HomePageState extends State<HomePage>
                                 shape: const CircleBorder(),
                                 child: SvgPicture.asset(
                                   '${Configs.of(context).configs.imageAssents}'
-                                  'unity_logo.svg',
+                                  '${Strings.unityLogo}',
                                   height: Dimens.indent40,
+                                ),
+                              ),
+                            if (kIsWeb)
+                              RawMaterialButton(
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  AppRoute.unityGame.path,
+                                ),
+                                padding: const EdgeInsets.all(Dimens.indent8),
+                                shape: const CircleBorder(),
+                                child: Image.asset(
+                                  '${Configs.of(context).configs.imageAssents}'
+                                  '${Strings.unity2dLogo}',
+                                  height: Dimens.indent64,
                                 ),
                               ),
                           ],
@@ -238,9 +253,8 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  void displayMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
+  void displayMessage(String message) =>
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
 }

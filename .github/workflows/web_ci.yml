@@ -3,7 +3,7 @@ name: Build & upload to GitHub pages
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build:

@@ -7,9 +7,9 @@ import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/main/res/values/strings.dart';
 import 'package:turskyi/model/links.dart';
 
-/// [GamePage] class represents a view of a game page
-class GamePage extends StatelessWidget {
-  const GamePage({Key? key}) : super(key: key);
+/// [UnityGamePage] class represents a view of a game page
+class UnityGamePage extends StatelessWidget {
+  const UnityGamePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class GamePage extends StatelessWidget {
     ui.platformViewRegistry.registerViewFactory(
       Configs.of(context).configs.htmlName,
       (_) => IFrameElement()
-        ..src = Links.unityThreeDAddress
+        ..src = Links.unityTwoDAddress
         ..style.border = Strings.noBorder
         ..style.height = Strings.oneHundredPercent
         ..style.width = Strings.oneHundredPercent,
