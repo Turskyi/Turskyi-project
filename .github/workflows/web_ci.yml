@@ -3,7 +3,7 @@ name: Build & upload to GitHub pages
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build:
@@ -45,7 +45,7 @@ jobs:
           git config --global init.defaultBranch master
           git status
           git remote add origin https://${{ secrets.ACCESS_TOKEN }}@github.com/Turskyi/turskyi.github.io.git
-          git checkout -b dev
+          git checkout -b master
           git add --all
           git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push --force origin dev
+          git push --force origin master
