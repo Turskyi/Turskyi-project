@@ -9,6 +9,7 @@ class Links {
   static const String goodReadsAddress =
       'https://www.goodreads.com/user/show/89268945-dmytro-turskyi';
   static const String unityThreeDAddress = 'https://unitythreedgame.web.app';
+  static const String unityTwoDAddress = 'https://play-time-2d.web.app';
   static const String androidDeveloperAddress =
       'https://play.google.com/store/apps/dev?id=8790223297246728168';
 }
