@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'dart:ui' as ui;
+import 'dart:ui_web';
 
 import 'package:flutter/material.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
@@ -31,8 +31,7 @@ class GamePage extends StatelessWidget {
   }
 
   void _registerHtmlView(BuildContext context) {
-    // ignore: avoid_dynamic_calls
-    ui.platformViewRegistry.registerViewFactory(
+    platformViewRegistry.registerViewFactory(
       Configs.of(context).configs.htmlName,
       (_) => IFrameElement()
         ..src = Links.unityThreeDAddress

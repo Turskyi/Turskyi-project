@@ -19,7 +19,7 @@ class Decorations {
         offset: Offset(Dimens.offsetMinus1, Dimens.offsetMinus1),
         color: Colors.white,
         blurRadius: Dimens.shadowRadius,
-      )
+      ),
     ],
     borderRadius: BorderRadius.circular(Dimens.borderRadius),
   );

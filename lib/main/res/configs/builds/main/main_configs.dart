@@ -7,4 +7,7 @@ class MainConfigs implements BaseConfigs {
 
   @override
   String htmlName = 'game-html';
+
+  @override
+  String htmlGameName = 'unity-game-html';
 }
