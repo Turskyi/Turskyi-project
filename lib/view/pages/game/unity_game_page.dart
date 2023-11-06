@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'dart:ui' as ui;
+import 'dart:ui_web';
 
 import 'package:flutter/material.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
@@ -24,16 +24,15 @@ class UnityGamePage extends StatelessWidget {
       body: Directionality(
         textDirection: TextDirection.ltr,
         child: HtmlElementView(
-          viewType: Configs.of(context).configs.htmlName,
+          viewType: Configs.of(context).configs.htmlGameName,
         ),
       ),
     );
   }
 
   void _registerHtmlView(BuildContext context) {
-    // ignore: avoid_dynamic_calls
-    ui.platformViewRegistry.registerViewFactory(
-      Configs.of(context).configs.htmlName,
+    platformViewRegistry.registerViewFactory(
+      Configs.of(context).configs.htmlGameName,
       (_) => IFrameElement()
         ..src = Links.unityTwoDAddress
         ..style.border = Strings.noBorder

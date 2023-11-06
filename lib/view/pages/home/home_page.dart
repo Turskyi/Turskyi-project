@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage>
                             ),
                           ),
                           // Determine if we should show game button.
-                          if (kIsWeb)
+                          if (kIsWeb && isLarge)
                             RawMaterialButton(
                               onPressed: () => Navigator.pushNamed(
                                 context,
@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage>
                                 height: Dimens.indent40,
                               ),
                             ),
-                          if (kIsWeb)
+                          if (kIsWeb && isLarge)
                             RawMaterialButton(
                               onPressed: () => Navigator.pushNamed(
                                 context,

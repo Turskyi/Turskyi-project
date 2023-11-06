@@ -8,4 +8,7 @@ abstract class BaseConfigs {
 
   /// [String] name of the html page
   late String htmlName;
+
+  /// [String] name of the html page with the unity game
+  late String htmlGameName;
 }
