@@ -6,9 +6,7 @@ import 'package:turskyi/presenter/home_presenter.dart';
 
 /// Build title of the occupation
 class OccupationWidget extends StatelessWidget {
-  const OccupationWidget({
-    Key? key,
-  }) : super(key: key);
+  const OccupationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

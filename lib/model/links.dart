@@ -14,4 +14,5 @@ class Links {
       'https://play.google.com/store/apps/dev?id=8790223297246728168';
 
   static const String politeraiAddress = 'https://www.politerai.com/';
+  static const String annaStoreAddress = 'https://an-artist.store';
 }

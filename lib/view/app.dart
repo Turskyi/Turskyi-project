@@ -10,7 +10,7 @@ import 'package:turskyi/view/routes/app_router.dart';
 class App extends StatelessWidget {
   /// It's a good practice to expose the ability to provide a key
   /// when creating public widgets.
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {

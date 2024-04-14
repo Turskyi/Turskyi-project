@@ -44,7 +44,7 @@ class Dimens {
 
   // START: widths
   /// [widthColorButton] variable contains specific width of the "wishlist" logo
-  static const double widthColorButton = 52.0;
+  static const double widthColorButton = 56.0;
 
   /// [widthFacebook] variable contains specific width of the "facebook" logo
   static const double widthFacebook = 68.0;

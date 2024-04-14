@@ -4,8 +4,8 @@ import 'package:turskyi/presenter/home_presenter.dart';
 
 class FabWidget extends StatelessWidget {
   const FabWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

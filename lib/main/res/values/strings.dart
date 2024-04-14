@@ -1,14 +1,14 @@
-class Strings {
-  static const String phoneScheme = 'tel';
-  static const String github = 'GitHub';
-  static const String gists = 'Gists';
-  static const String linkedin = 'LinkedIn';
-  static const String phoneNumber = '+14379852581';
-  static const String oneHundredPercent = '100%';
-  static const String noBorder = 'none';
-  static const String unityLogo = 'unity_logo.svg';
-  static const String unity2dLogo = 'unity_2d_logo.png';
-  static const String googlePlayLogo = 'pic_google_play_grey.png';
-  static const String homeBackground = 'bg_home.png';
-  static const String gpt = 'gpt.png';
-}
+const String phoneScheme = 'tel';
+const String github = 'GitHub';
+const String gists = 'Gists';
+const String linkedin = 'LinkedIn';
+const String phoneNumber = '+14379852581';
+const String oneHundredPercent = '100%';
+const String noBorder = 'none';
+const String unityLogo = 'unity_logo.svg';
+const String unity2dLogo = 'unity_2d_logo.png';
+const String googlePlayLogo = 'pic_google_play_grey.png';
+const String homeBackground = 'bg_home.png';
+const String gpt = 'gpt.png';
+const String annaStoreTitle = 'AnArtist.Store';
+const String nextJsIcon = 'nextjs_icon.png';

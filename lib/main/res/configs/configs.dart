@@ -10,11 +10,11 @@ import 'package:turskyi/view/app.dart';
 class Configs extends InheritedWidget {
   /// constructor for specifying values required for data class [Configs]
   const Configs({
-    Key? key,
+    super.key,
     required this.colors,
     required this.configs,
     required this.child,
-  }) : super(key: key, child: child);
+  }) : super(child: child);
 
   /// [colors] is a value containing colors of the app
   final BaseColors colors;
