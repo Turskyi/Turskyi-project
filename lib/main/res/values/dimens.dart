@@ -49,7 +49,7 @@ class Dimens {
   /// [widthFacebook] variable contains specific width of the "facebook" logo
   static const double widthFacebook = 68.0;
 
-  static const double wishlistButtonWidth = 176.0;
+  static const double wishlistButtonWidth = 188.0;
 
   /// maximum width of the screen in portrait mode
   static const double maxPortraitWidth = 599.0;
