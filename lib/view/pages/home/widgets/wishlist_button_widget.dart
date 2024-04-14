@@ -8,14 +8,14 @@ import 'package:turskyi/presenter/home_presenter.dart';
 
 class WishlistButtonWidget extends StatelessWidget {
   const WishlistButtonWidget({
-    Key? key,
+    super.key,
     required this.wishlistWidth,
     required this.duration,
     required this.onWishListButtonAnimate,
     required this.onLaunchLink,
     required this.animationRotation,
     required this.dayCount,
-  }) : super(key: key);
+  });
 
   final double wishlistWidth;
   final Duration duration;

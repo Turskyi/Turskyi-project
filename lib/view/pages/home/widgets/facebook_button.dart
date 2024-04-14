@@ -9,7 +9,7 @@ import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/routes/link.dart';
 
 class FacebookButton extends StatelessWidget {
-  const FacebookButton({Key? key}) : super(key: key);
+  const FacebookButton({super.key});
 
   @override
   Widget build(BuildContext context) {

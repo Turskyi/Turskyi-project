@@ -1,25 +1,34 @@
-import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
 
-enum Link { github, gists, linkedin, goodReads, facebook, wishBoard, politerai }
+enum Link {
+  github,
+  gists,
+  linkedin,
+  goodreads,
+  facebook,
+  myWishBoard,
+  politerai,
+  annaStore;
 
-extension LinkExtension on Link {
   String get title {
     switch (this) {
       case Link.github:
-        return Strings.github;
+        return strings.github;
       case Link.gists:
-        return Strings.gists;
+        return strings.gists;
       case Link.linkedin:
-        return Strings.linkedin;
+        return strings.linkedin;
       case Link.facebook:
         return Link.facebook.name;
-      case Link.wishBoard:
-        return Link.wishBoard.name;
-      case Link.goodReads:
-        return Link.goodReads.name;
+      case Link.myWishBoard:
+        return Link.myWishBoard.name;
+      case Link.goodreads:
+        return Link.goodreads.name;
       case Link.politerai:
         return Link.politerai.name;
+      case Link.annaStore:
+        return strings.annaStoreTitle;
     }
   }
 
@@ -33,12 +42,14 @@ extension LinkExtension on Link {
         return Links.gistsAddress;
       case Link.facebook:
         return Links.facebookAddress;
-      case Link.wishBoard:
+      case Link.myWishBoard:
         return Links.wishBoardAddress;
-      case Link.goodReads:
+      case Link.goodreads:
         return Links.goodReadsAddress;
       case Link.politerai:
         return Links.politeraiAddress;
+      case Link.annaStore:
+        return Links.annaStoreAddress;
     }
   }
 }

@@ -3,10 +3,10 @@ import 'package:turskyi/main/res/values/dimens.dart';
 
 class HyperlinkWidget extends StatelessWidget {
   const HyperlinkWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final String title;
   final VoidCallback onTap;

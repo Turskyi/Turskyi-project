@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/decorations.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -28,7 +28,7 @@ import 'package:turskyi/view/util/screen.dart';
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage>
               fit: BoxFit.cover,
               image: ExactAssetImage(
                 '${Configs.of(context).configs.imageAssents}'
-                '${Strings.homeBackground}',
+                '${strings.homeBackground}',
               ),
             ),
           ),
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage>
                         duration: model.expandDuration,
                         onWishListButtonAnimate: model.onWishListButtonAnimate,
                         onLaunchLink: () => model.onLaunchLink(
-                          Link.wishBoard.address,
+                          Link.myWishBoard.address,
                         ),
                         animationRotation: model.rotationAnimation,
                       ),
@@ -191,6 +191,21 @@ class _HomePageState extends State<HomePage>
                         children: <Widget>[
                           RawMaterialButton(
                             onPressed: () => model.onLaunchLink(
+                              Link.annaStore.address,
+                            ),
+                            padding: const EdgeInsets.all(Dimens.indent8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  Dimens.buttonRadius), // Square shape
+                            ),
+                            child: Image.asset(
+                              '${Configs.of(context).configs.imageAssents}'
+                              '${strings.nextJsIcon}',
+                              height: Dimens.indent40,
+                            ),
+                          ),
+                          RawMaterialButton(
+                            onPressed: () => model.onLaunchLink(
                               Link.politerai.address,
                             ),
                             padding: const EdgeInsets.all(Dimens.indent8),
@@ -208,7 +223,7 @@ class _HomePageState extends State<HomePage>
                               ),
                               child: Image.asset(
                                 '${Configs.of(context).configs.imageAssents}'
-                                '${Strings.googlePlayLogo}',
+                                '${strings.googlePlayLogo}',
                                 color: Colors.white,
                                 width: Dimens.indent140,
                               ),
@@ -225,7 +240,7 @@ class _HomePageState extends State<HomePage>
                               shape: const CircleBorder(),
                               child: SvgPicture.asset(
                                 '${Configs.of(context).configs.imageAssents}'
-                                '${Strings.unityLogo}',
+                                '${strings.unityLogo}',
                                 height: Dimens.indent40,
                               ),
                             ),
@@ -239,7 +254,7 @@ class _HomePageState extends State<HomePage>
                               shape: const CircleBorder(),
                               child: Image.asset(
                                 '${Configs.of(context).configs.imageAssents}'
-                                '${Strings.unity2dLogo}',
+                                '${strings.unity2dLogo}',
                                 height: Dimens.indent64,
                               ),
                             ),
@@ -251,7 +266,7 @@ class _HomePageState extends State<HomePage>
               ),
               child: Image.asset(
                 '${Configs.of(context).configs.imageAssents}'
-                '${Strings.gpt}',
+                '${strings.gpt}',
                 height: Dimens.indent64,
               ),
             ),

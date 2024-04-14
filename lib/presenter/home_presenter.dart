@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/strings.dart';
+import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/date_times.dart';
 import 'package:turskyi/presenter/time.dart';
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -190,8 +190,8 @@ class HomePresenter with ChangeNotifier {
      platforms.
   */
     final Uri launchUri = Uri(
-      scheme: Strings.phoneScheme,
-      path: Strings.phoneNumber,
+      scheme: strings.phoneScheme,
+      path: strings.phoneNumber,
     );
     await launchUrl(launchUri);
   }

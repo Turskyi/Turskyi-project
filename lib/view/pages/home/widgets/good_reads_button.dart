@@ -7,7 +7,7 @@ import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/routes/link.dart';
 
 class GoodReadsButton extends StatelessWidget {
-  const GoodReadsButton({Key? key}) : super(key: key);
+  const GoodReadsButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class GoodReadsButton extends StatelessWidget {
             ),
           ),
           onPressed: () => model.onLaunchLink(
-            Link.goodReads.address,
+            Link.goodreads.address,
           ),
           child: image ?? const SizedBox(),
         );
