@@ -3,7 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/themes.dart';
 import 'package:turskyi/view/routes/app_route.dart';
-import 'package:turskyi/view/routes/app_router.dart';
+import 'package:turskyi/view/routes/app_router.dart' as router;
 
 /// [App] contains main settings of the web page and returns
 /// [MaterialApp] with all project specific instructions
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: translate('title'),
       initialRoute: AppRoute.home.path,
-      routes: AppRouter.routes,
+      routes: router.routes,
       theme: ThemeData(
         primarySwatch: Configs.of(context).colors.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,

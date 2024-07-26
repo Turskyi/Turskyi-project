@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/radii.dart';
+import 'package:turskyi/main/res/values/radii.dart' as radii;
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/routes/link.dart';
 
@@ -17,7 +17,7 @@ class FacebookButton extends StatelessWidget {
       height: Dimens.heightColorButton,
       margin: const EdgeInsets.all(Dimens.indent8),
       decoration: BoxDecoration(
-        borderRadius: Radii.borderRadius,
+        borderRadius: radii.borderRadius,
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Configs.of(context).colors.colorFacebookWithOpacity,
@@ -35,7 +35,7 @@ class FacebookButton extends StatelessWidget {
                 horizontal: Dimens.indent16,
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: Radii.borderRadius,
+                borderRadius: radii.borderRadius,
                 side: BorderSide(
                   color: Configs.of(context).colors.colorFacebook,
                 ),

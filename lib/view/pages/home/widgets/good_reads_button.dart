@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/radii.dart';
+import 'package:turskyi/main/res/values/radii.dart' as radii;
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/view/routes/link.dart';
 
@@ -20,7 +20,7 @@ class GoodReadsButton extends StatelessWidget {
               horizontal: Dimens.indent16,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: Radii.borderRadius,
+              borderRadius: radii.borderRadius,
               side: const BorderSide(color: Color(0xFFD8D5C2)),
             ),
           ),

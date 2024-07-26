@@ -7,7 +7,8 @@
     "error": "error",
     "cannot_launch": "Could not launch",
     "experience": "Experience",
-    "flutter_sdk": "Flutter SDK:",
-    "android_sdk": "Android SDK:"
+    "total": "Total:",
+    "flutter": "Flutter:",
+    "android": "Android:"
   }
 }

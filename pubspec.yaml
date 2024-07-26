@@ -4,8 +4,8 @@ description: Personal web page.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-homepage: https://turskyi.github.io/#/
-version: 1.0.1
+homepage: https://turskyi.com
+version: 1.0.2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -18,13 +18,13 @@ dependencies:
   flutter_svg: ^2.0.10+1
 
   #  localization
-  flutter_translate: ^4.0.4
+  flutter_translate: ^4.1.0
 
   #  add  ChangeNotifierProvider and Consumer for implementing MVP structural design pattern
   provider: ^6.1.2
 
   # For launching a new web page on web browser.
-  url_launcher: ^6.2.6
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

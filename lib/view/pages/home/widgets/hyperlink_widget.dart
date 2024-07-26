@@ -3,9 +3,9 @@ import 'package:turskyi/main/res/values/dimens.dart';
 
 class HyperlinkWidget extends StatelessWidget {
   const HyperlinkWidget({
-    super.key,
     required this.title,
     required this.onTap,
+    super.key,
   });
 
   final String title;
@@ -28,6 +28,8 @@ class HyperlinkWidget extends StatelessWidget {
                 color: Colors.white,
                 decoration: TextDecoration.underline,
                 fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                decorationColor: Colors.white70,
+                decorationThickness: 0.5,
               ),
             ),
           ),
