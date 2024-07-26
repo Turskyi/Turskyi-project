@@ -65,5 +65,16 @@ The Flutter project for supporting personal website
 For any inquiries please reach out to me directly at
 [dmytro@turskyi.com](mailto:dmytro@turskyi.com).
 
+# Disclaimer:
+
+I am aware that building a landing page with [Flutter](https://flutter.dev/)
+is not ideal due to its lack of SEO optimization and server-side rendering
+support. Flutter web is more suitable for building web apps rather than
+traditional websites. The current business idea of this project is a website,
+which should ideally be implemented using a more appropriate framework such as
+[Next.js](https://nextjs.org/). In the future, this project will be migrated
+to Next.js unless Flutter starts supporting SEO optimization and server-side
+rendering.
+
 
 
