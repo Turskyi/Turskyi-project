@@ -9,6 +9,7 @@ enum Link {
   facebook,
   myWishBoard,
   politerai,
+  laoziAi,
   annaStore;
 
   String get title {
@@ -27,6 +28,8 @@ enum Link {
         return Link.goodreads.name;
       case Link.politerai:
         return Link.politerai.name;
+      case Link.laoziAi:
+        return strings.laoziAiTitle;
       case Link.annaStore:
         return strings.annaStoreTitle;
     }
@@ -46,6 +49,8 @@ enum Link {
         return Links.wishBoardAddress;
       case Link.goodreads:
         return Links.goodReadsAddress;
+      case Link.laoziAi:
+        return Links.laoziAiAddress;
       case Link.politerai:
         return Links.politeraiAddress;
       case Link.annaStore:

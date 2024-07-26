@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
-import 'package:turskyi/main/res/values/decorations.dart';
+import 'package:turskyi/main/res/values/decorations.dart' as decorations;
 import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
@@ -19,7 +19,7 @@ import 'package:turskyi/view/pages/home/widgets/occupation_widget.dart';
 import 'package:turskyi/view/pages/home/widgets/wishlist_button_widget.dart';
 import 'package:turskyi/view/routes/app_route.dart';
 import 'package:turskyi/view/routes/link.dart';
-import 'package:turskyi/view/util/screen.dart';
+import 'package:turskyi/view/util/screen.dart' as screen;
 
 /// [HomePage] class represents a view of a landing page.
 /// It extends [StatefulWidget] for the reason of using
@@ -39,15 +39,15 @@ class _HomePageState extends State<HomePage>
     implements HomeView {
   @override
   Widget build(BuildContext context) {
-    final bool isLarge = Screen.isWide(context);
+    final bool isLarge = screen.isWide(context);
     return ChangeNotifierProvider<HomePresenter>(
-      create: (_) => HomePresenter(this, tickerProvider: this),
+      create: (_) => HomePresenter(view: this, tickerProvider: this),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: const FabWidget(),
         body: DecoratedBox(
           decoration: BoxDecoration(
-            // build background picture
+            // Builds background image.
             image: DecorationImage(
               alignment: Alignment.topCenter,
               fit: BoxFit.cover,
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage>
                                 top: Dimens.indent40,
                                 bottom: Dimens.indent4,
                               ),
-                              decoration: Decorations.textDecoration,
+                              decoration: decorations.textDecoration,
                               child: Text(
                                 translate('home.experience'),
                                 style: isLarge
@@ -140,10 +140,10 @@ class _HomePageState extends State<HomePage>
                                 right: Dimens.indent12,
                                 bottom: Dimens.indent4,
                               ),
-                              decoration: Decorations.textDecoration,
+                              decoration: decorations.textDecoration,
                               margin: const EdgeInsets.only(bottom: 4),
                               child: Text(
-                                '${translate('home.flutter_sdk')}'
+                                '${translate('home.flutter')}'
                                 ' ${model.flutterExperience}',
                                 style: isLarge
                                     ? Theme.of(context).textTheme.headlineMedium
@@ -156,10 +156,25 @@ class _HomePageState extends State<HomePage>
                                 right: Dimens.indent12,
                                 bottom: Dimens.indent4,
                               ),
-                              decoration: Decorations.textDecoration,
+                              decoration: decorations.textDecoration,
                               child: Text(
-                                '${translate('home.android_sdk')}'
+                                '${translate('home.android')}'
                                 ' ${model.androidExperience}',
+                                style: isLarge
+                                    ? Theme.of(context).textTheme.headlineMedium
+                                    : Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: Dimens.indent12,
+                                right: Dimens.indent12,
+                                bottom: Dimens.indent4,
+                              ),
+                              decoration: decorations.textDecoration,
+                              child: Text(
+                                '${translate('home.total')}'
+                                ' ${model.totalExperience}',
                                 style: isLarge
                                     ? Theme.of(context).textTheme.headlineMedium
                                     : Theme.of(context).textTheme.titleLarge,
@@ -196,12 +211,29 @@ class _HomePageState extends State<HomePage>
                             padding: const EdgeInsets.all(Dimens.indent8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
-                                  Dimens.buttonRadius), // Square shape
+                                Dimens.buttonRadius,
+                              ), // Square shape
                             ),
                             child: Image.asset(
                               '${Configs.of(context).configs.imageAssents}'
                               '${strings.nextJsIcon}',
                               height: Dimens.indent40,
+                            ),
+                          ),
+                          RawMaterialButton(
+                            onPressed: () => model.onLaunchLink(
+                              Link.laoziAi.address,
+                            ),
+                            padding: const EdgeInsets.all(Dimens.indent8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                Dimens.buttonRadius,
+                              ), // Square shape
+                            ),
+                            child: SvgPicture.asset(
+                              '${Configs.of(context).configs.imageAssents}'
+                              '${strings.geminiLogo}',
+                              height: Dimens.indent64,
                             ),
                           ),
                           RawMaterialButton(

@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/radii.dart';
+import 'package:turskyi/main/res/values/radii.dart' as radii;
 import 'package:turskyi/presenter/home_presenter.dart';
 
 class WishlistButtonWidget extends StatelessWidget {
   const WishlistButtonWidget({
-    super.key,
     required this.wishlistWidth,
     required this.duration,
     required this.onWishListButtonAnimate,
     required this.onLaunchLink,
     required this.animationRotation,
     required this.dayCount,
+    super.key,
   });
 
   final double wishlistWidth;
@@ -56,7 +56,7 @@ class WishlistButtonWidget extends StatelessWidget {
           onLongPress: onWishListButtonAnimate,
           style: TextButton.styleFrom(
             backgroundColor: Configs.of(context).colors.colorWishlist,
-            shape: RoundedRectangleBorder(borderRadius: Radii.borderRadius),
+            shape: RoundedRectangleBorder(borderRadius: radii.borderRadius),
           ),
           onPressed: onLaunchLink,
           child: Row(

@@ -1,40 +1,35 @@
 include: package:lint/analysis_options.yaml
 
 analyzer:
-  errors:
-    undefined_prefixed_name: ignore
+  exclude:
+    - "**.g.dart"
+
 linter:
   rules:
-    # ------ Disabling individual rules ----- #
-
-    # Allow Util classes
-    avoid_classes_with_only_static_members: false
-
+    # ------ Disabling individual rules. ----- #
     prefer_constructors_over_static_methods: false
-    overridden_fields: false
     avoid_web_libraries_in_flutter: false
     unsafe_html: false
-    implementation_imports: false
 
     # ------------------------------------- #
 
-    # ------ Enabling individual rules ------ #
+    # ------ Enabling individual rules. ---- #
     #                 ---                   #
-    # These rules here are good but too #
-    # opinionated to enable them by default #
+    # These rules here are good but too ----#
+    # opinionated to enable them by default. #
     # ------------------------------------- #
-
+    require_trailing_commas: true
     use_key_in_widget_constructors: true
-
+    sort_pub_dependencies: true
     prefer_const_constructors_in_immutables: true
-
-    # Make constructors the first thing in every class
+    avoid_classes_with_only_static_members: true
+    # Make constructors the first thing in every class.
     sort_constructors_first: true
-
+    always_put_required_named_parameters_first: true
     prefer_single_quotes: true
 
-    # Blindly follow the Flutter code style, which prefers types everywhere
+    # Blindly follow the Flutter code style, which prefers types everywhere.
     always_specify_types: true
 
-    # Do not allow code lines longer than 80 characters
+    # Do not allow code lines longer than 80 characters.
     lines_longer_than_80_chars: true

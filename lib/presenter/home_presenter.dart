@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/main/res/values/strings.dart' as strings;
-import 'package:turskyi/model/date_times.dart';
+import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/presenter/time.dart';
 import 'package:turskyi/view/pages/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 /// [HomePresenter] class is business logic of the [HomePage], storing all the
-/// methods and variables
+/// methods and variables.
 class HomePresenter with ChangeNotifier {
-  /// constructor for [HomePresenter] class
-  HomePresenter(this._view, {required TickerProvider tickerProvider}) {
+  /// Constructor for [HomePresenter] class.
+  HomePresenter({
+    required HomeView view,
+    required TickerProvider tickerProvider,
+  }) {
+    _view = view;
     _fadeAnimationController = AnimationController(
       duration: Duration(seconds: Time.fade.value),
       vsync: tickerProvider,
@@ -34,16 +38,18 @@ class HomePresenter with ChangeNotifier {
     _fadeAnimationController.forward();
     _flutterExperience = _setExperience(
       firstTime: _flutterFirstCommit,
-      gapDuration:
-          _flutterLastCommit.difference(DateTime(2022, DateTime.may, 9)),
+      gapDuration: _flutterLastCommit.difference(
+        DateTime(2022, DateTime.may, 9),
+      ),
     );
     _androidExperience = _setExperience(
       firstTime: _androidFirstCommit,
       lastTime: _androidLastCommit,
     );
+    _totalExperience = _setExperience(firstTime: _androidFirstCommit);
   }
 
-  final HomeView _view;
+  late HomeView _view;
 
   late final Animation<double> _rotationAnimation;
 
@@ -60,23 +66,27 @@ class HomePresenter with ChangeNotifier {
 
   final bool _isLoading = false;
 
-  /// [isLoading] variable is storing a current state of the progress bar
+  /// [isLoading] variable is storing a current state of the progress bar.
   bool get isLoading => _isLoading;
 
   final Duration _expandDuration = const Duration(milliseconds: 400);
 
-  /// controls duration of the expanded animation
+  /// Controls duration of the expanded animation.
   Duration get expandDuration => _expandDuration;
 
-  /// https://github.com/MyRoadStudio/text-to-speech-flutter/commits/master
-  final DateTime _flutterFirstCommit = DateTimes.flutterFirstCommit;
-  final DateTime _flutterLastCommit = DateTimes.flutterLastCommit;
+  /// https://github.com/MyRoadStudio/text-to-speech-flutter/commits/master.
+  final DateTime _flutterFirstCommit = date_times.flutterFirstCommit;
+  final DateTime _flutterLastCommit = date_times.flutterLastCommit;
 
-  /// https://gitlab.com/IntSoftware/redbook/commits/master
-  final DateTime _androidFirstCommit = DateTimes.androidFirstCommit;
+  /// https://gitlab.com/IntSoftware/redbook/commits/master.
+  final DateTime _androidFirstCommit = date_times.androidFirstCommit;
 
-  /// https://github.com/MyRoadStudio/happy-life-android/commits/master
-  final DateTime _androidLastCommit = DateTimes.androidLastCommit;
+  /// https://github.com/MyRoadStudio/happy-life-android/commits/master.
+  final DateTime _androidLastCommit = date_times.androidLastCommit;
+
+  String _totalExperience = '';
+
+  String get totalExperience => _totalExperience;
 
   String _flutterExperience = '';
 
@@ -117,8 +127,12 @@ class HomePresenter with ChangeNotifier {
     Duration? gapDuration,
   }) {
     final int gapDays = gapDuration?.inDays ?? 0;
-    final int totalDays =
-        (lastTime ?? DateTime.now()).difference(firstTime).inDays - gapDays;
+    final int totalDays = (lastTime ?? DateTime.now())
+            .difference(
+              firstTime,
+            )
+            .inDays -
+        gapDays;
     const int daysPerYear = 365;
     const int daysPerMonth = 30;
     /* "~/" is an integer division,
