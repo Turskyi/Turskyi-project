@@ -54,11 +54,8 @@ void main() {
         data: const MediaQueryData(size: justAboveThresholdSize),
         child: Builder(
           builder: (BuildContext context) {
-            // Debug print
-            print(
-              'Screen size just above threshold: ${MediaQuery.of(context).size.shortestSide}',
-            );
-            // Verify that isWide returns true for screens just above the threshold
+            // Verify that isWide returns true for screens just above the
+            // threshold.
             expect(isWide(context), isTrue);
             return Container();
           },
