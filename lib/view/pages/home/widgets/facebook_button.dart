@@ -44,13 +44,13 @@ class FacebookButton extends StatelessWidget {
             onPressed: () => model.onLaunchLink(Link.facebook.address),
             child: kIsWeb
                 ? Image.asset(
-              '${Configs.of(context).configs.imageAssents}'
+                    '${Configs.of(context).configs.imageAssents}'
                     'pic_facebook.png',
                     width: Dimens.widthFacebook,
                     fit: BoxFit.cover,
                   )
                 : SvgPicture.asset(
-              '${Configs.of(context).configs.imageAssents}'
+                    '${Configs.of(context).configs.imageAssents}'
                     'pic_facebook.svg',
                     width: Dimens.widthFacebook,
                     fit: BoxFit.cover,

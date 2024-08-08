@@ -1,7 +1,9 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
 [![Build & upload to GitHub pages](https://github.com/Turskyi/Turskyi-project/actions/workflows/web_ci.yml/badge.svg)](https://github.com/Turskyi/Turskyi-project/actions/workflows/web_ci.yml)
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
-<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/Turskyi/travelling_pro">
+[![codecov](https://codecov.io/gh/Turskyi/Turskyi-project/graph/badge.svg?token=9AFY7V0YP4)](https://codecov.io/gh/Turskyi/Turskyi-project)
+[![Code Quality](https://github.com/Turskyi/Turskyi-project/actions/workflows/code_quality_tests.yml/badge.svg)](https://github.com/Turskyi/Turskyi-project/actions/workflows/code_quality_tests.yml)
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/Turskyi/Turskyi-project">
 
 # Developer Dmytro Turskyi landing page
 
