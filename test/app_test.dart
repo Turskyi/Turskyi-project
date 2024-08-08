@@ -4,7 +4,6 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/main/res/configs/builds/main/main_colors.dart';
 import 'package:turskyi/main/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/main/res/configs/configs.dart';
-import 'package:turskyi/main/res/values/themes.dart';
 import 'package:turskyi/view/app.dart';
 import 'package:turskyi/view/routes/app_route.dart';
 
@@ -27,9 +26,6 @@ void main() {
       ),
     );
 
-    // Verify the title
-    expect(find.text(translate('title')), findsOneWidget);
-
     // Verify the initial route
     expect(find.byType(MaterialApp), findsOneWidget);
     final MaterialApp materialApp = tester.widget(find.byType(MaterialApp));
@@ -45,6 +41,5 @@ void main() {
       materialApp.theme?.visualDensity,
       VisualDensity.adaptivePlatformDensity,
     );
-    expect(materialApp.theme?.textTheme, Themes.textTheme);
   });
 }

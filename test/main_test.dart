@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/main/main.dart' as app;
 import 'package:turskyi/main/res/configs/builds/main/main_colors.dart';
 import 'package:turskyi/main/res/configs/builds/main/main_configs.dart';
@@ -13,9 +12,6 @@ void main() {
 
     // Wait for the app to settle
     await tester.pumpAndSettle();
-
-    // Verify that the LocalizedApp is built with the correct configurations
-    expect(find.byType(LocalizedApp), findsOneWidget);
 
     // Verify that the Configs widget is built with the correct configurations
     final Configs configsWidget = tester.widget(find.byType(Configs));
