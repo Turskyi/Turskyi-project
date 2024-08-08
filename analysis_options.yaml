@@ -7,6 +7,15 @@ analyzer:
 linter:
   rules:
     # ------ Disabling individual rules. ----- #
+    # Muting the `prefer_constructors_over_static_methods` linter rule is
+    # necessary here because:
+    #  1. The `of` method's purpose in
+    # `static Configs of(BuildContext context)` is to provide a statically
+    # accessible method to retrieve the inherited widget instance.
+    #  2. This pattern is widely used and recognized in Flutter's architecture
+    #     for managing inherited data.
+    #  3. Following the linter rule would contradict the best practices and
+    #     conventions established in the Flutter framework.
     prefer_constructors_over_static_methods: false
     avoid_web_libraries_in_flutter: false
     unsafe_html: false

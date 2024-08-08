@@ -23,8 +23,8 @@ import 'package:turskyi/view/util/screen.dart' as screen;
 
 /// [HomePage] class represents a view of a landing page.
 /// It extends [StatefulWidget] for the reason of using
-/// [TickerProviderStateMixin], which must be mixed onto 'StatefulWidget',
-/// because 'StatefulWidget' implement 'State<StatefulWidget>.
+/// [TickerProviderStateMixin], which must be mixed onto [StatefulWidget],
+/// because [StatefulWidget] implement `State<StatefulWidget>`.
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
@@ -157,6 +157,7 @@ class _HomePageState extends State<HomePage>
                                 bottom: Dimens.indent4,
                               ),
                               decoration: decorations.textDecoration,
+                              margin: const EdgeInsets.only(bottom: 4),
                               child: Text(
                                 '${translate('home.android')}'
                                 ' ${model.androidExperience}',

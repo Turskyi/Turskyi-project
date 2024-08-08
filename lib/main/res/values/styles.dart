@@ -60,5 +60,4 @@ class Styles {
   );
 
 // END: [TextStyle]s
-
 }
