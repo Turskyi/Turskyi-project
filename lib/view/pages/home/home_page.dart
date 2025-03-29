@@ -38,6 +38,13 @@ class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
   @override
+  void displayMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final bool isLarge = screen.isWide(context);
     return ChangeNotifierProvider<HomePresenter>(
@@ -66,237 +73,290 @@ class _HomePageState extends State<HomePage>
               builder: (
                 BuildContext context,
                 HomePresenter model,
-                Widget? gptLogo,
-              ) =>
-                  Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const FullNameText(),
-                  const OccupationWidget(),
-                  // build github, gists and linkedin hyperlinks
-                  Wrap(
-                    children: <Widget>[
-                      HyperlinkWidget(
-                        title: Link.github.title,
-                        onTap: () => model.onLaunchLink(Link.github.address),
-                      ),
-                      HyperlinkWidget(
-                        title: Link.gists.title,
-                        onTap: () => model.onLaunchLink(Link.gists.address),
-                      ),
-                      HyperlinkWidget(
-                        title: Link.linkedin.title,
-                        onTap: () => model.onLaunchLink(
-                          Link.linkedin.address,
+                Widget? gptLogo,) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const FullNameText(),
+                    const OccupationWidget(),
+                    // build github, gists and linkedin hyperlinks
+                    Wrap(
+                      children: <Widget>[
+                        HyperlinkWidget(
+                          title: Link.github.title,
+                          onTap: () => model.onLaunchLink(Link.github.address),
+                        ),
+                        HyperlinkWidget(
+                          title: Link.gists.title,
+                          onTap: () => model.onLaunchLink(Link.gists.address),
+                        ),
+                        HyperlinkWidget(
+                          title: Link.linkedin.title,
+                          onTap: () =>
+                              model.onLaunchLink(
+                                Link.linkedin.address,
+                              ),
+                        ),
+                      ],
+                    ),
+                    // build facebook and wishlist button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const GoodReadsButton(),
+                        const FacebookButton(),
+                        WishlistButtonWidget(
+                          dayCount: model.daysToBirthday,
+                          wishlistWidth: model.wishlistWidth,
+                          duration: model.expandDuration,
+                          onWishListButtonAnimate:
+                          model.onWishListButtonAnimate,
+                          onLaunchLink: () =>
+                              model.onLaunchLink(
+                                Link.myWishBoard.address,
+                              ),
+                          animationRotation: model.rotationAnimation,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                margin: const EdgeInsets.only(
+                                  top: Dimens.indent40,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: decorations.textDecoration,
+                                child: Text(
+                                  translate('home.experience'),
+                                  style: isLarge
+                                      ? Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      : Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleLarge,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: decorations.textDecoration,
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: Text(
+                                  '${translate('home.flutter')}'
+                                      ' ${model.flutterExperience}',
+                                  style: isLarge
+                                      ? Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      : Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleLarge,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: decorations.textDecoration,
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: Text(
+                                  '${translate('home.android')}'
+                                      ' ${model.androidExperience}',
+                                  style: isLarge
+                                      ? Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      : Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleLarge,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: Dimens.indent12,
+                                  right: Dimens.indent12,
+                                  bottom: Dimens.indent4,
+                                ),
+                                decoration: decorations.textDecoration,
+                                child: Text(
+                                  '${translate('home.total')}'
+                                      ' ${model.totalExperience}',
+                                  style: isLarge
+                                      ? Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      : Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleLarge,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (model.isLoading)
+                      const Padding(
+                        padding: EdgeInsets.all(Dimens.indent64),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black87,
+                            color: Colors.grey,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  // build facebook and wishlist button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const GoodReadsButton(),
-                      const FacebookButton(),
-                      WishlistButtonWidget(
-                        dayCount: model.daysToBirthday,
-                        wishlistWidth: model.wishlistWidth,
-                        duration: model.expandDuration,
-                        onWishListButtonAnimate: model.onWishListButtonAnimate,
-                        onLaunchLink: () => model.onLaunchLink(
-                          Link.myWishBoard.address,
-                        ),
-                        animationRotation: model.rotationAnimation,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: Dimens.indent12,
-                                right: Dimens.indent12,
-                                bottom: Dimens.indent4,
+                    Expanded(
+                      child: Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: SizedBox(
+                          height: 80.0,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              RawMaterialButton(
+                                onPressed: () =>
+                                    model.onLaunchLink(
+                                      Link.annaStore.address,
+                                    ),
+                                padding: const EdgeInsets.all(Dimens.indent8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    Dimens.buttonRadius,
+                                  ), // Square shape
+                                ),
+                                child: Image.asset(
+                                  '${Configs
+                                      .of(context)
+                                      .configs
+                                      .imageAssents}'
+                                      '${strings.nextJsIcon}',
+                                  height: Dimens.indent40,
+                                ),
                               ),
-                              margin: const EdgeInsets.only(
-                                top: Dimens.indent40,
-                                bottom: Dimens.indent4,
+                              RawMaterialButton(
+                                onPressed: () =>
+                                    model.onLaunchLink(
+                                      Link.laoziAi.address,
+                                    ),
+                                padding: const EdgeInsets.all(Dimens.indent8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    Dimens.buttonRadius,
+                                  ), // Square shape
+                                ),
+                                child: SvgPicture.asset(
+                                  '${Configs
+                                      .of(context)
+                                      .configs
+                                      .imageAssents}'
+                                      '${strings.geminiLogo}',
+                                  height: Dimens.indent64,
+                                ),
                               ),
-                              decoration: decorations.textDecoration,
-                              child: Text(
-                                translate('home.experience'),
-                                style: isLarge
-                                    ? Theme.of(context).textTheme.headlineMedium
-                                    : Theme.of(context).textTheme.titleLarge,
+                              RawMaterialButton(
+                                onPressed: () =>
+                                    model.onLaunchLink(
+                                      Link.politerai.address,
+                                    ),
+                                padding: const EdgeInsets.all(Dimens.indent8),
+                                shape: const CircleBorder(),
+                                child: gptLogo,
                               ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: Dimens.indent12,
-                                right: Dimens.indent12,
-                                bottom: Dimens.indent4,
+                              Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(
+                                    Dimens.buttonRadius,
+                                  ),
+                                  onTap: () =>
+                                      model.onLaunchLink(
+                                        Links.androidDeveloperAddress,
+                                      ),
+                                  child: Image.asset(
+                                    '${Configs
+                                        .of(context)
+                                        .configs
+                                        .imageAssents}'
+                                        '${strings.googlePlayLogo}',
+                                    color: Colors.white,
+                                    width: Dimens.indent140,
+                                  ),
+                                ),
                               ),
-                              decoration: decorations.textDecoration,
-                              margin: const EdgeInsets.only(bottom: 4),
-                              child: Text(
-                                '${translate('home.flutter')}'
-                                ' ${model.flutterExperience}',
-                                style: isLarge
-                                    ? Theme.of(context).textTheme.headlineMedium
-                                    : Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: Dimens.indent12,
-                                right: Dimens.indent12,
-                                bottom: Dimens.indent4,
-                              ),
-                              decoration: decorations.textDecoration,
-                              margin: const EdgeInsets.only(bottom: 4),
-                              child: Text(
-                                '${translate('home.android')}'
-                                ' ${model.androidExperience}',
-                                style: isLarge
-                                    ? Theme.of(context).textTheme.headlineMedium
-                                    : Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: Dimens.indent12,
-                                right: Dimens.indent12,
-                                bottom: Dimens.indent4,
-                              ),
-                              decoration: decorations.textDecoration,
-                              child: Text(
-                                '${translate('home.total')}'
-                                ' ${model.totalExperience}',
-                                style: isLarge
-                                    ? Theme.of(context).textTheme.headlineMedium
-                                    : Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (model.isLoading)
-                    const Padding(
-                      padding: EdgeInsets.all(Dimens.indent64),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.black87,
-                          color: Colors.grey,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
+                              // Determine if we should show game button.
+                              if (kIsWeb && isLarge)
+                                RawMaterialButton(
+                                  onPressed: () =>
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoute.game.path,
+                                      ),
+                                  padding:
+                                  const EdgeInsets.all(Dimens.indent20),
+                                  shape: const CircleBorder(),
+                                  child: SvgPicture.asset(
+                                    '${Configs
+                                        .of(context)
+                                        .configs
+                                        .imageAssents}'
+                                        '${strings.unityLogo}',
+                                    height: Dimens.indent40,
+                                  ),
+                                ),
+                              if (kIsWeb && isLarge)
+                                RawMaterialButton(
+                                  onPressed: () =>
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoute.unityGame.path,
+                                      ),
+                                  padding: const EdgeInsets.all(Dimens.indent8),
+                                  shape: const CircleBorder(),
+                                  child: Image.asset(
+                                    '${Configs
+                                        .of(context)
+                                        .configs
+                                        .imageAssents}'
+                                        '${strings.unity2dLogo}',
+                                    height: Dimens.indent64,
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          RawMaterialButton(
-                            onPressed: () => model.onLaunchLink(
-                              Link.annaStore.address,
-                            ),
-                            padding: const EdgeInsets.all(Dimens.indent8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.buttonRadius,
-                              ), // Square shape
-                            ),
-                            child: Image.asset(
-                              '${Configs.of(context).configs.imageAssents}'
-                              '${strings.nextJsIcon}',
-                              height: Dimens.indent40,
-                            ),
-                          ),
-                          RawMaterialButton(
-                            onPressed: () => model.onLaunchLink(
-                              Link.laoziAi.address,
-                            ),
-                            padding: const EdgeInsets.all(Dimens.indent8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.buttonRadius,
-                              ), // Square shape
-                            ),
-                            child: SvgPicture.asset(
-                              '${Configs.of(context).configs.imageAssents}'
-                              '${strings.geminiLogo}',
-                              height: Dimens.indent64,
-                            ),
-                          ),
-                          RawMaterialButton(
-                            onPressed: () => model.onLaunchLink(
-                              Link.politerai.address,
-                            ),
-                            padding: const EdgeInsets.all(Dimens.indent8),
-                            shape: const CircleBorder(),
-                            child: gptLogo,
-                          ),
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.buttonRadius,
-                              ),
-                              onTap: () => model.onLaunchLink(
-                                Links.androidDeveloperAddress,
-                              ),
-                              child: Image.asset(
-                                '${Configs.of(context).configs.imageAssents}'
-                                '${strings.googlePlayLogo}',
-                                color: Colors.white,
-                                width: Dimens.indent140,
-                              ),
-                            ),
-                          ),
-                          // Determine if we should show game button.
-                          if (kIsWeb && isLarge)
-                            RawMaterialButton(
-                              onPressed: () => Navigator.pushNamed(
-                                context,
-                                AppRoute.game.path,
-                              ),
-                              padding: const EdgeInsets.all(Dimens.indent20),
-                              shape: const CircleBorder(),
-                              child: SvgPicture.asset(
-                                '${Configs.of(context).configs.imageAssents}'
-                                '${strings.unityLogo}',
-                                height: Dimens.indent40,
-                              ),
-                            ),
-                          if (kIsWeb && isLarge)
-                            RawMaterialButton(
-                              onPressed: () => Navigator.pushNamed(
-                                context,
-                                AppRoute.unityGame.path,
-                              ),
-                              padding: const EdgeInsets.all(Dimens.indent8),
-                              shape: const CircleBorder(),
-                              child: Image.asset(
-                                '${Configs.of(context).configs.imageAssents}'
-                                '${strings.unity2dLogo}',
-                                height: Dimens.indent64,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              },
               child: Image.asset(
                 '${Configs.of(context).configs.imageAssents}'
                 '${strings.gpt}',
@@ -308,10 +368,4 @@ class _HomePageState extends State<HomePage>
       ),
     );
   }
-
-  @override
-  void displayMessage(String message) =>
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
 }

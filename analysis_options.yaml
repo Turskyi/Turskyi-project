@@ -18,7 +18,6 @@ linter:
     #     conventions established in the Flutter framework.
     prefer_constructors_over_static_methods: false
     avoid_web_libraries_in_flutter: false
-    unsafe_html: false
 
     # ------------------------------------- #
 
