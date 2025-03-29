@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
+import 'package:turskyi/res/values/dimens.dart';
 
 class HyperlinkWidget extends StatelessWidget {
   const HyperlinkWidget({

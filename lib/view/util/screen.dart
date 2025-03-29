@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
+import 'package:turskyi/res/values/dimens.dart';
 
 bool isWide(BuildContext context) {
   final double shortestSide = _getShortestSide(context);

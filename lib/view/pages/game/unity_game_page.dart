@@ -1,11 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:html';
 import 'dart:ui_web';
 
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/configs/configs.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
+import 'package:turskyi/res/configs/configs.dart';
+import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/res/values/strings.dart' as strings;
 
 /// [UnityGamePage] class represents a view of a game page
 class UnityGamePage extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/main/res/configs/builds/main/main_colors.dart';
-import 'package:turskyi/main/res/configs/builds/main/main_configs.dart';
-import 'package:turskyi/main/res/configs/configs.dart';
-import 'package:turskyi/main/res/language.dart';
+import 'package:turskyi/res/configs/builds/main/main_colors.dart';
+import 'package:turskyi/res/configs/builds/main/main_configs.dart';
+import 'package:turskyi/res/configs/configs.dart';
+import 'package:turskyi/res/language.dart';
 import 'package:turskyi/view/app.dart';
 
 /// Justification of using the 'async' after [main]

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/presenter/time.dart';
+import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';

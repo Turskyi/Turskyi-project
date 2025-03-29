@@ -1,4 +1,4 @@
-import 'package:turskyi/main/res/configs/builds/main/main_configs.dart';
+import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 
 ///[BaseConfigs] is an abstract class containing list of project dynamic values,
 /// which will be initialised in [MainConfigs] class.

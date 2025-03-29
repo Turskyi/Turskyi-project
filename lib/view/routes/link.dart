@@ -1,5 +1,5 @@
-import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
+import 'package:turskyi/res/values/strings.dart' as strings;
 
 enum Link {
   github,

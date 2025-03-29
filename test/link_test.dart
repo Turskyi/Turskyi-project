@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:turskyi/main/res/values/strings.dart' as strings;
 import 'package:turskyi/model/links.dart';
+import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/routes/link.dart';
 
 void main() {
