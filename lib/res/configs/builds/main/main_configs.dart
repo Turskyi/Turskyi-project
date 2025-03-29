@@ -1,4 +1,4 @@
-import 'package:turskyi/main/res/configs/base/base_configs.dart';
+import 'package:turskyi/res/configs/base/base_configs.dart';
 
 /// [MainConfigs] is a class containing list of project specific values
 class MainConfigs implements BaseConfigs {

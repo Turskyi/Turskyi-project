@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turskyi/main/res/configs/configs.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/radii.dart' as radii;
 import 'package:turskyi/presenter/home_presenter.dart';
+import 'package:turskyi/res/configs/configs.dart';
+import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/res/values/radii.dart' as radii;
 
 class WishlistButtonWidget extends StatelessWidget {
   const WishlistButtonWidget({

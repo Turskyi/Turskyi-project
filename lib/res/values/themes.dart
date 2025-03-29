@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/values/styles.dart';
+import 'package:turskyi/res/values/styles.dart';
 
 class Themes {
   static const TextTheme textTheme = TextTheme(

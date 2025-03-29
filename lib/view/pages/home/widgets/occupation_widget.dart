@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
+import 'package:turskyi/res/values/dimens.dart';
 
 /// Build title of the occupation
 class OccupationWidget extends StatelessWidget {

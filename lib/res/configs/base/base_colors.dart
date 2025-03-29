@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/configs/builds/main/main_colors.dart';
+import 'package:turskyi/res/configs/builds/main/main_colors.dart';
 
 /// [BaseColors] abstract class containing color variables which will be
 /// initialized in [MainColors] during launch depending on build configuration.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/main/res/values/dimens.dart';
-import 'package:turskyi/main/res/values/shadows.dart';
+import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/res/values/shadows.dart';
 
 /// Util class containing commonly used widget styles
 class Styles {

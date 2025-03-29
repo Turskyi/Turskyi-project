@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:turskyi/main/res/configs/base/base_colors.dart';
-import 'package:turskyi/main/res/configs/base/base_configs.dart';
-import 'package:turskyi/main/res/configs/builds/main/main_colors.dart';
-import 'package:turskyi/main/res/configs/builds/main/main_configs.dart';
+import 'package:turskyi/res/configs/base/base_colors.dart';
+import 'package:turskyi/res/configs/base/base_configs.dart';
+import 'package:turskyi/res/configs/builds/main/main_colors.dart';
+import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/view/app.dart';
 
 /// [Configs] is an object data class which contains configuration of the app
