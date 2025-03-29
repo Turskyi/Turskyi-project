@@ -1,0 +1,16 @@
+const String phoneScheme = 'tel';
+const String github = 'GitHub';
+const String gists = 'Gists';
+const String linkedin = 'LinkedIn';
+const String phoneNumber = '+14379852581';
+const String oneHundredPercent = '100%';
+const String noBorder = 'none';
+const String unityLogo = 'unity_logo.svg';
+const String geminiLogo = 'gemini.svg';
+const String unity2dLogo = 'unity_2d_logo.png';
+const String googlePlayLogo = 'pic_google_play_grey.png';
+const String homeBackground = 'bg_home.png';
+const String gpt = 'gpt.png';
+const String annaStoreTitle = 'AnArtist.Store';
+const String laoziAiTitle = 'Daoism - Laozi Ai Chatbot';
+const String nextJsIcon = 'nextjs_icon.png';
