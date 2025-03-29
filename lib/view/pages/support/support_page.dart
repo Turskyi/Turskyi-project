@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:turskyi/presenter/support_form_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/view/routes/app_route.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -22,8 +23,25 @@ class _SupportPageState extends State<SupportPage> {
       child: Scaffold(
         backgroundColor: Configs.of(context).colors.background,
         appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () => Navigator.of(context).popUntil(
+                ModalRoute.withName(AppRoute.home.path),
+              ),
+              borderRadius: BorderRadius.circular(100),
+              child: ClipOval(
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage(
+                    '${Configs.of(context).configs.imageAssents}logo.png',
+                  ),
+                ),
+              ),
+            ),
+          ),
           title: Text(
-            'Support',
+            'Developer Turskyi Support',
             style: TextStyle(
               color: Colors.white,
               fontSize: TextTheme.of(context).headlineLarge?.fontSize,
@@ -41,8 +59,11 @@ class _SupportPageState extends State<SupportPage> {
               maxWidth: 600,
             ),
             child: Consumer<SupportFormPresenter>(
-              builder:
-                  (BuildContext context, SupportFormPresenter presenter, _) {
+              builder: (
+                BuildContext context,
+                SupportFormPresenter presenter,
+                _,
+              ) {
                 return Form(
                   key: _formKey,
                   child: Column(
@@ -80,7 +101,7 @@ class _SupportPageState extends State<SupportPage> {
                       TextFormField(
                         style: const TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
-                          labelText: 'Email Address',
+                          labelText: 'Your Email Address',
                           labelStyle: TextStyle(color: Colors.white),
                           hintStyle: TextStyle(color: Colors.white60),
                           border: OutlineInputBorder(
