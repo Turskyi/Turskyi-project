@@ -40,11 +40,14 @@ class _SupportPageState extends State<SupportPage> {
               ),
             ),
           ),
-          title: Text(
-            'Developer Turskyi Support',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: TextTheme.of(context).headlineLarge?.fontSize,
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Developer Turskyi Support',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: TextTheme.of(context).headlineLarge?.fontSize,
+              ),
             ),
           ),
           elevation: Dimens.noElevation,
