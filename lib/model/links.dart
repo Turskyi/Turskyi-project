@@ -15,5 +15,5 @@ class Links {
 
   static const String politeraiAddress = 'https://www.politerai.com/';
   static const String laoziAiAddress = 'https://daoizm.online';
-  static const String annaStoreAddress = 'https://an-artist.store';
+  static const String annaStoreAddress = 'https://anartist.turskyi.com';
 }
