@@ -9,6 +9,7 @@ const String unityLogo = 'unity_logo.svg';
 const String geminiLogo = 'gemini.svg';
 const String unity2dLogo = 'unity_2d_logo.png';
 const String googlePlayLogo = 'pic_google_play_grey.png';
+const String appStoreLogo = 'pic_app_store_grey.png';
 const String homeBackground = 'bg_home.png';
 const String gpt = 'gpt.png';
 const String annaStoreTitle = 'AnArtist.Store';
