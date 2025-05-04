@@ -61,4 +61,4 @@ jobs:
           git checkout -b master
           git add --all
           git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push origin master
+          git push --force origin master
