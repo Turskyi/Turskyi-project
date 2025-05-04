@@ -26,6 +26,7 @@ jobs:
           ENV: ${{ secrets.ENV }}
 
       - run: flutter config --enable-web
+      - run: flutter clean
       - run: flutter pub get
       - run: dart run build_runner build --delete-conflicting-outputs
       - run: flutter build web
@@ -60,4 +61,4 @@ jobs:
           git checkout -b master
           git add --all
           git diff-index --quiet HEAD || git commit -m "Updated personal website"
-          git push --force origin master
+          git push origin master

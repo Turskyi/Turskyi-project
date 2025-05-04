@@ -77,6 +77,7 @@ class Footer extends StatelessWidget {
                     height: Dimens.indent64,
                   ),
                 ),
+                // Android developer button.
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -93,6 +94,28 @@ class Footer extends StatelessWidget {
                       '${strings.googlePlayLogo}',
                       color: Colors.white,
                       width: Dimens.indent140,
+                    ),
+                  ),
+                ),
+                // Apple developer button.
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(
+                        Dimens.buttonRadius,
+                      ),
+                      onTap: () => model.onLaunchLink(
+                        Links.appleDeveloperAddress,
+                      ),
+                      child: Image.asset(
+                        '${Configs.of(
+                          context,
+                        ).configs.imageAssents}'
+                        '${strings.appStoreLogo}',
+                        width: Dimens.indent140,
+                      ),
                     ),
                   ),
                 ),

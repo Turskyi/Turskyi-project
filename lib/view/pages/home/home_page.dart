@@ -46,22 +46,22 @@ class _HomePageState extends State<HomePage>
     final bool isLarge = screen.isWide(context);
     return ChangeNotifierProvider<HomePresenter>(
       create: (_) => HomePresenter(view: this, tickerProvider: this),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        floatingActionButton: const FabWidget(),
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            // Builds background image.
-            image: DecorationImage(
-              alignment: Alignment.topCenter,
-              fit: BoxFit.cover,
-              image: ExactAssetImage(
-                '${Configs.of(context).configs.imageAssents}'
-                '${strings.homeBackground}',
-              ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          // Builds background image.
+          image: DecorationImage(
+            alignment: Alignment.topCenter,
+            fit: BoxFit.cover,
+            image: ExactAssetImage(
+              '${Configs.of(context).configs.imageAssents}'
+              '${strings.homeBackground}',
             ),
           ),
-          child: Consumer<HomePresenter>(
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          floatingActionButton: const FabWidget(),
+          body: Consumer<HomePresenter>(
             builder: (
               BuildContext context,
               HomePresenter model,

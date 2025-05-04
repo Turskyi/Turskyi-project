@@ -12,6 +12,8 @@ class Links {
   static const String unityTwoDAddress = 'https://play-time-2d.web.app';
   static const String androidDeveloperAddress =
       'https://play.google.com/store/apps/dev?id=8790223297246728168';
+  static const String appleDeveloperAddress =
+      'https://apps.apple.com/us/developer/dmytro-turskyi/id1803716526';
 
   static const String politeraiAddress = 'https://www.politerai.com/';
   static const String laoziAiAddress = 'https://daoizm.online';
