@@ -116,15 +116,6 @@ class HomePresenter with ChangeNotifier {
   /// controls the width of the "suffix" of the title
   double get suffixWidth => _suffixWidth;
 
-  bool _showProjects = false;
-
-  bool get showProjects => _showProjects;
-
-  set showProjects(bool value) {
-    _showProjects = value;
-    notifyListeners();
-  }
-
   final List<Project> allProjects = <Project>[
     const Project(
       name: 'Daoism Laozi AI',
