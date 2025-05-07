@@ -36,7 +36,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
-  bool _showProjects = false;
+  final ValueNotifier<bool> _showProjectsNotifier = ValueNotifier<bool>(false);
+
   late final AnimationController _projectsController;
   late final Animation<Offset> _slideAnimation;
 
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final bool isLarge = screen.isWide(context);
+    final bool isLarge = screen.isLarge(context);
     return ChangeNotifierProvider<HomePresenter>(
       create: (_) => HomePresenter(view: this, tickerProvider: this),
       child: DecoratedBox(
@@ -91,17 +92,22 @@ class _HomePageState extends State<HomePage>
               if (isLarge)
                 Consumer<HomePresenter>(
                   builder: (__, HomePresenter model, _) {
-                    return ProjectsOverlayPanel(
-                      allProjects: model.allProjects,
-                      showProjects: _showProjects,
-                      controller: _projectsController,
-                      slideAnimation: _slideAnimation,
-                      onDismiss: _toggleProjects,
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: _showProjectsNotifier,
+                      builder: (BuildContext __, bool showProjects, _) {
+                        return ProjectsOverlayPanel(
+                          allProjects: model.allProjects,
+                          showProjects: showProjects,
+                          controller: _projectsController,
+                          slideAnimation: _slideAnimation,
+                          onDismiss: _toggleProjects,
+                        );
+                      },
                     );
                   },
                 ),
               Consumer<HomePresenter>(
-                builder: (BuildContext context, HomePresenter model, _) {
+                builder: (BuildContext __, HomePresenter model, _) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -161,12 +167,17 @@ class _HomePageState extends State<HomePage>
               if (!isLarge)
                 Consumer<HomePresenter>(
                   builder: (__, HomePresenter model, _) {
-                    return ProjectsOverlayPanel(
-                      allProjects: model.allProjects,
-                      showProjects: _showProjects,
-                      controller: _projectsController,
-                      slideAnimation: _slideAnimation,
-                      onDismiss: _toggleProjects,
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: _showProjectsNotifier,
+                      builder: (BuildContext context, bool showProjects, _) {
+                        return ProjectsOverlayPanel(
+                          allProjects: model.allProjects,
+                          showProjects: showProjects,
+                          controller: _projectsController,
+                          slideAnimation: _slideAnimation,
+                          onDismiss: _toggleProjects,
+                        );
+                      },
                     );
                   },
                 ),
@@ -184,13 +195,12 @@ class _HomePageState extends State<HomePage>
   }
 
   void _toggleProjects() {
-    setState(() {
-      _showProjects = !_showProjects;
-      if (_showProjects) {
-        _projectsController.forward();
-      } else {
-        _projectsController.reverse();
-      }
-    });
+    _showProjectsNotifier.value = !_showProjectsNotifier.value;
+
+    if (_showProjectsNotifier.value) {
+      _projectsController.forward();
+    } else {
+      _projectsController.reverse();
+    }
   }
 }

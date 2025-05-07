@@ -18,7 +18,7 @@ class ExperienceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLarge = screen.isWide(context);
+    final bool isLarge = screen.isLarge(context);
     return Row(
       children: <Widget>[
         Flexible(

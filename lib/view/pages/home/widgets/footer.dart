@@ -18,7 +18,7 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLarge = screen.isWide(context);
+    final bool isLarge = screen.isLarge(context);
     return Align(
       alignment: FractionalOffset.bottomCenter,
       child: SizedBox(

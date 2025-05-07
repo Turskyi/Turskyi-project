@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turskyi/res/values/dimens.dart';
 
-bool isWide(BuildContext context) {
+bool isLarge(BuildContext context) {
   final double shortestSide = _getShortestSide(context);
   final bool isLarge = shortestSide > Dimens.maxPortraitWidth;
   return isLarge;
