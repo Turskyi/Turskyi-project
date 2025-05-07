@@ -18,17 +18,25 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     Resend(apiKey: Env.resendApiKey);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: translate('title'),
       initialRoute: AppRoute.home.path,
       routes: router.routes,
       theme: ThemeData(
         primarySwatch: Configs.of(context).colors.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: Themes.textTheme,
+        textTheme: Themes.textTheme.apply(
+          // Light grey.
+          bodyColor: Colors.grey.shade300,
+          // Very light grey.
+          displayColor: Colors.grey.shade100,
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Configs.of(context).colors.primarySwatch.shade500,
-            foregroundColor: Colors.white,
+            // Medium grey.
+            backgroundColor: Colors.grey.shade500,
+            // Light grey for text.
+            foregroundColor: Colors.grey.shade100,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             textStyle: Themes.textTheme.titleMedium,
             shape: RoundedRectangleBorder(
@@ -36,12 +44,26 @@ class App extends StatelessWidget {
             ),
           ),
         ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.white,
+        textSelectionTheme: TextSelectionThemeData(
+          // Light grey.
+          cursorColor: Colors.grey.shade100,
+          // a bit darker grey.
+          selectionColor: Colors.grey.shade400,
+          //light grey.
+          selectionHandleColor: Colors.grey.shade100,
         ),
-        progressIndicatorTheme: const ProgressIndicatorThemeData(
-          color: Colors.white,
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          // Light grey for the indicator.
+          color: Colors.grey.shade100,
         ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          // Medium grey.
+          backgroundColor: Colors.grey.shade500,
+          // Light grey for icon.
+          foregroundColor: Colors.grey.shade100,
+        ),
+        // the background of the Scaffold.
+        scaffoldBackgroundColor: Colors.black,
       ),
     );
   }

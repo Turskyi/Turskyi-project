@@ -18,14 +18,14 @@ dependencies:
     sdk: flutter
 
   # display svg images
-  flutter_svg: ^2.0.17
+  flutter_svg: ^2.1.0
 
   #  localization
   flutter_translate: ^4.1.0
 
   #  add  ChangeNotifierProvider and Consumer for implementing MVP structural design pattern
-  mockito: ^5.4.5
-  provider: ^6.1.4
+  mockito: ^5.4.6
+  provider: ^6.1.5
 
   # For launching a new web page on web browser.
   resend: ^1.0.0
@@ -53,5 +53,6 @@ flutter:
     - assets/i18n/
     #    picture files
     - assets/images/
+    - assets/images/feature_graphics/
 
 

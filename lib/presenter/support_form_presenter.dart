@@ -48,7 +48,7 @@ class SupportFormPresenter extends ChangeNotifier {
     try {
       await _resend.sendEmail(
         from: 'Do Not Reply ${constants.appName} '
-            '<no-reply@${constants.resendDomain}>',
+            '<no-reply@${constants.resendEmailDomain}>',
         to: <String>[constants.supportEmail],
         subject: 'New Message Received from ${constants.appName}',
         text: 'New support message received:\n\n Email: $customerEmail\n\n'
@@ -57,7 +57,7 @@ class SupportFormPresenter extends ChangeNotifier {
 
       await _resend.sendEmail(
         from: 'Do Not Reply ${constants.appName} '
-            '<no-reply@${constants.resendDomain}>',
+            '<no-reply@${constants.resendEmailDomain}>',
         to: <String>[customerEmail],
         subject: 'Thank You! Your Support Message Has Been Sent to '
             '${constants.appName}',

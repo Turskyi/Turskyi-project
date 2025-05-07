@@ -47,6 +47,7 @@ class Footer extends StatelessWidget {
                     '${Configs.of(context).configs.imageAssents}'
                     '${strings.nextJsIcon}',
                     height: Dimens.indent40,
+                    color: Colors.white,
                   ),
                 ),
                 RawMaterialButton(
@@ -132,6 +133,10 @@ class Footer extends StatelessWidget {
                       '${Configs.of(context).configs.imageAssents}'
                       '${strings.unityLogo}',
                       height: Dimens.indent40,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 if (kIsWeb && isLarge)
@@ -162,6 +167,7 @@ class Footer extends StatelessWidget {
                   child: const Icon(
                     Icons.support_agent,
                     size: Dimens.indent40,
+                    color: Colors.white,
                   ),
                 ),
               ],

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
+import 'package:turskyi/model/platform_type.dart';
+import 'package:turskyi/model/project.dart';
 import 'package:turskyi/presenter/time.dart';
+import 'package:turskyi/res/constants.dart' as constants;
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -112,6 +115,49 @@ class HomePresenter with ChangeNotifier {
 
   /// controls the width of the "suffix" of the title
   double get suffixWidth => _suffixWidth;
+
+  bool _showProjects = false;
+
+  bool get showProjects => _showProjects;
+
+  set showProjects(bool value) {
+    _showProjects = value;
+    notifyListeners();
+  }
+
+  final List<Project> allProjects = <Project>[
+    const Project(
+      name: 'Daoism Laozi AI',
+      imageAssetPath:
+          '${constants.featureGraphicPath}daoism_laozi_ai-feature_graphic.png',
+      websiteUrl: 'https://daoizm.online',
+      supportedPlatforms: <PlatformType>{
+        PlatformType.ios,
+        PlatformType.android,
+        PlatformType.web,
+      },
+    ),
+    const Project(
+      name: 'Ethical Scanner',
+      imageAssetPath:
+          '${constants.featureGraphicPath}ethical_scanner-feature_graphic.png',
+      websiteUrl: 'https://ethical-scanner.${constants.developerDomain}',
+      supportedPlatforms: <PlatformType>{
+        PlatformType.ios,
+        PlatformType.android,
+      },
+    ),
+    const Project(
+      name: 'Мала Книжка (Тарас Шевченко)',
+      imageAssetPath:
+          '${constants.featureGraphicPath}mala_knyzhka-feature_graphic.png',
+      websiteUrl: 'https://mala-knyzhka.web.app',
+      supportedPlatforms: <PlatformType>{
+        PlatformType.android,
+        PlatformType.web,
+      },
+    ),
+  ];
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
