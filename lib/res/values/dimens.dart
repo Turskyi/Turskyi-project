@@ -91,6 +91,7 @@ class Dimens {
   static const double indent16 = 16.0;
   static const double indent20 = 20.0;
   static const double indent24 = 24.0;
+  static const double indent32 = 32.0;
   static const double indent40 = 40.0;
   static const double indent64 = 64.0;
   static const double indent140 = 140.0;

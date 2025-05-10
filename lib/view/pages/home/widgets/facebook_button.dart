@@ -26,7 +26,7 @@ class FacebookButton extends StatelessWidget {
         ],
       ),
       child: Consumer<HomePresenter>(
-        builder: (BuildContext context, HomePresenter model, Widget? child) {
+        builder: (BuildContext context, HomePresenter model, Widget? _) {
           return TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Configs.of(context).colors.colorFacebook,

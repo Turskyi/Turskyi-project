@@ -15,7 +15,7 @@ void main() {
         child: Builder(
           builder: (BuildContext context) {
             // Verify that isWide returns true for wide screens
-            expect(isWide(context), isTrue);
+            expect(isLarge(context), isTrue);
             return Container();
           },
         ),
@@ -35,7 +35,7 @@ void main() {
         child: Builder(
           builder: (BuildContext context) {
             // Verify that isWide returns false for narrow screens
-            expect(isWide(context), isFalse);
+            expect(isLarge(context), isFalse);
             return Container();
           },
         ),
@@ -56,7 +56,7 @@ void main() {
           builder: (BuildContext context) {
             // Verify that isWide returns true for screens just above the
             // threshold.
-            expect(isWide(context), isTrue);
+            expect(isLarge(context), isTrue);
             return Container();
           },
         ),
