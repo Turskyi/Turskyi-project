@@ -132,10 +132,11 @@ class HomePresenter with ChangeNotifier {
       name: 'Ethical Scanner',
       imageAssetPath:
           '${constants.featureGraphicPath}ethical_scanner-feature_graphic.png',
-      websiteUrl: 'https://ethical-scanner.${constants.developerDomain}',
+      websiteUrl: 'https://ethical-scanner.com',
       supportedPlatforms: <PlatformType>{
         PlatformType.ios,
         PlatformType.android,
+        PlatformType.web,
       },
     ),
     const Project(
