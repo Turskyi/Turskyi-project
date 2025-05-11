@@ -121,7 +121,6 @@ class _HomePageState extends State<HomePage>
                               children: <Widget>[
                                 const FullNameText(),
                                 const OccupationWidget(),
-                                // Build github, gists and linkedin hyperlinks.
                                 HyperlinkGroup(
                                   onLaunchLink: model.onLaunchLink,
                                   links: const <Link>[
@@ -130,7 +129,6 @@ class _HomePageState extends State<HomePage>
                                     Link.linkedin,
                                   ],
                                 ),
-
                                 const SocialButtonsRow(),
                                 ExperienceWidget(
                                   flutterExperience: model.flutterExperience,

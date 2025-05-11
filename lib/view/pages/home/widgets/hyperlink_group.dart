@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:turskyi/view/pages/home/widgets/hyperlink_widget.dart';
 import 'package:turskyi/view/routes/link.dart';
 
+/// Build github, gists and linkedin hyperlinks.
 class HyperlinkGroup extends StatelessWidget {
   const HyperlinkGroup({
     required this.onLaunchLink,
