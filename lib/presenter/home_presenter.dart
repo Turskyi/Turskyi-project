@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
+import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/platform_type.dart';
-import 'package:turskyi/model/project.dart';
 import 'package:turskyi/presenter/time.dart';
 import 'package:turskyi/res/constants.dart' as constants;
 import 'package:turskyi/res/values/dimens.dart';

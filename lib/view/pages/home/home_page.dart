@@ -85,7 +85,6 @@ class _HomePageState extends State<HomePage>
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          floatingActionButton: const FabWidget(),
           body: Stack(
             children: <Widget>[
               ProjectsButton(onPressed: _toggleProjects),
@@ -111,55 +110,61 @@ class _HomePageState extends State<HomePage>
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal:
-                              isLarge ? Dimens.indent24 : Dimens.indent12,
-                          vertical: Dimens.indent24,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            const FullNameText(),
-                            const OccupationWidget(),
-                            // Build github, gists and linkedin hyperlinks.
-                            HyperlinkGroup(
-                              onLaunchLink: model.onLaunchLink,
-                              links: const <Link>[
-                                Link.github,
-                                Link.gists,
-                                Link.linkedin,
-                              ],
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  isLarge ? Dimens.indent24 : Dimens.indent12,
+                              vertical:
+                                  isLarge ? Dimens.indent24 : Dimens.indent12,
                             ),
-
-                            // Build GoodReads, facebook and wishlist button.
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Column(
                               children: <Widget>[
-                                const GoodReadsButton(),
-                                const FacebookButton(),
-                                WishlistButtonWidget(
-                                  dayCount: model.daysToBirthday,
-                                  wishlistWidth: model.wishlistWidth,
-                                  duration: model.expandDuration,
-                                  onWishListButtonAnimate:
-                                      model.onWishListButtonAnimate,
-                                  onLaunchLink: () => model.onLaunchLink(
-                                    Link.myWishBoard.address,
-                                  ),
-                                  animationRotation: model.rotationAnimation,
+                                const FullNameText(),
+                                const OccupationWidget(),
+                                // Build github, gists and linkedin hyperlinks.
+                                HyperlinkGroup(
+                                  onLaunchLink: model.onLaunchLink,
+                                  links: const <Link>[
+                                    Link.github,
+                                    Link.gists,
+                                    Link.linkedin,
+                                  ],
                                 ),
+
+                                // Build GoodReads, facebook and wishlist button.
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    const GoodReadsButton(),
+                                    const FacebookButton(),
+                                    WishlistButtonWidget(
+                                      dayCount: model.daysToBirthday,
+                                      wishlistWidth: model.wishlistWidth,
+                                      duration: model.expandDuration,
+                                      onWishListButtonAnimate:
+                                          model.onWishListButtonAnimate,
+                                      onLaunchLink: () => model.onLaunchLink(
+                                        Link.myWishBoard.address,
+                                      ),
+                                      animationRotation:
+                                          model.rotationAnimation,
+                                    ),
+                                  ],
+                                ),
+                                ExperienceWidget(
+                                  flutterExperience: model.flutterExperience,
+                                  androidExperience: model.androidExperience,
+                                  totalExperience: model.totalExperience,
+                                ),
+                                if (model.isLoading) const LoadingIndicator(),
                               ],
                             ),
-                            ExperienceWidget(
-                              flutterExperience: model.flutterExperience,
-                              androidExperience: model.androidExperience,
-                              totalExperience: model.totalExperience,
-                            ),
-                            if (model.isLoading) const LoadingIndicator(),
-                          ],
+                          ),
                         ),
                       ),
-                      const Expanded(child: Footer()),
+                      const Footer(),
                     ],
                   );
                 },
@@ -183,6 +188,7 @@ class _HomePageState extends State<HomePage>
                 ),
             ],
           ),
+          floatingActionButton: const FabWidget(),
         ),
       ),
     );

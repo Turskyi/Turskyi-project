@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resend/resend.dart';
-import 'package:turskyi/model/support_form_data.dart';
+import 'package:turskyi/model/models/support_form_data.dart';
 import 'package:turskyi/res/constants.dart' as constants;
 
 class SupportFormPresenter extends ChangeNotifier {

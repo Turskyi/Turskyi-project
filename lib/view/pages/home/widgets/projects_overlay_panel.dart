@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/model/project.dart';
+import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/view/pages/home/widgets/project_tile.dart';
 
 class ProjectsOverlayPanel extends StatefulWidget {

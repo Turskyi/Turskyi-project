@@ -26,61 +26,63 @@ class WishlistButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePresenter>(
-      builder: (BuildContext context, HomePresenter model, Widget? button) {
-        if (kIsWeb) {
-          return MouseRegion(
-            onEnter: model.onWishListButtonAnimate,
-            onExit: model.onWishListButtonAnimate,
-            child: button,
-          );
-        } else {
-          return button ?? const SizedBox();
-        }
-      },
-      child: AnimatedContainer(
-        margin: const EdgeInsets.all(Dimens.indent8),
-        width: wishlistWidth,
-        height: Dimens.heightColorButton,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Configs.of(context).colors.colorWishlistWithOpacity,
-              blurRadius: Dimens.blurRadius,
-            ),
-          ],
-        ),
-        duration: duration,
-        child: TextButton(
-          onLongPress: onWishListButtonAnimate,
-          style: TextButton.styleFrom(
-            backgroundColor: Configs.of(context).colors.colorWishlist,
-            shape: RoundedRectangleBorder(borderRadius: radii.borderRadius),
-          ),
-          onPressed: onLaunchLink,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              RotationTransition(
-                turns: animationRotation,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                  child: Image.asset(
-                    '${Configs.of(context).configs.imageAssents}'
-                    'mywishboard_logo.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  dayCount,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white),
-                ),
+    return FittedBox(
+      child: Consumer<HomePresenter>(
+        builder: (BuildContext context, HomePresenter model, Widget? button) {
+          if (kIsWeb) {
+            return MouseRegion(
+              onEnter: model.onWishListButtonAnimate,
+              onExit: model.onWishListButtonAnimate,
+              child: button,
+            );
+          } else {
+            return button ?? const SizedBox();
+          }
+        },
+        child: AnimatedContainer(
+          margin: const EdgeInsets.all(Dimens.indent8),
+          width: wishlistWidth,
+          height: Dimens.heightColorButton,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Configs.of(context).colors.colorWishlistWithOpacity,
+                blurRadius: Dimens.blurRadius,
               ),
             ],
+          ),
+          duration: duration,
+          child: TextButton(
+            onLongPress: onWishListButtonAnimate,
+            style: TextButton.styleFrom(
+              backgroundColor: Configs.of(context).colors.colorWishlist,
+              shape: RoundedRectangleBorder(borderRadius: radii.borderRadius),
+            ),
+            onPressed: onLaunchLink,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RotationTransition(
+                  turns: animationRotation,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                    child: Image.asset(
+                      '${Configs.of(context).configs.imageAssents}'
+                      'mywishboard_logo.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    dayCount,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
