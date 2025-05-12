@@ -109,35 +109,33 @@ class _HomePageState extends State<HomePage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  isLarge ? Dimens.indent24 : Dimens.indent12,
-                              vertical:
-                                  isLarge ? Dimens.indent24 : Dimens.indent12,
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                const FullNameText(),
-                                const OccupationWidget(),
-                                HyperlinkGroup(
-                                  onLaunchLink: model.onLaunchLink,
-                                  links: const <Link>[
-                                    Link.github,
-                                    Link.gists,
-                                    Link.linkedin,
-                                  ],
-                                ),
-                                const SocialButtonsRow(),
-                                ExperienceWidget(
-                                  flutterExperience: model.flutterExperience,
-                                  androidExperience: model.androidExperience,
-                                  totalExperience: model.totalExperience,
-                                ),
-                                if (model.isLoading) const LoadingIndicator(),
-                              ],
-                            ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                                isLarge ? Dimens.indent24 : Dimens.indent12,
+                            vertical:
+                                isLarge ? Dimens.indent24 : Dimens.indent12,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              const FullNameText(),
+                              const OccupationWidget(),
+                              HyperlinkGroup(
+                                onLaunchLink: model.onLaunchLink,
+                                links: const <Link>[
+                                  Link.github,
+                                  Link.gists,
+                                  Link.linkedin,
+                                ],
+                              ),
+                              const SocialButtonsRow(),
+                              ExperienceWidget(
+                                flutterExperience: model.flutterExperience,
+                                androidExperience: model.androidExperience,
+                                totalExperience: model.totalExperience,
+                              ),
+                              if (model.isLoading) const LoadingIndicator(),
+                            ],
                           ),
                         ),
                       ),

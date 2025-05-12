@@ -22,65 +22,71 @@ class ExperienceWidget extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final TextStyle? textStyle =
         isLarge ? textTheme.headlineMedium : textTheme.titleLarge;
+    final double height = MediaQuery.of(context).size.height;
+
     return Row(
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(
-                left: Dimens.indent12,
-                right: Dimens.indent12,
-                bottom: Dimens.indent4,
+            if (height > 340)
+              Container(
+                padding: const EdgeInsets.only(
+                  left: Dimens.indent12,
+                  right: Dimens.indent12,
+                  bottom: Dimens.indent4,
+                ),
+                margin: const EdgeInsets.only(
+                  top: Dimens.indent40,
+                  bottom: Dimens.indent4,
+                ),
+                decoration: decorations.textDecoration,
+                child: Text(
+                  translate('home.experience'),
+                  style: textStyle,
+                ),
               ),
-              margin: const EdgeInsets.only(
-                top: Dimens.indent40,
-                bottom: Dimens.indent4,
+            if (height > 380)
+              Container(
+                padding: const EdgeInsets.only(
+                  left: Dimens.indent12,
+                  right: Dimens.indent12,
+                  bottom: Dimens.indent4,
+                ),
+                decoration: decorations.textDecoration,
+                margin: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${translate('home.flutter')} $flutterExperience',
+                  style: textStyle,
+                ),
               ),
-              decoration: decorations.textDecoration,
-              child: Text(
-                translate('home.experience'),
-                style: textStyle,
+            if (height > 414)
+              Container(
+                padding: const EdgeInsets.only(
+                  left: Dimens.indent12,
+                  right: Dimens.indent12,
+                  bottom: Dimens.indent4,
+                ),
+                decoration: decorations.textDecoration,
+                margin: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${translate('home.android')} $androidExperience',
+                  style: textStyle,
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: Dimens.indent12,
-                right: Dimens.indent12,
-                bottom: Dimens.indent4,
+            if (height > 444)
+              Container(
+                padding: const EdgeInsets.only(
+                  left: Dimens.indent12,
+                  right: Dimens.indent12,
+                  bottom: Dimens.indent4,
+                ),
+                decoration: decorations.textDecoration,
+                child: Text(
+                  '${translate('home.total')} $totalExperience',
+                  style: textStyle,
+                ),
               ),
-              decoration: decorations.textDecoration,
-              margin: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                '${translate('home.flutter')} $flutterExperience',
-                style: textStyle,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: Dimens.indent12,
-                right: Dimens.indent12,
-                bottom: Dimens.indent4,
-              ),
-              decoration: decorations.textDecoration,
-              margin: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                '${translate('home.android')} $androidExperience',
-                style: textStyle,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: Dimens.indent12,
-                right: Dimens.indent12,
-                bottom: Dimens.indent4,
-              ),
-              decoration: decorations.textDecoration,
-              child: Text(
-                '${translate('home.total')} $totalExperience',
-                style: textStyle,
-              ),
-            ),
           ],
         ),
       ],

@@ -140,6 +140,17 @@ class HomePresenter with ChangeNotifier {
       },
     ),
     const Project(
+      name: 'WeatherFit',
+      imageAssetPath:
+          '${constants.featureGraphicPath}weather_fit-feature_graphic.png',
+      websiteUrl: 'https://weather-fit.com',
+      supportedPlatforms: <PlatformType>{
+        PlatformType.ios,
+        PlatformType.android,
+        PlatformType.web,
+      },
+    ),
+    const Project(
       name: 'Мала Книжка (Тарас Шевченко)',
       imageAssetPath:
           '${constants.featureGraphicPath}mala_knyzhka-feature_graphic.png',
