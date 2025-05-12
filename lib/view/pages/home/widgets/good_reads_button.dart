@@ -11,32 +11,34 @@ class GoodReadsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePresenter>(
-      builder: (BuildContext context, HomePresenter model, Widget? image) {
-        return TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: const Color(0xFFE9E9E9),
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.indent16,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: radii.borderRadius,
-              side: const BorderSide(color: Color(0xFFD8D5C2)),
-            ),
+    return FittedBox(
+      child: Consumer<HomePresenter>(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.indent4),
+          child: Image.asset(
+            '${Configs.of(context).configs.imageAssents}'
+            'good_reads_logo.png',
+            width: 112.0,
           ),
-          onPressed: () => model.onLaunchLink(
-            Link.goodreads.address,
-          ),
-          child: image ?? const SizedBox(),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: Dimens.indent4),
-        child: Image.asset(
-          '${Configs.of(context).configs.imageAssents}'
-          'good_reads_logo.png',
-          width: 112.0,
         ),
+        builder: (BuildContext _, HomePresenter model, Widget? image) {
+          return TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xFFE9E9E9),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.indent16,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: radii.borderRadius,
+                side: const BorderSide(color: Color(0xFFD8D5C2)),
+              ),
+            ),
+            onPressed: () => model.onLaunchLink(
+              Link.goodreads.address,
+            ),
+            child: image ?? const SizedBox(),
+          );
+        },
       ),
     );
   }

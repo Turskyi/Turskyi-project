@@ -19,12 +19,17 @@ class ExperienceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isLarge = screen.isLarge(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final TextStyle? textStyle =
+        isLarge ? textTheme.headlineMedium : textTheme.titleLarge;
+    final double height = MediaQuery.of(context).size.height;
+
     return Row(
       children: <Widget>[
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (height > 340)
               Container(
                 padding: const EdgeInsets.only(
                   left: Dimens.indent12,
@@ -38,11 +43,10 @@ class ExperienceWidget extends StatelessWidget {
                 decoration: decorations.textDecoration,
                 child: Text(
                   translate('home.experience'),
-                  style: isLarge
-                      ? Theme.of(context).textTheme.headlineMedium
-                      : Theme.of(context).textTheme.titleLarge,
+                  style: textStyle,
                 ),
               ),
+            if (height > 380)
               Container(
                 padding: const EdgeInsets.only(
                   left: Dimens.indent12,
@@ -53,11 +57,10 @@ class ExperienceWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 4),
                 child: Text(
                   '${translate('home.flutter')} $flutterExperience',
-                  style: isLarge
-                      ? Theme.of(context).textTheme.headlineMedium
-                      : Theme.of(context).textTheme.titleLarge,
+                  style: textStyle,
                 ),
               ),
+            if (height > 414)
               Container(
                 padding: const EdgeInsets.only(
                   left: Dimens.indent12,
@@ -68,11 +71,10 @@ class ExperienceWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 4),
                 child: Text(
                   '${translate('home.android')} $androidExperience',
-                  style: isLarge
-                      ? Theme.of(context).textTheme.headlineMedium
-                      : Theme.of(context).textTheme.titleLarge,
+                  style: textStyle,
                 ),
               ),
+            if (height > 444)
               Container(
                 padding: const EdgeInsets.only(
                   left: Dimens.indent12,
@@ -82,13 +84,10 @@ class ExperienceWidget extends StatelessWidget {
                 decoration: decorations.textDecoration,
                 child: Text(
                   '${translate('home.total')} $totalExperience',
-                  style: isLarge
-                      ? Theme.of(context).textTheme.headlineMedium
-                      : Theme.of(context).textTheme.titleLarge,
+                  style: textStyle,
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ],
     );

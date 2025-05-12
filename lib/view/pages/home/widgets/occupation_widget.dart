@@ -3,6 +3,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/res/values/dimens.dart';
+import 'package:turskyi/view/util/screen.dart' as screen;
 
 /// Build title of the occupation
 class OccupationWidget extends StatelessWidget {
@@ -10,11 +11,28 @@ class OccupationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLarge = screen.isLarge(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final double? fontSize = isLarge
+        ? textTheme.headlineSmall?.fontSize
+        : textTheme.titleLarge?.fontSize;
     return Padding(
       padding: const EdgeInsets.only(top: Dimens.indent4),
       child: Consumer<HomePresenter>(
-        builder:
-            (BuildContext context, HomePresenter model, Widget? homeTitle) {
+        child: Text(
+          translate('home.title'),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis,
+            fontSize: fontSize,
+          ),
+        ),
+        builder: (
+          BuildContext context,
+          HomePresenter model,
+          Widget? homeTitle,
+        ) {
           return FadeTransition(
             opacity: model.curvedAnimation,
             child: MouseRegion(
@@ -26,16 +44,14 @@ class OccupationWidget extends StatelessWidget {
                   AnimatedContainer(
                     width: model.suffixWidth,
                     duration: model.expandDuration,
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: Dimens.indent4),
                     child: Text(
                       translate('home.suffix_title'),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis,
-                        fontSize: Theme.of(
-                          context,
-                        ).textTheme.headlineSmall?.fontSize,
+                        fontSize: fontSize,
                       ),
                     ),
                   ),
@@ -45,15 +61,6 @@ class OccupationWidget extends StatelessWidget {
             ),
           );
         },
-        child: Text(
-          translate('home.title'),
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            overflow: TextOverflow.ellipsis,
-            fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
-          ),
-        ),
       ),
     );
   }

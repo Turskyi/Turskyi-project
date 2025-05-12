@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/platform_type.dart';
-import 'package:turskyi/model/project.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectTile extends StatelessWidget {

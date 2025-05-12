@@ -7,16 +7,14 @@ import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
 import 'package:turskyi/view/pages/home/widgets/experience_widget.dart';
 import 'package:turskyi/view/pages/home/widgets/fab_widget.dart';
-import 'package:turskyi/view/pages/home/widgets/facebook_button.dart';
 import 'package:turskyi/view/pages/home/widgets/footer.dart';
 import 'package:turskyi/view/pages/home/widgets/full_name_text.dart';
-import 'package:turskyi/view/pages/home/widgets/good_reads_button.dart';
 import 'package:turskyi/view/pages/home/widgets/hyperlink_group.dart';
 import 'package:turskyi/view/pages/home/widgets/loading_indicator.dart';
 import 'package:turskyi/view/pages/home/widgets/occupation_widget.dart';
 import 'package:turskyi/view/pages/home/widgets/projects_button.dart';
 import 'package:turskyi/view/pages/home/widgets/projects_overlay_panel.dart';
-import 'package:turskyi/view/pages/home/widgets/wishlist_button_widget.dart';
+import 'package:turskyi/view/pages/home/widgets/social_buttons_row.dart';
 import 'package:turskyi/view/routes/link.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;
 
@@ -85,7 +83,6 @@ class _HomePageState extends State<HomePage>
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          floatingActionButton: const FabWidget(),
           body: Stack(
             children: <Widget>[
               ProjectsButton(onPressed: _toggleProjects),
@@ -111,55 +108,38 @@ class _HomePageState extends State<HomePage>
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal:
-                              isLarge ? Dimens.indent24 : Dimens.indent12,
-                          vertical: Dimens.indent24,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            const FullNameText(),
-                            const OccupationWidget(),
-                            // Build github, gists and linkedin hyperlinks.
-                            HyperlinkGroup(
-                              onLaunchLink: model.onLaunchLink,
-                              links: const <Link>[
-                                Link.github,
-                                Link.gists,
-                                Link.linkedin,
-                              ],
-                            ),
-
-                            // Build GoodReads, facebook and wishlist button.
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const GoodReadsButton(),
-                                const FacebookButton(),
-                                WishlistButtonWidget(
-                                  dayCount: model.daysToBirthday,
-                                  wishlistWidth: model.wishlistWidth,
-                                  duration: model.expandDuration,
-                                  onWishListButtonAnimate:
-                                      model.onWishListButtonAnimate,
-                                  onLaunchLink: () => model.onLaunchLink(
-                                    Link.myWishBoard.address,
-                                  ),
-                                  animationRotation: model.rotationAnimation,
-                                ),
-                              ],
-                            ),
-                            ExperienceWidget(
-                              flutterExperience: model.flutterExperience,
-                              androidExperience: model.androidExperience,
-                              totalExperience: model.totalExperience,
-                            ),
-                            if (model.isLoading) const LoadingIndicator(),
-                          ],
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                                isLarge ? Dimens.indent24 : Dimens.indent12,
+                            vertical:
+                                isLarge ? Dimens.indent24 : Dimens.indent12,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              const FullNameText(),
+                              const OccupationWidget(),
+                              HyperlinkGroup(
+                                onLaunchLink: model.onLaunchLink,
+                                links: const <Link>[
+                                  Link.github,
+                                  Link.gists,
+                                  Link.linkedin,
+                                ],
+                              ),
+                              const SocialButtonsRow(),
+                              ExperienceWidget(
+                                flutterExperience: model.flutterExperience,
+                                androidExperience: model.androidExperience,
+                                totalExperience: model.totalExperience,
+                              ),
+                              if (model.isLoading) const LoadingIndicator(),
+                            ],
+                          ),
                         ),
                       ),
-                      const Expanded(child: Footer()),
+                      const Footer(),
                     ],
                   );
                 },
@@ -183,6 +163,7 @@ class _HomePageState extends State<HomePage>
                 ),
             ],
           ),
+          floatingActionButton: const FabWidget(),
         ),
       ),
     );

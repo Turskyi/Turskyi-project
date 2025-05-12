@@ -20,8 +20,10 @@ class ProjectsButton extends StatelessWidget {
                 backgroundColor: Colors.black.withAlpha(25),
                 foregroundColor: Colors.grey.shade300,
                 side: BorderSide(color: Colors.grey.shade300),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.indent16,
+                  vertical: 10,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

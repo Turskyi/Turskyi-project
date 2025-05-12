@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
+import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/platform_type.dart';
-import 'package:turskyi/model/project.dart';
 import 'package:turskyi/presenter/time.dart';
 import 'package:turskyi/res/constants.dart' as constants;
 import 'package:turskyi/res/values/dimens.dart';
@@ -133,6 +133,17 @@ class HomePresenter with ChangeNotifier {
       imageAssetPath:
           '${constants.featureGraphicPath}ethical_scanner-feature_graphic.png',
       websiteUrl: 'https://ethical-scanner.com',
+      supportedPlatforms: <PlatformType>{
+        PlatformType.ios,
+        PlatformType.android,
+        PlatformType.web,
+      },
+    ),
+    const Project(
+      name: 'WeatherFit',
+      imageAssetPath:
+          '${constants.featureGraphicPath}weather_fit-feature_graphic.png',
+      websiteUrl: 'https://weather-fit.com',
       supportedPlatforms: <PlatformType>{
         PlatformType.ios,
         PlatformType.android,
