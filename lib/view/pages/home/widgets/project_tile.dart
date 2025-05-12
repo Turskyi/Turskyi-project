@@ -21,7 +21,7 @@ class ProjectTile extends StatelessWidget {
       begin: removing ? Offset.zero : const Offset(1, 0),
       end: removing ? const Offset(1, 0) : Offset.zero,
     );
-
+    const double verticalPadding = 8.0;
     return SlideTransition(
       position: slideTween.animate(
         CurvedAnimation(parent: animation, curve: Curves.easeInOut),
@@ -29,7 +29,12 @@ class ProjectTile extends StatelessWidget {
       child: FadeTransition(
         opacity: animation,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.fromLTRB(
+            20.0,
+            verticalPadding,
+            16.0,
+            verticalPadding,
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

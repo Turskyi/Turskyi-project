@@ -63,7 +63,6 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         width: 300,
-                        padding: const EdgeInsets.all(12),
                         color: Colors.transparent,
                         child: AnimatedList(
                           key: _listKey,
