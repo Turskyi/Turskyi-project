@@ -46,3 +46,4 @@ app.*.map.json
 /env.g.dart
 env.g.dart
 coverage
+coverage_report
