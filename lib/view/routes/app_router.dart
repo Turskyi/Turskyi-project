@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/view/pages/game/game_page.dart';
-import 'package:turskyi/view/pages/game/unity_game_page.dart';
+import 'package:turskyi/view/pages/game/unity_three_d_game_page.dart';
+import 'package:turskyi/view/pages/game/unity_two_d_game_page.dart';
 import 'package:turskyi/view/pages/home/home_page.dart';
 import 'package:turskyi/view/pages/support/support_page.dart';
 import 'package:turskyi/view/routes/app_route.dart';
@@ -9,8 +9,8 @@ import 'package:turskyi/view/routes/app_route.dart';
 Map<String, WidgetBuilder> get routes {
   return <String, WidgetBuilder>{
     AppRoute.home.path: (_) => const HomePage(),
-    AppRoute.game.path: (_) => const GamePage(),
-    AppRoute.unityGame.path: (_) => const UnityGamePage(),
+    AppRoute.game.path: (_) => const UnityThreeDGamePage(),
+    AppRoute.unityGame.path: (_) => const UnityTwoDGamePage(),
     AppRoute.support.path: (_) => const SupportPage(),
   };
 }
