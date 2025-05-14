@@ -4,13 +4,15 @@ class Project {
   const Project({
     required this.name,
     required this.imageAssetPath,
-    required this.websiteUrl,
+    required this.primaryWebsiteUrl,
+    required this.fallbackWebsiteUrl,
     required this.supportedPlatforms,
   });
 
   final String name;
   final String imageAssetPath;
-  final String websiteUrl;
+  final String primaryWebsiteUrl;
+  final String fallbackWebsiteUrl;
   final Set<PlatformType> supportedPlatforms;
 
   bool get isUniversal {

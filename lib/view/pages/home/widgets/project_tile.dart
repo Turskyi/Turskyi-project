@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/platform_type.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:turskyi/presenter/home_presenter.dart';
 
 class ProjectTile extends StatelessWidget {
   const ProjectTile({
@@ -53,7 +54,11 @@ class ProjectTile extends StatelessWidget {
               color: Colors.black.withValues(alpha: 0.001),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () => launchUrl(Uri.parse(project.websiteUrl)),
+                onTap: () {
+                  context.read<HomePresenter>().checkAndLaunchProjectWebsite(
+                        project,
+                      );
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Stack(

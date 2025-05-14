@@ -23,8 +23,11 @@ dependencies:
   #  localization
   flutter_translate: ^4.1.0
 
-  #  add  ChangeNotifierProvider and Consumer for implementing MVP structural design pattern
+  http: ^1.4.0
   mockito: ^5.4.6
+
+  #  Add  ChangeNotifierProvider and Consumer for implementing MVP structural
+  #  design pattern.
   provider: ^6.1.5
 
   # For launching a new web page on web browser.
