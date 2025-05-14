@@ -29,7 +29,9 @@ The Flutter project for supporting personal website
   [GitHub Pages](https://pages.github.com/) after every push to the `master`
   branch;
 
-- Web content hosting and a domain: [turskyi.com](https://turskyi.com);
+- Web content hosting and a domain: [turskyi.com](https://turskyi.com). The
+  original site is hosted on GitHub Pages at
+  [turskyi.github.io](https://turskyi.github.io).
 
 - Generated release build https://github.com/Turskyi/turskyi.github.io;
 

@@ -1,10 +1,12 @@
+import 'dart:io' show HttpStatus;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:http/http.dart' as http;
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/model/models/project.dart';
-import 'package:turskyi/model/platform_type.dart';
+import 'package:turskyi/model/project_data_source.dart';
 import 'package:turskyi/presenter/time.dart';
-import 'package:turskyi/res/constants.dart' as constants;
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -18,8 +20,10 @@ class HomePresenter with ChangeNotifier {
   HomePresenter({
     required HomeView view,
     required TickerProvider tickerProvider,
+    required ProjectDataSource projectDataSource,
   }) {
     _view = view;
+    _projectDataSource = projectDataSource;
     _fadeAnimationController = AnimationController(
       duration: Duration(seconds: Time.fade.value),
       vsync: tickerProvider,
@@ -53,15 +57,15 @@ class HomePresenter with ChangeNotifier {
   }
 
   late HomeView _view;
-
+  late ProjectDataSource _projectDataSource;
   late final Animation<double> _rotationAnimation;
-
-  /// controls degree of the rotation
-  Animation<double> get rotationAnimation => _rotationAnimation;
 
   late AnimationController _fadeAnimationController;
   late AnimationController _rotationAnimationController;
   late CurvedAnimation _curvedAnimation;
+
+  /// Controls degree of the rotation.
+  Animation<double> get rotationAnimation => _rotationAnimation;
 
   /// [curvedAnimation] is a variable which storing [_fadeAnimationController]
   /// and type of [Curves]
@@ -116,51 +120,7 @@ class HomePresenter with ChangeNotifier {
   /// controls the width of the "suffix" of the title
   double get suffixWidth => _suffixWidth;
 
-  final List<Project> allProjects = <Project>[
-    const Project(
-      name: 'Daoism Laozi AI',
-      imageAssetPath:
-          '${constants.featureGraphicPath}daoism_laozi_ai-feature_graphic.png',
-      websiteUrl: 'https://daoizm.online',
-      supportedPlatforms: <PlatformType>{
-        PlatformType.ios,
-        PlatformType.android,
-        PlatformType.web,
-      },
-    ),
-    const Project(
-      name: 'Ethical Scanner',
-      imageAssetPath:
-          '${constants.featureGraphicPath}ethical_scanner-feature_graphic.png',
-      websiteUrl: 'https://ethical-scanner.com',
-      supportedPlatforms: <PlatformType>{
-        PlatformType.ios,
-        PlatformType.android,
-        PlatformType.web,
-      },
-    ),
-    const Project(
-      name: 'WeatherFit',
-      imageAssetPath:
-          '${constants.featureGraphicPath}weather_fit-feature_graphic.png',
-      websiteUrl: 'https://weather-fit.com',
-      supportedPlatforms: <PlatformType>{
-        PlatformType.ios,
-        PlatformType.android,
-        PlatformType.web,
-      },
-    ),
-    const Project(
-      name: 'Мала Книжка (Тарас Шевченко)',
-      imageAssetPath:
-          '${constants.featureGraphicPath}mala_knyzhka-feature_graphic.png',
-      websiteUrl: 'https://mala-knyzhka.web.app',
-      supportedPlatforms: <PlatformType>{
-        PlatformType.android,
-        PlatformType.web,
-      },
-    ),
-  ];
+  List<Project> get allProjects => _projectDataSource.allProjects;
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
@@ -257,6 +217,44 @@ class HomePresenter with ChangeNotifier {
       path: strings.phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  Future<void> checkAndLaunchProjectWebsite(Project project) async {
+    final String primaryUrl = project.primaryWebsiteUrl;
+    final String fallbackUrl = project.fallbackWebsiteUrl;
+
+    try {
+      final http.Response response = await http.head(Uri.parse(primaryUrl));
+
+      if (response.statusCode == HttpStatus.ok) {
+        // Website is likely active and serving content.
+        await _launchUrl(primaryUrl);
+      } else {
+        // Website might not be active, or returned an error.
+        await _launchUrl(fallbackUrl);
+      }
+    } catch (e) {
+      // An error occurred during the HTTP request (e.g., network issue, domain
+      // not resolving).
+      debugPrint('HTTP error checking $primaryUrl: $e');
+      await _launchUrl(fallbackUrl);
+      _view.displayMessage(
+        "Couldn't reach the main website. Opening fallback URL.",
+      );
+    }
+  }
+
+  /// Launches a given URL.
+  /// Displays an error message if the URL cannot be launched.
+  Future<void> _launchUrl(String url) async {
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      // Handle potential errors during URL launching (less common than HTTP
+      // errors, but good to be safe)
+      debugPrint('Error launching URL $url: $e');
+      _view.displayMessage("Couldn't open the link: $url");
+    }
   }
 
   @override
