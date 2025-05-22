@@ -8,11 +8,11 @@ class ProjectDataSource {
   List<Project> get allProjects {
     return <Project>[
       const Project(
-        name: 'Daoism - Laozi AI',
+        name: 'Ethical Scanner',
         imageAssetPath: '${constants.featureGraphicPath}'
-            'daoism_laozi_ai-feature_graphic.png',
-        primaryWebsiteUrl: 'https://daoizm.online',
-        fallbackWebsiteUrl: 'https://laozi-chatbot.vercel.app',
+            'ethical_scanner-feature_graphic.png',
+        primaryWebsiteUrl: 'https://ethical-scanner.com',
+        fallbackWebsiteUrl: 'https://ethical-scanner-web.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
@@ -20,11 +20,23 @@ class ProjectDataSource {
         },
       ),
       const Project(
-        name: 'Ethical Scanner',
+        name: 'Life-Coaching AI',
         imageAssetPath: '${constants.featureGraphicPath}'
-            'ethical_scanner-feature_graphic.png',
-        primaryWebsiteUrl: 'https://ethical-scanner.com',
-        fallbackWebsiteUrl: 'ethical-scanner-web.vercel.app',
+            'life-coaching_ai-feature_graphic.png',
+        primaryWebsiteUrl: 'https://lifecoach.turskyi.com',
+        fallbackWebsiteUrl: 'https://life-coaching-ai.vercel.app',
+        supportedPlatforms: <PlatformType>{
+          PlatformType.ios,
+          PlatformType.android,
+          PlatformType.web,
+        },
+      ),
+      const Project(
+        name: 'Daoism - Laozi AI',
+        imageAssetPath: '${constants.featureGraphicPath}'
+            'daoism_laozi_ai-feature_graphic.png',
+        primaryWebsiteUrl: 'https://daoizm.online',
+        fallbackWebsiteUrl: 'https://laozi-chatbot.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
