@@ -1,8 +1,9 @@
-import 'dart:io' show HttpStatus;
+import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:http/http.dart' as http;
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/project_data_source.dart';
@@ -222,21 +223,61 @@ class HomePresenter with ChangeNotifier {
   Future<void> checkAndLaunchProjectWebsite(Project project) async {
     final String primaryUrl = project.primaryWebsiteUrl;
     final String fallbackUrl = project.fallbackWebsiteUrl;
+    final Dio dio = Dio();
 
     try {
-      final http.Response response = await http.head(Uri.parse(primaryUrl));
+      final Response<void> response = await dio.head(primaryUrl);
 
       if (response.statusCode == HttpStatus.ok) {
-        // Website is likely active and serving content.
         await _launchUrl(primaryUrl);
       } else {
-        // Website might not be active, or returned an error.
+        if (kDebugMode) {
+          debugPrint('Unexpected status: ${response.statusCode}');
+        }
         await _launchUrl(fallbackUrl);
       }
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        debugPrint('Dio error while checking $primaryUrl:');
+        debugPrint('Type: ${e.type}');
+        debugPrint('Message: ${e.message}');
+        debugPrint('Error: ${e.error}');
+        debugPrint('Response: ${e.response}');
+      }
+
+      if (e.type == DioExceptionType.connectionError) {
+        try {
+          //TODO: migrate website from github pages somewhere we can set up a
+          // serverless backend, until then use this workaround.
+          final Response<void> response = await dio.head(
+            'https://cors-anywhere.com/$primaryUrl',
+          );
+
+          if (response.statusCode == HttpStatus.ok) {
+            await _launchUrl(primaryUrl);
+          } else {
+            if (kDebugMode) {
+              debugPrint('Unexpected status: ${response.statusCode}');
+            }
+            await _launchUrl(fallbackUrl);
+          }
+        } on DioException catch (_) {
+          await _launchUrl(fallbackUrl);
+          _view.displayMessage(
+            "Couldn't reach the main website. Opening fallback URL.",
+          );
+        }
+      } else {
+        await _launchUrl(fallbackUrl);
+        _view.displayMessage(
+          "Couldn't reach the main website. Opening fallback URL.",
+        );
+      }
     } catch (e) {
-      // An error occurred during the HTTP request (e.g., network issue, domain
-      // not resolving).
-      debugPrint('HTTP error checking $primaryUrl: $e');
+      if (kDebugMode) {
+        debugPrint('Unexpected error: $e');
+      }
+
       await _launchUrl(fallbackUrl);
       _view.displayMessage(
         "Couldn't reach the main website. Opening fallback URL.",
