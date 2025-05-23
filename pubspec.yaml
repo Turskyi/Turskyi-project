@@ -11,6 +11,7 @@ environment:
   sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
+  dio: ^5.8.0+1
   email_validator: ^3.0.0
   envied: ^1.1.1
   envied_generator: ^1.1.1
@@ -23,7 +24,6 @@ dependencies:
   #  localization
   flutter_translate: ^4.1.0
 
-  http: ^1.4.0
   mockito: ^5.4.6
 
   #  Add ChangeNotifierProvider and Consumer for implementing the MVP structural
