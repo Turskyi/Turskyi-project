@@ -29,10 +29,50 @@ class Footer extends StatelessWidget {
             HomePresenter model,
             _,
           ) {
+            final String imageAssents = Configs.of(
+              context,
+            ).configs.imageAssents;
             return ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               children: <Widget>[
+                // Apple developer button.
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(
+                        Dimens.buttonRadius,
+                      ),
+                      onTap: () => model.onLaunchLink(
+                        Links.appleDeveloperAddress,
+                      ),
+                      child: Image.asset(
+                        '$imageAssents${strings.appStoreLogo}',
+                        width: Dimens.indent140,
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Android developer button.
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(
+                      Dimens.buttonRadius,
+                    ),
+                    onTap: () => model.onLaunchLink(
+                      Links.androidDeveloperAddress,
+                    ),
+                    child: Image.asset(
+                      '$imageAssents${strings.googlePlayLogo}',
+                      color: Colors.white,
+                      width: Dimens.indent140,
+                    ),
+                  ),
+                ),
                 RawMaterialButton(
                   onPressed: () => model.onLaunchLink(
                     Link.annaStore.address,
@@ -44,8 +84,7 @@ class Footer extends StatelessWidget {
                     ), // Square shape
                   ),
                   child: Image.asset(
-                    '${Configs.of(context).configs.imageAssents}'
-                    '${strings.nextJsIcon}',
+                    '$imageAssents${strings.nextJsIcon}',
                     height: Dimens.indent40,
                     color: Colors.white,
                   ),
@@ -61,8 +100,7 @@ class Footer extends StatelessWidget {
                     ), // Square shape
                   ),
                   child: SvgPicture.asset(
-                    '${Configs.of(context).configs.imageAssents}'
-                    '${strings.geminiLogo}',
+                    '$imageAssents${strings.geminiLogo}',
                     height: Dimens.indent64,
                   ),
                 ),
@@ -73,53 +111,11 @@ class Footer extends StatelessWidget {
                   padding: const EdgeInsets.all(Dimens.indent8),
                   shape: const CircleBorder(),
                   child: Image.asset(
-                    '${Configs.of(context).configs.imageAssents}'
-                    '${strings.gpt}',
+                    '$imageAssents${strings.gpt}',
                     height: Dimens.indent64,
                   ),
                 ),
-                // Android developer button.
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(
-                      Dimens.buttonRadius,
-                    ),
-                    onTap: () => model.onLaunchLink(
-                      Links.androidDeveloperAddress,
-                    ),
-                    child: Image.asset(
-                      '${Configs.of(
-                        context,
-                      ).configs.imageAssents}'
-                      '${strings.googlePlayLogo}',
-                      color: Colors.white,
-                      width: Dimens.indent140,
-                    ),
-                  ),
-                ),
-                // Apple developer button.
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(
-                        Dimens.buttonRadius,
-                      ),
-                      onTap: () => model.onLaunchLink(
-                        Links.appleDeveloperAddress,
-                      ),
-                      child: Image.asset(
-                        '${Configs.of(
-                          context,
-                        ).configs.imageAssents}'
-                        '${strings.appStoreLogo}',
-                        width: Dimens.indent140,
-                      ),
-                    ),
-                  ),
-                ),
+
                 // Determine if we should show game button.
                 if (kIsWeb && isLarge)
                   RawMaterialButton(
@@ -130,8 +126,7 @@ class Footer extends StatelessWidget {
                     padding: const EdgeInsets.all(Dimens.indent20),
                     shape: const CircleBorder(),
                     child: SvgPicture.asset(
-                      '${Configs.of(context).configs.imageAssents}'
-                      '${strings.unityLogo}',
+                      '$imageAssents${strings.unityLogo}',
                       height: Dimens.indent40,
                       colorFilter: const ColorFilter.mode(
                         Colors.white,
@@ -148,8 +143,7 @@ class Footer extends StatelessWidget {
                     padding: const EdgeInsets.all(Dimens.indent8),
                     shape: const CircleBorder(),
                     child: Image.asset(
-                      '${Configs.of(context).configs.imageAssents}'
-                      '${strings.unity2dLogo}',
+                      '$imageAssents${strings.unity2dLogo}',
                       height: Dimens.indent64,
                     ),
                   ),
