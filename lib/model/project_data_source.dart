@@ -23,7 +23,7 @@ class ProjectDataSource {
         name: 'Life-Coaching AI',
         imageAssetPath: '${constants.featureGraphicPath}'
             'life-coaching_ai-feature_graphic.png',
-        primaryWebsiteUrl: 'https://lifecoach.turskyi.com',
+        primaryWebsiteUrl: 'https://lifecoaching-ai.com',
         fallbackWebsiteUrl: 'https://life-coaching-ai.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
