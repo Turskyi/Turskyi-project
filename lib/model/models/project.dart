@@ -5,8 +5,8 @@ class Project {
     required this.name,
     required this.imageAssetPath,
     required this.primaryWebsiteUrl,
-    required this.fallbackWebsiteUrl,
     required this.supportedPlatforms,
+    this.fallbackWebsiteUrl = '',
   });
 
   final String name;

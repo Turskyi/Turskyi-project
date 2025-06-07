@@ -11,7 +11,7 @@ import 'package:turskyi/view/app.dart';
 /// https://pub.dev/packages/flutter_translate/example and as an exception
 /// in dart style https://dart-lang.github.io/linter/lints/avoid_void_async.html
 void main() async {
-  /// init language
+  /// Init language.
   final LocalizationDelegate localizationDelegate =
       await LocalizationDelegate.create(
     fallbackLocale: Language.en.name,
