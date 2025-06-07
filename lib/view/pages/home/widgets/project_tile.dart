@@ -69,12 +69,14 @@ class ProjectTile extends StatelessWidget {
                           image: AssetImage(project.imageAssetPath),
                           fit: BoxFit.cover,
                           child: const SizedBox.expand(),
-                          onImageError: (_, __) => ColoredBox(
-                            color: Colors.grey.shade300,
-                            child: const Center(
-                              child: Icon(Icons.broken_image),
-                            ),
-                          ),
+                          onImageError: (Object _, StackTrace? __) {
+                            ColoredBox(
+                              color: Colors.grey.shade300,
+                              child: const Center(
+                                child: Icon(Icons.broken_image),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Positioned(

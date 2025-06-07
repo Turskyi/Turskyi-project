@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/model/project_data_source.dart';
@@ -18,6 +19,7 @@ import 'package:turskyi/view/pages/home/widgets/projects_overlay_panel.dart';
 import 'package:turskyi/view/pages/home/widgets/social_buttons_row.dart';
 import 'package:turskyi/view/routes/link.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;
+import 'package:url_launcher/url_launcher.dart';
 
 /// [HomePage] class represents a view of a landing page.
 /// It extends [StatefulWidget] for the reason of using
@@ -65,9 +67,48 @@ class _HomePageState extends State<HomePage>
 
   @override
   void displayMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+    final RegExp linkRegex = RegExp(
+      r'(https?:\/\/[^\s]+)',
+      caseSensitive: false,
     );
+
+    final Match? match = linkRegex.firstMatch(message);
+    final String? link = match?.group(0);
+    if (match != null && link != null) {
+      final int start = match.start;
+      final int end = match.end;
+
+      final TextSpan span = TextSpan(
+        style: const TextStyle(color: Colors.white),
+        children: <InlineSpan>[
+          TextSpan(text: message.substring(0, start)),
+          TextSpan(
+            text: link,
+            style: const TextStyle(
+              color: Colors.lightBlueAccent,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => launchUrl(Uri.parse(link)),
+          ),
+          TextSpan(text: message.substring(end)),
+        ],
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 10),
+          content: SelectableText.rich(span),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 6),
+          content: SelectableText(message),
+        ),
+      );
+    }
   }
 
   @override
@@ -171,6 +212,20 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
+              Consumer<HomePresenter>(
+                child: Positioned.fill(
+                  child: AbsorbPointer(
+                    child: Container(color: Colors.transparent),
+                  ),
+                ),
+                builder: (__, HomePresenter model, Widget? child) {
+                  if (model.isLoading && child != null) {
+                    return child;
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
             ],
           ),
           floatingActionButton: const FabWidget(),

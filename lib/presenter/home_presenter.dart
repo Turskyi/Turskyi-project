@@ -72,7 +72,7 @@ class HomePresenter with ChangeNotifier {
   /// and type of [Curves]
   CurvedAnimation get curvedAnimation => _curvedAnimation;
 
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   /// [isLoading] variable is storing a current state of the progress bar.
   bool get isLoading => _isLoading;
@@ -220,7 +220,41 @@ class HomePresenter with ChangeNotifier {
     await launchUrl(launchUri);
   }
 
+  /// Attempts to open the project's primary website. If it's unreachable,
+  /// tries a fallback.
+  ///
+  /// ### Why this is necessary:
+  /// In some cases, project domains may become unavailable — e.g., if I forget
+  /// to renew them.
+  /// However, many projects also have a free-hosted fallback (like Firebase or
+  /// Vercel) that can still work.
+  ///
+  /// ### What's going on:
+  /// 1. Try to `HEAD` the primary URL to check if it's alive.
+  ///    - If status is `200`, launch it directly.
+  ///    - Otherwise, fall back to the backup URL.
+  ///
+  /// 2. Unfortunately, [Dio] cannot distinguish between:
+  ///    - A truly expired/unavailable domain (e.g., DNS error)
+  ///    - A **CORS-restricted** domain (like Cloudflare-protected apps)
+  ///
+  /// 3. Chrome can differentiate these in DevTools (CORS error vs.
+  /// `ERR_NAME_NOT_RESOLVED`), but [Dio] just throws
+  /// [DioExceptionType.connectionError] for both.
+  ///
+  /// 4. Workaround for the CORS case:
+  ///    - Retry the request using a **CORS proxy**
+  ///    (`https://cors-anywhere.com/`)
+  ///    - If this proxy request succeeds, we know the domain is alive and CORS
+  ///    was the issue.
+  ///    - In that case, we try launching the original URL anyway.
+  ///
+  /// 5. If both attempts fail — we show the fallback site.
+  ///    - In some edge cases (e.g. Clerk domain lock), fallback is just an
+  ///    explanation/snackbar.
   Future<void> checkAndLaunchProjectWebsite(Project project) async {
+    _isLoading = true;
+    notifyListeners();
     final String primaryUrl = project.primaryWebsiteUrl;
     final String fallbackUrl = project.fallbackWebsiteUrl;
     final Dio dio = Dio();
@@ -234,7 +268,7 @@ class HomePresenter with ChangeNotifier {
         if (kDebugMode) {
           debugPrint('Unexpected status: ${response.statusCode}');
         }
-        await _launchUrl(fallbackUrl);
+        await _launchFallbackUrl(fallbackUrl);
       }
     } on DioException catch (e) {
       if (kDebugMode) {
@@ -247,42 +281,78 @@ class HomePresenter with ChangeNotifier {
 
       if (e.type == DioExceptionType.connectionError) {
         try {
-          //TODO: migrate website from github pages somewhere we can set up a
-          // serverless backend, until then use this workaround.
-          final Response<void> response = await dio.head(
-            'https://cors-anywhere.com/$primaryUrl',
-          );
+          // TODO: migrate hosting website from github pages to a platform that
+          // allows custom API routes, somewhere we can set up a serverless
+          // backend, to build a proper CORS-aware backend, until then use this
+          // workaround.
+          final String proxyPrimaryUrl =
+              'https://cors-anywhere.com/$primaryUrl';
+          final Response<void> response = await dio.head(proxyPrimaryUrl);
 
           if (response.statusCode == HttpStatus.ok) {
             await _launchUrl(primaryUrl);
           } else {
             if (kDebugMode) {
-              debugPrint('Unexpected status: ${response.statusCode}');
+              debugPrint(
+                'DioException (cors-anywhere): Unexpected status while '
+                'checking proxy $primaryUrl -> $proxyPrimaryUrl: '
+                '${response.statusCode}',
+              );
             }
-            await _launchUrl(fallbackUrl);
+            await _launchFallbackUrl(fallbackUrl);
           }
-        } on DioException catch (_) {
-          await _launchUrl(fallbackUrl);
-          _view.displayMessage(
-            "Couldn't reach the main website. Opening fallback URL.",
-          );
+        } on DioException catch (eCors) {
+          if (kDebugMode) {
+            debugPrint(
+              'Dio error while checking proxy $primaryUrl: \n'
+              '${eCors.type}, \n${eCors.message}, \n${eCors.error}, \n'
+              '${eCors.response}',
+            );
+          }
+          await _handleFallbackUrl(fallbackUrl);
         }
       } else {
-        await _launchUrl(fallbackUrl);
-        _view.displayMessage(
-          "Couldn't reach the main website. Opening fallback URL.",
-        );
+        if (kDebugMode) {
+          debugPrint(
+            'DioException (non-connection error) encountered for $primaryUrl: '
+            '$e',
+          );
+        }
+        await _handleFallbackUrl(fallbackUrl);
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('Unexpected error: $e');
+        debugPrint(
+          'Generic catch block: An unexpected error of type ${e.runtimeType} '
+          'occurred: $e',
+        );
       }
 
-      await _launchUrl(fallbackUrl);
-      _view.displayMessage(
-        "Couldn't reach the main website. Opening fallback URL.",
-      );
+      await _handleFallbackUrl(fallbackUrl);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
+  }
+
+  Future<void> _handleFallbackUrl(String fallbackUrl) async {
+    _view.displayMessage(
+      "Couldn't reach the main website. Opening fallback URL.",
+    );
+    await _launchFallbackUrl(fallbackUrl);
+  }
+
+  Future<void> _launchFallbackUrl(String fallbackUrl) async {
+    if (fallbackUrl.trim().isEmpty) {
+      _view.displayMessage(
+        'Unfortunately, this project is not accessible at the moment. '
+        'You can contact the developer via https://turskyi.com/#/support to '
+        'find out more.',
+      );
+      return;
+    }
+
+    await _launchUrl(fallbackUrl);
   }
 
   /// Launches a given URL.
