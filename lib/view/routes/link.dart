@@ -42,7 +42,7 @@ enum Link {
       case Link.gists:
         return Links.gistsAddress;
       case Link.linkedin:
-        return Links.gistsAddress;
+        return Links.linkedinAddress;
       case Link.facebook:
         return Links.facebookAddress;
       case Link.myWishBoard:
