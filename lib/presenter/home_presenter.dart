@@ -309,7 +309,31 @@ class HomePresenter with ChangeNotifier {
               '${eCors.response}',
             );
           }
-          await _handleFallbackUrl(fallbackUrl);
+
+          if (fallbackUrl.isNotEmpty) {
+            await _handleFallbackUrl(fallbackUrl);
+          } else if (eCors.type == DioExceptionType.connectionError) {
+            try {
+              await _launchUrl(primaryUrl);
+            } catch (eLaunch) {
+              if (kDebugMode) {
+                debugPrint(
+                  '‼️ Last attempt to launch primary URL "$primaryUrl" '
+                  'FAILED.\n'
+                  '   Previous attempts (direct HEAD, proxy HEAD) resulted in '
+                  'DioExceptionType.connectionError.\n'
+                  '   Current _launchUrl error type: ${eLaunch.runtimeType}\n'
+                  '   Current _launchUrl error: $eLaunch',
+                );
+              }
+              _view.displayMessage(
+                'Unfortunately, this project is not accessible at the moment. '
+                'You can contact the developer via '
+                'https://turskyi.com/#/support to find out more.',
+              );
+              return;
+            }
+          }
         }
       } else {
         if (kDebugMode) {

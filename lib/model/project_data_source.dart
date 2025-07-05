@@ -139,7 +139,7 @@ class ProjectDataSource {
         name: 'Відчуття.Тиші & Zigmund Afraid',
         imageAssetPath: '${constants.featureGraphicPath}vt-feature_graphic.png',
         primaryWebsiteUrl:
-            '${constants.googlePlayBaseUrl}id=com.music.android.sensilence',
+            '${constants.googlePlayBaseUrl}com.music.android.sensilence',
         supportedPlatforms: <PlatformType>{PlatformType.android},
       ),
     ];
