@@ -121,6 +121,19 @@ class Footer extends StatelessWidget {
                   RawMaterialButton(
                     onPressed: () => Navigator.pushNamed(
                       context,
+                      AppRoute.unityGame.path,
+                    ),
+                    padding: const EdgeInsets.all(Dimens.indent8),
+                    shape: const CircleBorder(),
+                    child: Image.asset(
+                      '$imageAssents${strings.unity2dLogo}',
+                      height: Dimens.indent64,
+                    ),
+                  ),
+                if (kIsWeb && isLarge)
+                  RawMaterialButton(
+                    onPressed: () => Navigator.pushNamed(
+                      context,
                       AppRoute.game.path,
                     ),
                     padding: const EdgeInsets.all(Dimens.indent20),
@@ -134,19 +147,7 @@ class Footer extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (kIsWeb && isLarge)
-                  RawMaterialButton(
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      AppRoute.unityGame.path,
-                    ),
-                    padding: const EdgeInsets.all(Dimens.indent8),
-                    shape: const CircleBorder(),
-                    child: Image.asset(
-                      '$imageAssents${strings.unity2dLogo}',
-                      height: Dimens.indent64,
-                    ),
-                  ),
+
                 RawMaterialButton(
                   onPressed: () => Navigator.pushNamed(
                     context,
