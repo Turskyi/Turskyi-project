@@ -33,7 +33,7 @@ class ProjectsButton extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
-                    ?.copyWith(color: Colors.grey.shade300),
+                    ?.copyWith(color: Colors.white),
               ),
             )
           : Material(

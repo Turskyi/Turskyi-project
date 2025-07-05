@@ -22,7 +22,7 @@ void main() {
       expect(Link.gists.address, Links.gistsAddress);
       expect(
         Link.linkedin.address,
-        Links.gistsAddress,
+        Links.linkedinAddress,
       );
       expect(Link.facebook.address, Links.facebookAddress);
       expect(Link.myWishBoard.address, Links.wishBoardAddress);

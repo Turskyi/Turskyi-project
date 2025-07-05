@@ -54,7 +54,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
             ),
             AnimatedBuilder(
               animation: widget.controller,
-              builder: (_, __) {
+              builder: (BuildContext _, Widget? __) {
                 return Opacity(
                   opacity: widget.controller.value,
                   child: SlideTransition(
@@ -67,8 +67,9 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                         child: AnimatedList(
                           key: _listKey,
                           initialItemCount: _visibleProjects.length,
+                          padding: const EdgeInsets.only(bottom: 80.0),
                           itemBuilder: (
-                            _,
+                            BuildContext _,
                             int index,
                             Animation<double> animation,
                           ) {
