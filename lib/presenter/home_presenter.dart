@@ -305,8 +305,10 @@ class HomePresenter with ChangeNotifier {
           if (kDebugMode) {
             debugPrint(
               'Dio error while checking proxy $primaryUrl: \n'
-              '${eCors.type}, \n${eCors.message}, \n${eCors.error}, \n'
-              '${eCors.response}',
+              'eCors.type: ${eCors.type}, \n'
+              'eCors.message: ${eCors.message}, \n'
+              'eCors.error: ${eCors.error}, \n'
+              'eCors.response: ${eCors.response}.',
             );
           }
 

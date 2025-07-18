@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
 
   # display svg images
-  flutter_svg: ^2.1.0
+  flutter_svg: ^2.2.0
 
   #  localization
   flutter_translate: ^4.1.0
@@ -32,10 +32,11 @@ dependencies:
 
   # For launching a new web page on web browser.
   resend: ^1.0.0
-  url_launcher: ^6.3.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
-  build_runner: ^2.4.15
+  # Tried ^2.6.0 and it does not compile.
+  build_runner: any
   flutter_test:
     sdk: flutter
 

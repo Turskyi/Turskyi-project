@@ -69,10 +69,10 @@ class ProjectDataSource {
         },
       ),
       const Project(
-        name: 'InvestTrack',
+        name: 'InvestTracks',
         imageAssetPath: '${constants.featureGraphicPath}'
             'invest_track-feature_graphic.png',
-        primaryWebsiteUrl: 'https://invest.turskyi.com',
+        primaryWebsiteUrl: 'https://investtracks.com',
         // No `fallbackWebsiteUrl` because it will not support authentication
         // on another domain.
         supportedPlatforms: <PlatformType>{
