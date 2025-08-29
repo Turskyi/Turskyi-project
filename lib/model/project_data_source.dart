@@ -82,6 +82,18 @@ class ProjectDataSource {
         },
       ),
       const Project(
+        name: 'PortionControl',
+        imageAssetPath: '${constants.featureGraphicPath}'
+            'portion_control-feature_graphic.png',
+        primaryWebsiteUrl: 'https://portion-control.turskyi.com',
+        fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
+        supportedPlatforms: <PlatformType>{
+          PlatformType.android,
+          PlatformType.web,
+          PlatformType.ios,
+        },
+      ),
+      const Project(
         name: 'Мала Книжка (Тарас Шевченко)',
         imageAssetPath:
             '${constants.featureGraphicPath}mala_knyzhka-feature_graphic.png',
@@ -99,17 +111,6 @@ class ProjectDataSource {
             '${constants.featureGraphicPath}news_glance-feature_graphic.png',
         primaryWebsiteUrl: 'https://news.turskyi.com',
         fallbackWebsiteUrl: 'https://news-glanceai.vercel.app',
-        supportedPlatforms: <PlatformType>{
-          PlatformType.android,
-          PlatformType.web,
-        },
-      ),
-      const Project(
-        name: 'PortionControl',
-        imageAssetPath: '${constants.featureGraphicPath}'
-            'portion_control-feature_graphic.png',
-        primaryWebsiteUrl: 'https://portion-control.turskyi.com',
-        fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
           PlatformType.web,

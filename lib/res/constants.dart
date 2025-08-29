@@ -1,4 +1,5 @@
 const String appName = 'Turskyi';
+// Expires Mar 13, 2026.
 const String resendEmailDomain = 'kima.website';
 const String developerDomain = 'turskyi.com';
 const String supportEmail = 'support@$developerDomain';

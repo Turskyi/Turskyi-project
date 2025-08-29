@@ -30,12 +30,11 @@ dependencies:
   #  design pattern.
   provider: ^6.1.5
 
-  # For launching a new web page on web browser.
   resend: ^1.0.0
   url_launcher: ^6.3.2
 
 dev_dependencies:
-  # Tried ^2.6.0 and it does not compile.
+  # Tried ^2.6.0, and it does not compile.
   build_runner: any
   flutter_test:
     sdk: flutter
