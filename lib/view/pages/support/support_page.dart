@@ -19,7 +19,7 @@ class _SupportPageState extends State<SupportPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SupportFormPresenter>(
-      create: (_) => SupportFormPresenter(),
+      create: (BuildContext _) => SupportFormPresenter(),
       child: Scaffold(
         backgroundColor: Configs.of(context).colors.background,
         appBar: AppBar(
@@ -65,7 +65,7 @@ class _SupportPageState extends State<SupportPage> {
               builder: (
                 BuildContext context,
                 SupportFormPresenter presenter,
-                _,
+                Widget? _,
               ) {
                 return Form(
                   key: _formKey,

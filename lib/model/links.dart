@@ -15,7 +15,7 @@ class Links {
   static const String appleDeveloperAddress =
       'https://apps.apple.com/us/developer/dmytro-turskyi/id1803716526';
 
-  static const String politeraiAddress = 'https://www.politerai.com/';
+  static const String politeraiAddress = 'https://politer.turskyi.com';
   static const String laoziAiAddress = 'https://daoizm.online';
   static const String annaStoreAddress = 'https://anartist.turskyi.com';
 }
