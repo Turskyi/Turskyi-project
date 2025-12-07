@@ -4,7 +4,7 @@ extension TimeExtension on Time {
   // START: seconds
   static const int fiveSeconds = 5;
 
-// END: seconds
+  // END: seconds
 
   int get value {
     switch (this) {

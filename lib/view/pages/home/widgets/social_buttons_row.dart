@@ -8,9 +8,7 @@ import 'package:turskyi/view/routes/link.dart';
 
 /// Build GoodReads, facebook and wishlist button.
 class SocialButtonsRow extends StatelessWidget {
-  const SocialButtonsRow({
-    super.key,
-  });
+  const SocialButtonsRow({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +18,13 @@ class SocialButtonsRow extends StatelessWidget {
         const GoodReadsButton(),
         const FacebookButton(),
         Consumer<HomePresenter>(
-          builder: (BuildContext __, HomePresenter model, _) {
+          builder: (BuildContext _, HomePresenter model, _) {
             return WishlistButtonWidget(
               dayCount: model.daysToBirthday,
               wishlistWidth: model.wishlistWidth,
               duration: model.expandDuration,
               onWishListButtonAnimate: model.onWishListButtonAnimate,
-              onLaunchLink: () => model.onLaunchLink(
-                Link.myWishBoard.address,
-              ),
+              onLaunchLink: () => model.onLaunchLink(Link.myWishBoard.address),
               animationRotation: model.rotationAnimation,
             );
           },

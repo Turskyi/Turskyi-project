@@ -28,10 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
-  const HomePage({
-    required this.projectDataSource,
-    super.key,
-  });
+  const HomePage({required this.projectDataSource, super.key});
 
   final ProjectDataSource projectDataSource;
 
@@ -54,23 +51,15 @@ class _HomePageState extends State<HomePage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(1.0, 0.0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _projectsController,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero).animate(
+          CurvedAnimation(parent: _projectsController, curve: Curves.easeInOut),
+        );
   }
 
   @override
   void displayMessage(String message) {
-    final RegExp linkRegex = RegExp(
-      r'(https?:\/\/[^\s]+)',
-      caseSensitive: false,
-    );
+    final RegExp linkRegex = RegExp(r'(https?://\S+)', caseSensitive: false);
 
     final Match? match = linkRegex.firstMatch(message);
     final String? link = match?.group(0);
@@ -139,10 +128,10 @@ class _HomePageState extends State<HomePage>
               ProjectsButton(onPressed: _toggleProjects),
               if (isLarge)
                 Consumer<HomePresenter>(
-                  builder: (__, HomePresenter model, _) {
+                  builder: (BuildContext _, HomePresenter model, Widget? _) {
                     return ValueListenableBuilder<bool>(
                       valueListenable: _showProjectsNotifier,
-                      builder: (BuildContext __, bool showProjects, _) {
+                      builder: (BuildContext _, bool showProjects, Widget? _) {
                         return ProjectsOverlayPanel(
                           allProjects: model.allProjects,
                           showProjects: showProjects,
@@ -155,17 +144,19 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
               Consumer<HomePresenter>(
-                builder: (BuildContext __, HomePresenter model, _) {
+                builder: (BuildContext _, HomePresenter model, Widget? _) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal:
-                                isLarge ? Dimens.indent24 : Dimens.indent12,
-                            vertical:
-                                isLarge ? Dimens.indent24 : Dimens.indent12,
+                            horizontal: isLarge
+                                ? Dimens.indent24
+                                : Dimens.indent12,
+                            vertical: isLarge
+                                ? Dimens.indent24
+                                : Dimens.indent12,
                           ),
                           child: Column(
                             children: <Widget>[
@@ -197,10 +188,10 @@ class _HomePageState extends State<HomePage>
               ),
               if (!isLarge)
                 Consumer<HomePresenter>(
-                  builder: (__, HomePresenter model, _) {
+                  builder: (BuildContext _, HomePresenter model, Widget? _) {
                     return ValueListenableBuilder<bool>(
                       valueListenable: _showProjectsNotifier,
-                      builder: (BuildContext context, bool showProjects, _) {
+                      builder: (BuildContext _, bool showProjects, Widget? _) {
                         return ProjectsOverlayPanel(
                           allProjects: model.allProjects,
                           showProjects: showProjects,
@@ -218,7 +209,7 @@ class _HomePageState extends State<HomePage>
                     child: Container(color: Colors.transparent),
                   ),
                 ),
-                builder: (__, HomePresenter model, Widget? child) {
+                builder: (BuildContext _, HomePresenter model, Widget? child) {
                   if (model.isLoading && child != null) {
                     return child;
                   } else {

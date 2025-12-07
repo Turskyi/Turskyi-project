@@ -20,8 +20,9 @@ class ExperienceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final TextStyle? textStyle =
-        isLarge ? textTheme.headlineMedium : textTheme.titleLarge;
+    final TextStyle? textStyle = isLarge
+        ? textTheme.headlineMedium
+        : textTheme.titleLarge;
     final double height = MediaQuery.of(context).size.height;
 
     return Row(
@@ -42,10 +43,7 @@ class ExperienceWidget extends StatelessWidget {
                     bottom: Dimens.indent4,
                   ),
                   decoration: decorations.textDecoration,
-                  child: Text(
-                    translate('home.experience'),
-                    style: textStyle,
-                  ),
+                  child: Text(translate('home.experience'), style: textStyle),
                 ),
               if (height > 380)
                 Container(

@@ -11,9 +11,9 @@ void main() {
   testWidgets('App renders home screen', (WidgetTester tester) async {
     final LocalizationDelegate localizationDelegate =
         await LocalizationDelegate.create(
-      fallbackLocale: Language.en.name,
-      supportedLocales: <String>[Language.en.name],
-    );
+          fallbackLocale: Language.en.name,
+          supportedLocales: <String>[Language.en.name],
+        );
 
     // 💡 Force test to have larger physical screen
     tester.view.physicalSize = const Size(1024, 2500);
@@ -21,11 +21,7 @@ void main() {
 
     final LocalizedApp testWidget = LocalizedApp(
       localizationDelegate,
-      Configs(
-        configs: MainConfigs(),
-        colors: MainColors(),
-        child: const App(),
-      ),
+      Configs(configs: MainConfigs(), colors: MainColors(), child: const App()),
     );
 
     await tester.pumpWidget(testWidget);

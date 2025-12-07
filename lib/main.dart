@@ -14,9 +14,9 @@ void main() async {
   /// Init language.
   final LocalizationDelegate localizationDelegate =
       await LocalizationDelegate.create(
-    fallbackLocale: Language.en.name,
-    supportedLocales: <String>[Language.en.name],
-  );
+        fallbackLocale: Language.en.name,
+        supportedLocales: <String>[Language.en.name],
+      );
 
   final MainConfigs configs = MainConfigs();
 

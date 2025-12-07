@@ -30,10 +30,9 @@ class ProjectsButton extends StatelessWidget {
               ),
               child: Text(
                 'Projects',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.white),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: Colors.white),
               ),
             )
           : Material(

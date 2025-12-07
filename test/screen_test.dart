@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:turskyi/view/util/screen.dart';
 
 void main() {
-  testWidgets('isWide returns true for wide screens',
-      (WidgetTester tester) async {
+  testWidgets('isWide returns true for wide screens', (
+    WidgetTester tester,
+  ) async {
     // Define a wide screen size
     const Size wideScreenSize = Size(1200, 800);
 
@@ -23,8 +24,9 @@ void main() {
     );
   });
 
-  testWidgets('isWide returns false for narrow screens',
-      (WidgetTester tester) async {
+  testWidgets('isWide returns false for narrow screens', (
+    WidgetTester tester,
+  ) async {
     // Define a narrow screen size
     const Size narrowScreenSize = Size(599, 800);
 
@@ -43,8 +45,9 @@ void main() {
     );
   });
 
-  testWidgets('isWide returns true for screens just above the threshold',
-      (WidgetTester tester) async {
+  testWidgets('isWide returns true for screens just above the threshold', (
+    WidgetTester tester,
+  ) async {
     // Define a screen size just above the threshold
     const Size justAboveThresholdSize = Size(600, 800);
 

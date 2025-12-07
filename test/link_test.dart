@@ -20,10 +20,7 @@ void main() {
     test('address returns correct value', () {
       expect(Link.github.address, Links.githubAddress);
       expect(Link.gists.address, Links.gistsAddress);
-      expect(
-        Link.linkedin.address,
-        Links.linkedinAddress,
-      );
+      expect(Link.linkedin.address, Links.linkedinAddress);
       expect(Link.facebook.address, Links.facebookAddress);
       expect(Link.myWishBoard.address, Links.wishBoardAddress);
       expect(Link.goodreads.address, Links.goodReadsAddress);

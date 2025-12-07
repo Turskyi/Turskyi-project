@@ -56,8 +56,8 @@ class ProjectTile extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   context.read<HomePresenter>().checkAndLaunchProjectWebsite(
-                        project,
-                      );
+                    project,
+                  );
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
@@ -69,7 +69,7 @@ class ProjectTile extends StatelessWidget {
                           image: AssetImage(project.imageAssetPath),
                           fit: BoxFit.cover,
                           child: const SizedBox.expand(),
-                          onImageError: (Object _, StackTrace? __) {
+                          onImageError: (Object _, StackTrace? _) {
                             ColoredBox(
                               color: Colors.grey.shade300,
                               child: const Center(
@@ -90,8 +90,9 @@ class ProjectTile extends StatelessWidget {
                           ),
                           child: Wrap(
                             spacing: 4,
-                            children: project.supportedPlatforms
-                                .map((PlatformType platform) {
+                            children: project.supportedPlatforms.map((
+                              PlatformType platform,
+                            ) {
                               final IconData icon = switch (platform) {
                                 PlatformType.android => Icons.android,
                                 PlatformType.ios => Icons.apple,
@@ -102,10 +103,7 @@ class ProjectTile extends StatelessWidget {
                                 size: 16,
                                 color: Colors.white,
                                 shadows: const <Shadow>[
-                                  Shadow(
-                                    color: Colors.black54,
-                                    blurRadius: 4,
-                                  ),
+                                  Shadow(color: Colors.black54, blurRadius: 4),
                                 ],
                               );
                             }).toList(),

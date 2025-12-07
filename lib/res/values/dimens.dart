@@ -40,7 +40,7 @@ class Dimens {
   /// H1 font size according https://material.io/design/typography/the-type-system.html#type-scale
   static const double headline1 = 96.0;
 
-// END: font sizes
+  // END: font sizes
 
   // START: widths
   /// [widthColorButton] variable contains specific width of the "wishlist" logo
@@ -54,7 +54,7 @@ class Dimens {
   /// maximum width of the screen in portrait mode
   static const double maxPortraitWidth = 599.0;
 
-// END: widths
+  // END: widths
 
   // START: heights
   static const double fontH6Height = 1.3;
@@ -67,22 +67,22 @@ class Dimens {
 
   // END: heights
 
-// START: radii
+  // START: radii
   /// shadow blur radius for "facebook" and "wishlist" buttons
   static const double shadowRadius = 8.0;
   static const double blurRadius = 12.0;
   static const double buttonRadius = 20.0;
   static const double borderRadius = 40.0;
 
-// END: radii
+  // END: radii
 
-// START: letter spacing
+  // START: letter spacing
   static const double letterSpacingH6 = 0.15;
   static const double letterSpacingH4 = 0.25;
 
-// END: letter spacing
+  // END: letter spacing
 
-// START: indents
+  // START: indents
   static const double indent1 = 1.0;
   static const double indent2 = 2.0;
   static const double indent4 = 4.0;
@@ -96,13 +96,13 @@ class Dimens {
   static const double indent64 = 64.0;
   static const double indent140 = 140.0;
 
-// END: indents
+  // END: indents
 
   // START: offset values
   static const double offset1 = 1.0;
   static const double offsetMinus1 = -1.0;
 
-// END: offset values
+  // END: offset values
 
   static const double noElevation = 0.0;
   static const double toolbarHeight = 72.0;

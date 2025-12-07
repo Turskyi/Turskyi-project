@@ -12,9 +12,7 @@ import 'package:turskyi/view/routes/link.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;
 
 class Footer extends StatelessWidget {
-  const Footer({
-    super.key,
-  });
+  const Footer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +22,7 @@ class Footer extends StatelessWidget {
       child: SizedBox(
         height: 80.0,
         child: Consumer<HomePresenter>(
-          builder: (
-            BuildContext context,
-            HomePresenter model,
-            _,
-          ) {
+          builder: (BuildContext context, HomePresenter model, Widget? _) {
             final String imageAssents = Configs.of(
               context,
             ).configs.imageAssents;
@@ -42,12 +36,9 @@ class Footer extends StatelessWidget {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(
-                        Dimens.buttonRadius,
-                      ),
-                      onTap: () => model.onLaunchLink(
-                        Links.appleDeveloperAddress,
-                      ),
+                      borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                      onTap: () =>
+                          model.onLaunchLink(Links.appleDeveloperAddress),
                       child: Image.asset(
                         '$imageAssents${strings.appStoreLogo}',
                         width: Dimens.indent140,
@@ -60,12 +51,9 @@ class Footer extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(
-                      Dimens.buttonRadius,
-                    ),
-                    onTap: () => model.onLaunchLink(
-                      Links.androidDeveloperAddress,
-                    ),
+                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
+                    onTap: () =>
+                        model.onLaunchLink(Links.androidDeveloperAddress),
                     child: Image.asset(
                       '$imageAssents${strings.googlePlayLogo}',
                       color: Colors.white,
@@ -74,9 +62,7 @@ class Footer extends StatelessWidget {
                   ),
                 ),
                 RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(
-                    Link.annaStore.address,
-                  ),
+                  onPressed: () => model.onLaunchLink(Link.annaStore.address),
                   padding: const EdgeInsets.all(Dimens.indent8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -90,9 +76,7 @@ class Footer extends StatelessWidget {
                   ),
                 ),
                 RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(
-                    Link.laoziAi.address,
-                  ),
+                  onPressed: () => model.onLaunchLink(Link.laoziAi.address),
                   padding: const EdgeInsets.all(Dimens.indent8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -105,9 +89,7 @@ class Footer extends StatelessWidget {
                   ),
                 ),
                 RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(
-                    Link.politerai.address,
-                  ),
+                  onPressed: () => model.onLaunchLink(Link.politerai.address),
                   padding: const EdgeInsets.all(Dimens.indent8),
                   shape: const CircleBorder(),
                   child: Image.asset(
@@ -119,10 +101,8 @@ class Footer extends StatelessWidget {
                 // Determine if we should show game button.
                 if (kIsWeb && isLarge)
                   RawMaterialButton(
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      AppRoute.unityGame.path,
-                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoute.unityGame.path),
                     padding: const EdgeInsets.all(Dimens.indent8),
                     shape: const CircleBorder(),
                     child: Image.asset(
@@ -132,10 +112,8 @@ class Footer extends StatelessWidget {
                   ),
                 if (kIsWeb && isLarge)
                   RawMaterialButton(
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      AppRoute.game.path,
-                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoute.game.path),
                     padding: const EdgeInsets.all(Dimens.indent20),
                     shape: const CircleBorder(),
                     child: SvgPicture.asset(
@@ -149,15 +127,11 @@ class Footer extends StatelessWidget {
                   ),
 
                 RawMaterialButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    AppRoute.support.path,
-                  ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AppRoute.support.path),
                   padding: const EdgeInsets.all(Dimens.indent8),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      Dimens.buttonRadius,
-                    ),
+                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
                   ),
                   child: const Icon(
                     Icons.support_agent,

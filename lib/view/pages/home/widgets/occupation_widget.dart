@@ -28,39 +28,36 @@ class OccupationWidget extends StatelessWidget {
             fontSize: fontSize,
           ),
         ),
-        builder: (
-          BuildContext context,
-          HomePresenter model,
-          Widget? homeTitle,
-        ) {
-          return FadeTransition(
-            opacity: model.curvedAnimation,
-            child: MouseRegion(
-              onEnter: model.onTitleHover,
-              onExit: model.onTitleHover,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  AnimatedContainer(
-                    width: model.suffixWidth,
-                    duration: model.expandDuration,
-                    padding: const EdgeInsets.only(right: Dimens.indent4),
-                    child: Text(
-                      translate('home.suffix_title'),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: fontSize,
+        builder:
+            (BuildContext context, HomePresenter model, Widget? homeTitle) {
+              return FadeTransition(
+                opacity: model.curvedAnimation,
+                child: MouseRegion(
+                  onEnter: model.onTitleHover,
+                  onExit: model.onTitleHover,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      AnimatedContainer(
+                        width: model.suffixWidth,
+                        duration: model.expandDuration,
+                        padding: const EdgeInsets.only(right: Dimens.indent4),
+                        child: Text(
+                          translate('home.suffix_title'),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: fontSize,
+                          ),
+                        ),
                       ),
-                    ),
+                      homeTitle ?? const SizedBox(),
+                    ],
                   ),
-                  homeTitle ?? const SizedBox(),
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
       ),
     );
   }

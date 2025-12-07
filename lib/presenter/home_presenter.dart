@@ -137,12 +137,8 @@ class HomePresenter with ChangeNotifier {
     Duration? gapDuration,
   }) {
     final int gapDays = gapDuration?.inDays ?? 0;
-    final int totalDays = (lastTime ?? DateTime.now())
-            .difference(
-              firstTime,
-            )
-            .inDays -
-        gapDays;
+    final int totalDays =
+        (lastTime ?? DateTime.now()).difference(firstTime).inDays - gapDays;
     const int daysPerYear = 365;
     const int daysPerMonth = 30;
     /* "~/" is an integer division,
