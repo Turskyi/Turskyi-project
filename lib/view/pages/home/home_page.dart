@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage>
                 child: Positioned.fill(
                   child: AbsorbPointer(
                     child: ColoredBox(
-                        color: Colors.black.withAlpha(150),
+                      color: Colors.black.withAlpha(150),
                       child: const LoadingIndicator(),
                     ),
                   ),
