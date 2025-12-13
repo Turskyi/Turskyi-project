@@ -7,3 +7,6 @@ const String imagePath = 'assets/images/';
 const String featureGraphicPath = '${imagePath}feature_graphics/';
 const String googlePlayBaseUrl =
     'https://play.google.com/store/apps/details?id=';
+const String doNotReplySenderName = 'Do Not Reply';
+const String feedbackEmailSender =
+    '$doNotReplySenderName $appName <no-reply@$resendEmailDomain>';

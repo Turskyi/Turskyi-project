@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 
 class FabWidget extends StatelessWidget {
-  const FabWidget({
-    super.key,
-  });
+  const FabWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

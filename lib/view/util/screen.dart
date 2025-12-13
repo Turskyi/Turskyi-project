@@ -9,8 +9,6 @@ bool isLarge(BuildContext context) {
 
 /// The equivalent of the "smallestWidth" qualifier on Android SDK.
 double _getShortestSide(BuildContext context) {
-  final double shortestSide = MediaQuery.of(
-    context,
-  ).size.shortestSide;
+  final double shortestSide = MediaQuery.of(context).size.shortestSide;
   return shortestSide;
 }

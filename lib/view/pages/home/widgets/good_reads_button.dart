@@ -25,17 +25,13 @@ class GoodReadsButton extends StatelessWidget {
           return TextButton(
             style: TextButton.styleFrom(
               backgroundColor: const Color(0xFFE9E9E9),
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.indent16,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.indent16),
               shape: RoundedRectangleBorder(
                 borderRadius: radii.borderRadius,
                 side: const BorderSide(color: Color(0xFFD8D5C2)),
               ),
             ),
-            onPressed: () => model.onLaunchLink(
-              Link.goodreads.address,
-            ),
+            onPressed: () => model.onLaunchLink(Link.goodreads.address),
             child: image ?? const SizedBox(),
           );
         },

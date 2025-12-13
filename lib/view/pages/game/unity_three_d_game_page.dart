@@ -24,9 +24,7 @@ class UnityThreeDGamePage extends StatelessWidget {
       ),
       body: Directionality(
         textDirection: TextDirection.ltr,
-        child: HtmlElementView(
-          viewType: Configs.of(context).configs.htmlName,
-        ),
+        child: HtmlElementView(viewType: Configs.of(context).configs.htmlName),
       ),
     );
   }

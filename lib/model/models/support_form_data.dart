@@ -9,11 +9,7 @@ class SupportFormData {
   final String email;
   final String message;
 
-  SupportFormData copyWith({
-    String? name,
-    String? email,
-    String? message,
-  }) {
+  SupportFormData copyWith({String? name, String? email, String? message}) {
     return SupportFormData(
       name: name ?? this.name,
       email: email ?? this.email,

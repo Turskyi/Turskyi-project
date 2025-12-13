@@ -54,7 +54,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
             ),
             AnimatedBuilder(
               animation: widget.controller,
-              builder: (BuildContext _, Widget? __) {
+              builder: (BuildContext _, Widget? _) {
                 return Opacity(
                   opacity: widget.controller.value,
                   child: SlideTransition(
@@ -68,23 +68,25 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                           key: _listKey,
                           initialItemCount: _visibleProjects.length,
                           padding: const EdgeInsets.only(bottom: 80.0),
-                          itemBuilder: (
-                            BuildContext _,
-                            int index,
-                            Animation<double> animation,
-                          ) {
-                            final Project? project = _visibleProjects[index];
-                            if (project != null) {
-                              return ProjectTile(
-                                key: ValueKey<String>(project.name),
-                                project: project,
-                                animation: animation,
-                                removing: false,
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
+                          itemBuilder:
+                              (
+                                BuildContext _,
+                                int index,
+                                Animation<double> animation,
+                              ) {
+                                final Project? project =
+                                    _visibleProjects[index];
+                                if (project != null) {
+                                  return ProjectTile(
+                                    key: ValueKey<String>(project.name),
+                                    project: project,
+                                    animation: animation,
+                                    removing: false,
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
                         ),
                       ),
                     ),

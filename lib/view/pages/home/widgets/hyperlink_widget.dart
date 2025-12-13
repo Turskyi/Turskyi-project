@@ -3,11 +3,7 @@ import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;
 
 class HyperlinkWidget extends StatelessWidget {
-  const HyperlinkWidget({
-    required this.title,
-    required this.onTap,
-    super.key,
-  });
+  const HyperlinkWidget({required this.title, required this.onTap, super.key});
 
   final String title;
   final VoidCallback onTap;

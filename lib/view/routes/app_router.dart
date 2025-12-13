@@ -9,11 +9,11 @@ import 'package:turskyi/view/routes/app_route.dart';
 /// Util method for storing routes of all pages of the app.
 Map<String, WidgetBuilder> get routes {
   return <String, WidgetBuilder>{
-    AppRoute.home.path: (_) => const HomePage(
-          projectDataSource: ProjectDataSource(),
-        ),
-    AppRoute.game.path: (_) => const UnityThreeDGamePage(),
-    AppRoute.unityGame.path: (_) => const UnityTwoDGamePage(),
-    AppRoute.support.path: (_) => const SupportPage(),
+    AppRoute.home.path: (BuildContext _) {
+      return const HomePage(projectDataSource: ProjectDataSource());
+    },
+    AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
+    AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
+    AppRoute.support.path: (BuildContext _) => const SupportPage(),
   };
 }

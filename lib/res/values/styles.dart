@@ -13,10 +13,7 @@ class Styles {
     letterSpacing: Dimens.letterSpacingH6,
     color: Colors.white,
     height: Dimens.fontH6Height,
-    shadows: <Shadow>[
-      Shadows.topRightTextShadow,
-      Shadows.bottomLeftTextShadow,
-    ],
+    shadows: <Shadow>[Shadows.topRightTextShadow, Shadows.bottomLeftTextShadow],
   );
 
   /// custom H5 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -26,10 +23,7 @@ class Styles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
     height: Dimens.fontH5Height,
-    shadows: <Shadow>[
-      Shadows.topRightTextShadow,
-      Shadows.bottomLeftTextShadow,
-    ],
+    shadows: <Shadow>[Shadows.topRightTextShadow, Shadows.bottomLeftTextShadow],
   );
 
   /// custom H4 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -40,10 +34,7 @@ class Styles {
     letterSpacing: Dimens.letterSpacingH4,
     color: Colors.white,
     height: Dimens.fontH4Height,
-    shadows: <Shadow>[
-      Shadows.topRightTextShadow,
-      Shadows.bottomLeftTextShadow,
-    ],
+    shadows: <Shadow>[Shadows.topRightTextShadow, Shadows.bottomLeftTextShadow],
   );
 
   /// custom H3 font style from https://material.io/design/typography/the-type-system.html#type-scale
@@ -53,11 +44,8 @@ class Styles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
     height: Dimens.fontH3Height,
-    shadows: <Shadow>[
-      Shadows.topRightTextShadow,
-      Shadows.bottomLeftTextShadow,
-    ],
+    shadows: <Shadow>[Shadows.topRightTextShadow, Shadows.bottomLeftTextShadow],
   );
 
-// END: [TextStyle]s
+  // END: [TextStyle]s
 }

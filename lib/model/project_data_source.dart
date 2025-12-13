@@ -21,7 +21,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'Ethical Scanner',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'ethical_scanner-feature_graphic.png',
         primaryWebsiteUrl: 'https://ethical-scanner.com',
         fallbackWebsiteUrl: 'https://ethical-scanner.turskyi.com',
@@ -33,7 +34,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'Life-Coaching AI',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'life-coaching_ai-feature_graphic.png',
         primaryWebsiteUrl: 'https://lifecoaching-ai.com',
         // No `fallbackWebsiteUrl` because it will not support authentication
@@ -46,7 +48,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'Daoism - Laozi AI',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'daoism_laozi_ai-feature_graphic.png',
         primaryWebsiteUrl: 'https://daoizm.online',
         fallbackWebsiteUrl: 'https://laozi-chatbot.vercel.app',
@@ -58,7 +61,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'Politer AI',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'politer_ai-feature_graphic.png',
         primaryWebsiteUrl: 'https://www.politerai.com',
         fallbackWebsiteUrl: 'https://politer.turskyi.com',
@@ -70,7 +74,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'InvestTracks',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'invest_track-feature_graphic.png',
         primaryWebsiteUrl: 'https://investtracks.com',
         // No `fallbackWebsiteUrl` because it will not support authentication
@@ -83,7 +88,8 @@ class ProjectDataSource {
       ),
       const Project(
         name: 'PortionControl',
-        imageAssetPath: '${constants.featureGraphicPath}'
+        imageAssetPath:
+            '${constants.featureGraphicPath}'
             'portion_control-feature_graphic.png',
         primaryWebsiteUrl: 'https://portion-control.turskyi.com',
         fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
@@ -98,7 +104,8 @@ class ProjectDataSource {
         imageAssetPath:
             '${constants.featureGraphicPath}mala_knyzhka-feature_graphic.png',
         primaryWebsiteUrl: 'https://mala-knyzhka.web.app',
-        fallbackWebsiteUrl: '${constants.googlePlayBaseUrl}'
+        fallbackWebsiteUrl:
+            '${constants.googlePlayBaseUrl}'
             'com.turskyi.malaknyzhka',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
