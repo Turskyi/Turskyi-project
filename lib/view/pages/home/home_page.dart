@@ -104,11 +104,13 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return ChangeNotifierProvider<HomePresenter>(
-      create: (_) => HomePresenter(
-        view: this,
-        tickerProvider: this,
-        projectDataSource: widget.projectDataSource,
-      ),
+      create: (BuildContext _) {
+        return HomePresenter(
+          view: this,
+          tickerProvider: this,
+          projectDataSource: widget.projectDataSource,
+        );
+      },
       child: DecoratedBox(
         decoration: BoxDecoration(
           // Builds background image.
@@ -176,7 +178,6 @@ class _HomePageState extends State<HomePage>
                                 androidExperience: model.androidExperience,
                                 totalExperience: model.totalExperience,
                               ),
-                              if (model.isLoading) const LoadingIndicator(),
                             ],
                           ),
                         ),
@@ -206,7 +207,10 @@ class _HomePageState extends State<HomePage>
               Consumer<HomePresenter>(
                 child: Positioned.fill(
                   child: AbsorbPointer(
-                    child: Container(color: Colors.transparent),
+                    child: ColoredBox(
+                        color: Colors.black.withAlpha(150),
+                      child: const LoadingIndicator(),
+                    ),
                   ),
                 ),
                 builder: (BuildContext _, HomePresenter model, Widget? child) {
