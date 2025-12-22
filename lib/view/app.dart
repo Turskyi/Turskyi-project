@@ -5,14 +5,15 @@ import 'package:turskyi/env/env.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/themes.dart';
 import 'package:turskyi/view/routes/app_route.dart';
-import 'package:turskyi/view/routes/app_router.dart' as router;
 
 /// [App] contains main settings of the web page and returns
 /// [MaterialApp] with all project specific instructions
 class App extends StatelessWidget {
   /// It's a good practice to expose the ability to provide a key
   /// when creating public widgets.
-  const App({super.key});
+  const App({required this.routes, super.key});
+
+  final Map<String, WidgetBuilder> routes;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: translate('title'),
       initialRoute: AppRoute.home.path,
-      routes: router.routes,
+      routes: routes,
       theme: ThemeData(
         primarySwatch: Configs.of(context).colors.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,

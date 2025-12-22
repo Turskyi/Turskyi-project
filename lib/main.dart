@@ -9,6 +9,11 @@ import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/language.dart';
 import 'package:turskyi/view/app.dart';
+import 'package:turskyi/view/pages/game/unity_three_d_game_page.dart';
+import 'package:turskyi/view/pages/game/unity_two_d_game_page.dart';
+import 'package:turskyi/view/pages/home/home_page.dart';
+import 'package:turskyi/view/pages/support/support_page.dart';
+import 'package:turskyi/view/routes/app_route.dart';
 
 /// Justification of using the 'async' after [main]
 /// is taken from the official documentation at
@@ -19,7 +24,7 @@ void main() async {
   // `await` operation, otherwise app may stuck on black/white screen.
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Init language.
+  // Init language.
   final SharedPreferences preferences = await SharedPreferences.getInstance();
 
   final LocalDataSource localDataSource = LocalDataSource(preferences);
@@ -44,10 +49,30 @@ void main() async {
 
   final MainConfigs configs = MainConfigs();
 
+  // Routes of all pages of the app.
+  final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
+    AppRoute.home.path: (BuildContext _) {
+      return HomePage(localDataSource: LocalDataSource(preferences));
+    },
+    AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
+    AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
+    AppRoute.support.path: (BuildContext _) => const SupportPage(),
+    AppRoute.enHome.path: (BuildContext _) {
+      return HomePage(localDataSource: LocalDataSource(preferences));
+    },
+    AppRoute.ukHome.path: (BuildContext _) {
+      return HomePage(localDataSource: LocalDataSource(preferences));
+    },
+  };
+
   runApp(
     LocalizedApp(
       localizationDelegate,
-      Configs(configs: configs, colors: MainColors(), child: const App()),
+      Configs(
+        configs: configs,
+        colors: MainColors(),
+        child: App(routes: routes),
+      ),
     ),
   );
 }

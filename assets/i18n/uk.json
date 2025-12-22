@@ -1,0 +1,21 @@
+{
+  "title": "Розробник Дмитро Турський",
+  "change_language": "Змінити мову",
+  "home": {
+    "name": "Дмитро Турський",
+    "title": "Розробник",
+    "suffix_title": "Флаттер/Андроїд",
+    "error": "помилка",
+    "cannot_launch": "Не вдалося відкрити",
+    "experience": "Досвід",
+    "total": "Загалом:",
+    "flutter": "Флаттер:",
+    "android": "Андроїд:"
+  },
+  "projects": {
+    "weather_fit": {
+      "name": "WeatherFit • Що вдягти?",
+      "url": "https://uk.weather-fit.com"
+    }
+  }
+}

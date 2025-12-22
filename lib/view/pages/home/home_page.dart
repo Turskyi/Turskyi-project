@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turskyi/model/project_data_source.dart';
+import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/dimens.dart';
@@ -12,6 +12,7 @@ import 'package:turskyi/view/pages/home/widgets/fab_widget.dart';
 import 'package:turskyi/view/pages/home/widgets/footer.dart';
 import 'package:turskyi/view/pages/home/widgets/full_name_text.dart';
 import 'package:turskyi/view/pages/home/widgets/hyperlink_group.dart';
+import 'package:turskyi/view/pages/home/widgets/language_selector.dart';
 import 'package:turskyi/view/pages/home/widgets/loading_indicator.dart';
 import 'package:turskyi/view/pages/home/widgets/occupation_widget.dart';
 import 'package:turskyi/view/pages/home/widgets/projects_button.dart';
@@ -28,9 +29,9 @@ import 'package:url_launcher/url_launcher.dart';
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
-  const HomePage({required this.projectDataSource, super.key});
+  const HomePage({required this.localDataSource, super.key});
 
-  final ProjectDataSource projectDataSource;
+  final LocalDataSource localDataSource;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage>
         return HomePresenter(
           view: this,
           tickerProvider: this,
-          projectDataSource: widget.projectDataSource,
+          localDataSource: widget.localDataSource,
         );
       },
       child: DecoratedBox(
@@ -128,6 +129,14 @@ class _HomePageState extends State<HomePage>
           body: Stack(
             children: <Widget>[
               ProjectsButton(onPressed: _toggleProjects),
+              Consumer<HomePresenter>(
+                builder: (BuildContext _, HomePresenter model, Widget? _) {
+                  return LanguageSelector(
+                    currentLanguage: model.language,
+                    onLanguageSelected: model.changeLanguage,
+                  );
+                },
+              ),
               if (isLarge)
                 Consumer<HomePresenter>(
                   builder: (BuildContext _, HomePresenter model, Widget? _) {

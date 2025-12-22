@@ -39,4 +39,4 @@ enum Language {
 const String _englishIsoLanguageCode = 'en';
 const String _ukrainianIsoLanguageCode = 'uk';
 const String _englishLanguage = 'English';
-const String _ukrainianLanguage = 'Ukrainian';
+const String _ukrainianLanguage = 'Українська';

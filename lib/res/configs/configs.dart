@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:turskyi/res/configs/base/base_colors.dart';
 import 'package:turskyi/res/configs/base/base_configs.dart';
-import 'package:turskyi/res/configs/builds/main/main_colors.dart';
-import 'package:turskyi/res/configs/builds/main/main_configs.dart';
-import 'package:turskyi/view/app.dart';
 
 /// [Configs] is an object data class which contains configuration of the app
 class Configs extends InheritedWidget {
@@ -61,11 +58,15 @@ class Configs extends InheritedWidget {
     if (appConfigs != null) {
       return appConfigs;
     } else {
-      final MainConfigs configs = MainConfigs();
-      return Configs(
-        configs: configs,
-        colors: MainColors(),
-        child: const App(),
+      // It is impossible to create a valid Configs here because we don't
+      // have the SharedPreferences instance. Throw an error to enforce
+      // correct usage in main.dart.
+      throw FlutterError(
+        'Configs.of() called with a context that does not contain a Configs '
+        'widget.\n'
+        'No Configs ancestor could be found starting from the context that was'
+        ' passed to Configs.of().\n'
+        'Make sure you wrap your App in Configs in main.dart.',
       );
     }
   }

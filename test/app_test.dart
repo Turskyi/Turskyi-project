@@ -9,6 +9,11 @@ import 'package:turskyi/res/configs/builds/main/main_colors.dart';
 import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/view/app.dart';
+import 'package:turskyi/view/pages/game/unity_three_d_game_page.dart';
+import 'package:turskyi/view/pages/game/unity_two_d_game_page.dart';
+import 'package:turskyi/view/pages/home/home_page.dart';
+import 'package:turskyi/view/pages/support/support_page.dart';
+import 'package:turskyi/view/routes/app_route.dart';
 
 void main() {
   testWidgets('App renders home screen', (WidgetTester tester) async {
@@ -25,10 +30,22 @@ void main() {
     // 💡 Force test to have larger physical screen
     tester.view.physicalSize = const Size(1024, 2500);
     tester.view.devicePixelRatio = 1.0;
-
+    // Routes of all pages of the app.
+    final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
+      AppRoute.home.path: (BuildContext _) {
+        return HomePage(localDataSource: LocalDataSource(preferences));
+      },
+      AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
+      AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
+      AppRoute.support.path: (BuildContext _) => const SupportPage(),
+    };
     final LocalizedApp testWidget = LocalizedApp(
       localizationDelegate,
-      Configs(configs: MainConfigs(), colors: MainColors(), child: const App()),
+      Configs(
+        configs: MainConfigs(),
+        colors: MainColors(),
+        child: App(routes: routes),
+      ),
     );
 
     await tester.pumpWidget(testWidget);

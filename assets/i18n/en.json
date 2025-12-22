@@ -1,5 +1,6 @@
 {
   "title": "Developer Dmytro Turskyi",
+  "change_language": "Change language",
   "home": {
     "name": "Dmytro Turskyi",
     "title": "Developer",
@@ -10,5 +11,11 @@
     "total": "Total:",
     "flutter": "Flutter:",
     "android": "Android:"
+  },
+  "projects": {
+    "weather_fit": {
+      "name": "WeatherFit",
+      "url": "https://en.weather-fit.com"
+    }
   }
 }
