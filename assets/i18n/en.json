@@ -15,7 +15,13 @@
   "projects": {
     "weather_fit": {
       "name": "WeatherFit",
-      "url": "https://en.weather-fit.com"
+      "url": "https://en.weather-fit.com",
+      "fallback_url": "https://en.weather.turskyi.com"
+    },
+    "ethical_scanner": {
+      "name": "Ethical Scanner",
+      "url": "https://en.ethical-scanner.com",
+      "fallback_url": "https://en.ethical-scanner.turskyi.com"
     }
   }
 }

@@ -15,7 +15,13 @@
   "projects": {
     "weather_fit": {
       "name": "WeatherFit • Що вдягти?",
-      "url": "https://uk.weather-fit.com"
+      "url": "https://uk.weather-fit.com",
+      "fallback_url": "https://uk.weather.turskyi.com"
+    },
+    "ethical_scanner": {
+      "name": "Ethical Scanner • Перевірка товарів",
+      "url": "https://uk.ethical-scanner.com",
+      "fallback_url": "https://uk.ethical-scanner.turskyi.com"
     }
   }
 }

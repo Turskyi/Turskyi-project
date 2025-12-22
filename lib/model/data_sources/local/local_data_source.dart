@@ -97,19 +97,19 @@ class LocalDataSource {
         imageAssetPath:
             '${constants.kFeatureGraphicPath}weather_fit-feature_graphic.png',
         primaryWebsiteUrl: translate('projects.weather_fit.url'),
-        fallbackWebsiteUrl: 'https://weather.turskyi.com',
+        fallbackWebsiteUrl: translate('projects.weather_fit.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
           PlatformType.web,
         },
       ),
-      const Project(
-        name: 'Ethical Scanner',
+      Project(
+        name: translate('projects.ethical_scanner.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'ethical_scanner-feature_graphic.png',
-        primaryWebsiteUrl: 'https://ethical-scanner.com',
+        primaryWebsiteUrl: translate('projects.ethical_scanner.url'),
         fallbackWebsiteUrl: 'https://ethical-scanner.turskyi.com',
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
