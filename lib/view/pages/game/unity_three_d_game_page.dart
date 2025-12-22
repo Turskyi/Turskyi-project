@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turskyi/model/links.dart';
+import 'package:turskyi/model/links.dart' as links;
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/view/pages/game/web_platform_view.dart'
@@ -13,7 +13,7 @@ class UnityThreeDGamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     setupWebView(
       Configs.of(context).configs.htmlName,
-      Links.unityThreeDAddress,
+      links.kUnityThreeDAddress,
     );
     return Scaffold(
       backgroundColor: Configs.of(context).colors.background,
