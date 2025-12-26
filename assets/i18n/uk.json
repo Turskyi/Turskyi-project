@@ -22,6 +22,34 @@
       "name": "Ethical Scanner • Перевірка товарів",
       "url": "https://uk.ethical-scanner.com",
       "fallback_url": "https://uk.ethical-scanner.turskyi.com"
+    },
+    "life_coaching_ai": {
+      "name": "Life-Coaching AI • Як бути?",
+      "url": "https://lifecoaching-ai.com"
+    },
+    "daoism_laozi_ai": {
+      "name": "Daoism • Laozi AI",
+      "url": "https://uk.daoizm.online",
+      "fallback_url": "https://uk.daoism.turskyi.com"
+    },
+    "politer_ai": {
+      "name": "Politer AI",
+      "url": "https://politerai.com",
+      "fallback_url": "https://politer.turskyi.com"
+    },
+    "portion_control": {
+      "name": "Portion Control",
+      "url": "https://uk.portion-control.turskyi.com",
+      "fallback_url": "https://portion-control-tracker.web.app"
+    },
+    "mala_knyzhka": {
+      "name": "Мала Книжка (Тарас Шевченко)",
+      "url": "https://mala-knyzhka.web.app"
+    },
+    "news_glance": {
+      "name": "News Glance • Висновки",
+      "url": "https://news.turskyi.com",
+      "fallback_url": "https://news-glanceai.vercel.app"
     }
   }
 }

@@ -109,16 +109,17 @@ class LocalDataSource {
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'ethical_scanner-feature_graphic.png',
+        // Renews on April 10, 2026. Price $10.46/year
         primaryWebsiteUrl: translate('projects.ethical_scanner.url'),
-        fallbackWebsiteUrl: 'https://ethical-scanner.turskyi.com',
+        fallbackWebsiteUrl: translate('projects.ethical_scanner.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
           PlatformType.web,
         },
       ),
-      const Project(
-        name: 'Life-Coaching AI',
+      Project(
+        name: translate('projects.life_coaching_ai.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'life-coaching_ai-feature_graphic.png',
@@ -131,26 +132,26 @@ class LocalDataSource {
           PlatformType.web,
         },
       ),
-      const Project(
-        name: 'Daoism - Laozi AI',
+      Project(
+        name: 'Daoism • Laozi AI',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'daoism_laozi_ai-feature_graphic.png',
-        primaryWebsiteUrl: 'https://daoizm.online',
-        fallbackWebsiteUrl: 'https://laozi-chatbot.vercel.app',
+        primaryWebsiteUrl: translate('projects.daoism_laozi_ai.url'),
+        fallbackWebsiteUrl: translate('projects.daoism_laozi_ai.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
           PlatformType.web,
         },
       ),
-      const Project(
+      Project(
         name: 'Politer AI',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'politer_ai-feature_graphic.png',
-        primaryWebsiteUrl: 'https://www.politerai.com',
-        fallbackWebsiteUrl: 'https://politer.turskyi.com',
+        primaryWebsiteUrl: translate('projects.politer_ai.url'),
+        fallbackWebsiteUrl: translate('projects.politer_ai.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
@@ -162,6 +163,8 @@ class LocalDataSource {
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'invest_track-feature_graphic.png',
+        // No `uk.` subdomain because it will not support authentication on
+        // another domain with clerk.com.
         primaryWebsiteUrl: 'https://investtracks.com',
         // No `fallbackWebsiteUrl` because it will not support authentication
         // on another domain.
@@ -171,12 +174,12 @@ class LocalDataSource {
           PlatformType.web,
         },
       ),
-      const Project(
-        name: 'PortionControl',
+      Project(
+        name: 'Portion Control',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'portion_control-feature_graphic.png',
-        primaryWebsiteUrl: 'https://portion-control.turskyi.com',
+        primaryWebsiteUrl: translate('projects.portion_control.url'),
         fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
@@ -184,8 +187,8 @@ class LocalDataSource {
           PlatformType.ios,
         },
       ),
-      const Project(
-        name: 'Мала Книжка (Тарас Шевченко)',
+      Project(
+        name: translate('projects.mala_knyzhka.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}mala_knyzhka-feature_graphic.png',
         primaryWebsiteUrl: 'https://mala-knyzhka.web.app',
@@ -197,8 +200,8 @@ class LocalDataSource {
           PlatformType.web,
         },
       ),
-      const Project(
-        name: 'News Glance',
+      Project(
+        name: translate('projects.news_glance.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}news_glance-feature_graphic.png',
         primaryWebsiteUrl: 'https://news.turskyi.com',
