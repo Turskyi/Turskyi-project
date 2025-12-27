@@ -17,17 +17,21 @@ class SocialButtonsRow extends StatelessWidget {
       children: <Widget>[
         const GoodReadsButton(),
         const FacebookButton(),
-        Consumer<HomePresenter>(
-          builder: (BuildContext _, HomePresenter model, _) {
-            return WishlistButtonWidget(
-              dayCount: model.daysToBirthday,
-              wishlistWidth: model.wishlistWidth,
-              duration: model.expandDuration,
-              onWishListButtonAnimate: model.onWishListButtonAnimate,
-              onLaunchLink: () => model.onLaunchLink(Link.myWishBoard.address),
-              animationRotation: model.rotationAnimation,
-            );
-          },
+        Flexible(
+          child: Consumer<HomePresenter>(
+            builder: (BuildContext _, HomePresenter model, Widget? _) {
+              return WishlistButtonWidget(
+                dayCount: model.daysToBirthday,
+                wishlistWidth: model.wishlistWidth,
+                duration: model.expandDuration,
+                onWishListButtonAnimate: model.onWishListButtonAnimate,
+                onLaunchLink: () {
+                  model.onLaunchLink(Link.myWishBoard.address);
+                },
+                animationRotation: model.rotationAnimation,
+              );
+            },
+          ),
         ),
       ],
     );
