@@ -25,7 +25,9 @@ class SocialButtonsRow extends StatelessWidget {
                 wishlistWidth: model.wishlistWidth,
                 duration: model.expandDuration,
                 onWishListButtonAnimate: model.onWishListButtonAnimate,
-                onLaunchLink: () => model.onLaunchLink(Link.myWishBoard.address),
+                onLaunchLink: () {
+                  model.onLaunchLink(Link.myWishBoard.address);
+                },
                 animationRotation: model.rotationAnimation,
               );
             },
