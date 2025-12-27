@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
+import 'package:turskyi/res/language.dart';
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -128,7 +129,14 @@ class _HomePageState extends State<HomePage>
           backgroundColor: Colors.transparent,
           body: Stack(
             children: <Widget>[
-              ProjectsButton(onPressed: _toggleProjects),
+              Consumer<HomePresenter>(
+                builder: (BuildContext _, HomePresenter model, Widget? _) {
+                  return ProjectsButton(
+                    key: ValueKey<Language>(model.language),
+                    onPressed: _toggleProjects,
+                  );
+                },
+              ),
               Consumer<HomePresenter>(
                 builder: (BuildContext _, HomePresenter model, Widget? _) {
                   return LanguageSelector(
@@ -171,8 +179,8 @@ class _HomePageState extends State<HomePage>
                           ),
                           child: Column(
                             children: <Widget>[
-                              const FullNameText(),
-                              const OccupationWidget(),
+                              FullNameText(key: widget.key),
+                              OccupationWidget(key: widget.key),
                               HyperlinkGroup(
                                 onLaunchLink: model.onLaunchLink,
                                 links: const <Link>[

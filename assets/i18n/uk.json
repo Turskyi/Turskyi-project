@@ -10,7 +10,9 @@
     "experience": "Досвід",
     "total": "Загалом:",
     "flutter": "Флаттер:",
-    "android": "Андроїд:"
+    "android": "Андроїд:",
+    "projects": "Проєкти",
+    "days_to_birthday": "{days} днів до дня народження"
   },
   "projects": {
     "weather_fit": {
@@ -51,5 +53,18 @@
       "url": "https://news.turskyi.com",
       "fallback_url": "https://news-glanceai.vercel.app"
     }
+  },
+  "support": {
+    "title": "Підтримка розробника Дмитра Турського",
+    "full_name": "Повне ім'я",
+    "email": "Ваша електронна адреса",
+    "message": "Повідомлення",
+    "send": "Надіслати",
+    "please_enter_name": "Будь ласка, введіть своє ім'я",
+    "please_enter_email": "Будь ласка, введіть свою електронну адресу",
+    "please_enter_valid_email": "Будь ласка, введіть дійсну електронну адресу",
+    "please_enter_message": "Будь ласка, введіть своє повідомлення",
+    "success_message": "Електронний лист успішно надіслано!",
+    "failure_message": "Не вдалося надіслати електронний лист."
   }
 }

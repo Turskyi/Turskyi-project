@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;
 
@@ -29,7 +30,7 @@ class ProjectsButton extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Projects',
+                translate('home.projects'),
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(color: Colors.white),

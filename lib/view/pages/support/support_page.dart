@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/presenter/support_form_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
@@ -26,9 +27,11 @@ class _SupportPageState extends State<SupportPage> {
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () => Navigator.of(
-                context,
-              ).popUntil(ModalRoute.withName(AppRoute.home.path)),
+              onTap: () {
+                Navigator.of(
+                  context,
+                ).popUntil(ModalRoute.withName(AppRoute.home.path));
+              },
               borderRadius: BorderRadius.circular(100),
               child: ClipOval(
                 child: CircleAvatar(
@@ -43,7 +46,7 @@ class _SupportPageState extends State<SupportPage> {
           title: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              'Developer Turskyi Support',
+              translate('support.title'),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: TextTheme.of(context).headlineLarge?.fontSize,
@@ -66,6 +69,7 @@ class _SupportPageState extends State<SupportPage> {
                     SupportFormPresenter presenter,
                     Widget? _,
                   ) {
+                    final FormState? formState = _formKey.currentState;
                     return Form(
                       key: _formKey,
                       child: Column(
@@ -73,23 +77,23 @@ class _SupportPageState extends State<SupportPage> {
                         children: <Widget>[
                           TextFormField(
                             style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Full Name',
-                              labelStyle: TextStyle(color: Colors.white),
-                              hintStyle: TextStyle(color: Colors.white60),
-                              border: OutlineInputBorder(
+                            decoration: InputDecoration(
+                              labelText: translate('support.full_name'),
+                              labelStyle: const TextStyle(color: Colors.white),
+                              hintStyle: const TextStyle(color: Colors.white60),
+                              border: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             validator: (String? value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your name';
+                                return translate('support.please_enter_name');
                               }
                               return null;
                             },
@@ -100,27 +104,29 @@ class _SupportPageState extends State<SupportPage> {
                           const SizedBox(height: 16),
                           TextFormField(
                             style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Your Email Address',
-                              labelStyle: TextStyle(color: Colors.white),
-                              hintStyle: TextStyle(color: Colors.white60),
-                              border: OutlineInputBorder(
+                            decoration: InputDecoration(
+                              labelText: translate('support.email'),
+                              labelStyle: const TextStyle(color: Colors.white),
+                              hintStyle: const TextStyle(color: Colors.white60),
+                              border: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
                             validator: (String? value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
+                                return translate('support.please_enter_email');
                               }
                               if (!EmailValidator.validate(value)) {
-                                return 'Please enter a valid email';
+                                return translate(
+                                  'support.please_enter_valid_email',
+                                );
                               }
                               return null;
                             },
@@ -132,25 +138,27 @@ class _SupportPageState extends State<SupportPage> {
                           TextFormField(
                             style: const TextStyle(color: Colors.white),
                             // White text color
-                            decoration: const InputDecoration(
-                              labelText: 'Message',
-                              labelStyle: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              labelText: translate('support.message'),
+                              labelStyle: const TextStyle(color: Colors.white),
                               // White label text
-                              hintStyle: TextStyle(color: Colors.white60),
-                              border: OutlineInputBorder(
+                              hintStyle: const TextStyle(color: Colors.white60),
+                              border: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                             maxLines: 5,
                             validator: (String? value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your message';
+                                return translate(
+                                  'support.please_enter_message',
+                                );
                               }
                               return null;
                             },
@@ -160,10 +168,10 @@ class _SupportPageState extends State<SupportPage> {
                           ),
                           const SizedBox(height: 24),
                           ElevatedButton(
-                            onPressed: presenter.isLoading
+                            onPressed: presenter.isLoading || formState == null
                                 ? null
                                 : () async {
-                                    if (_formKey.currentState!.validate()) {
+                                    if (formState.validate()) {
                                       await presenter.sendSupportEmail();
                                       if (presenter.isSuccess &&
                                           context.mounted) {
@@ -171,9 +179,11 @@ class _SupportPageState extends State<SupportPage> {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             content: Text(
-                                              'Email sent successfully!',
+                                              translate(
+                                                'support.success_message',
+                                              ),
                                             ),
                                           ),
                                         );
@@ -185,7 +195,9 @@ class _SupportPageState extends State<SupportPage> {
                                             content: Text(
                                               presenter.errorMessage.isNotEmpty
                                                   ? presenter.errorMessage
-                                                  : 'Failed to send email.',
+                                                  : translate(
+                                                      'support.failure_message',
+                                                    ),
                                             ),
                                           ),
                                         );
@@ -198,7 +210,7 @@ class _SupportPageState extends State<SupportPage> {
                                     height: 20,
                                     child: CircularProgressIndicator(),
                                   )
-                                : const Text('Send'),
+                                : Text(translate('support.send')),
                           ),
                         ],
                       ),

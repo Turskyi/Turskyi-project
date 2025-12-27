@@ -10,7 +10,9 @@
     "experience": "Experience",
     "total": "Total:",
     "flutter": "Flutter:",
-    "android": "Android:"
+    "android": "Android:",
+    "projects": "Projects",
+    "days_to_birthday": "{days} days to birthday"
   },
   "projects": {
     "weather_fit": {
@@ -51,5 +53,18 @@
       "url": "https://news.turskyi.com",
       "fallback_url": "https://news-glanceai.vercel.app"
     }
+  },
+  "support": {
+    "title": "Developer Dmytro Turskyi Support",
+    "full_name": "Full Name",
+    "email": "Your Email Address",
+    "message": "Message",
+    "send": "Send",
+    "please_enter_name": "Please enter your name",
+    "please_enter_email": "Please enter your email",
+    "please_enter_valid_email": "Please enter a valid email",
+    "please_enter_message": "Please enter your message",
+    "success_message": "Email sent successfully!",
+    "failure_message": "Failed to send email."
   }
 }

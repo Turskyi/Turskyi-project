@@ -186,8 +186,11 @@ class HomePresenter with ChangeNotifier {
         today,
         today.isAfter(birthday) ? DateTime(today.year + 1, 1, 13) : birthday,
       );
-      _daysToBirthday = '$days days to birthday';
-      _wishlistWidth = Dimens.wishlistButtonWidth;
+      _daysToBirthday = translate(
+        'home.days_to_birthday',
+        args: <String, Object?>{'days': days},
+      );
+      _wishlistWidth = _language.isEnglish ? Dimens.wishlistButtonWidth : 240;
       _rotationAnimationController.forward();
     } else {
       _daysToBirthday = '';
@@ -200,7 +203,7 @@ class HomePresenter with ChangeNotifier {
   /// rotates "wishlist" logo and expands text
   void onTitleHover(PointerEvent event) {
     if (_suffixWidth == 0) {
-      _suffixWidth = 172;
+      _suffixWidth = _language.isEnglish ? 172 : 204;
     } else {
       _suffixWidth = 0;
     }
