@@ -45,19 +45,10 @@ class HomePresenter with ChangeNotifier {
       ),
     );
     _fadeAnimationController.forward();
-    _flutterExperience = _setExperience(
-      firstTime: _flutterFirstCommit,
-      gapDuration: _flutterLastCommit.difference(
-        DateTime(2022, DateTime.may, 9),
-      ),
-    );
-    _androidExperience = _setExperience(
-      firstTime: _androidFirstCommit,
-      lastTime: _androidLastCommit,
-    );
-    _totalExperience = _setExperience(firstTime: _androidFirstCommit);
-    _language = localDataSource.getSavedLanguage();
     _localDataSource = localDataSource;
+    _language = localDataSource.getSavedLanguage();
+
+    _calculateExperience();
   }
 
   late HomeView _view;
@@ -164,13 +155,25 @@ class HomePresenter with ChangeNotifier {
 
     final StringBuffer experienceStringBuffer = StringBuffer();
     if (years > 0) {
-      experienceStringBuffer.write('$years year${years == 1 ? '' : 's'} ');
+      experienceStringBuffer.write(
+        '${translatePlural('home.'
+        'years', years, args: <String, Object?>{'value': years})} ',
+      );
     }
     if (months > 0) {
-      experienceStringBuffer.write('$months month${months == 1 ? '' : 's'} ');
+      experienceStringBuffer.write(
+        '${translatePlural('home.'
+        'months', months, args: <String, Object?>{'value': months})} ',
+      );
     }
     if (days > 0) {
-      experienceStringBuffer.write('$days day${days == 1 ? '' : 's'}');
+      experienceStringBuffer.write(
+        translatePlural(
+          'home.days',
+          days,
+          args: <String, Object?>{'value': days},
+        ),
+      );
     }
     return experienceStringBuffer.toString();
   }
@@ -225,6 +228,21 @@ class HomePresenter with ChangeNotifier {
       path: strings.phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  Future<void> changeLanguage(Language language) async {
+    if (language != _language) {
+      final bool isSaved = await _localDataSource.saveLanguageIsoCode(
+        language.isoLanguageCode,
+      );
+      if (isSaved && !_isLoading) {
+        _language = language;
+        _calculateExperience();
+        notifyListeners();
+      } else {
+        //TODO: handle this case.
+      }
+    }
   }
 
   /// Attempts to open the project's primary website. If it's unreachable,
@@ -401,18 +419,18 @@ class HomePresenter with ChangeNotifier {
     }
   }
 
-  Future<void> changeLanguage(Language language) async {
-    if (language != _language) {
-      final bool isSaved = await _localDataSource.saveLanguageIsoCode(
-        language.isoLanguageCode,
-      );
-      if (isSaved && !_isLoading) {
-        _language = language;
-        notifyListeners();
-      } else {
-        //TODO: handle this case.
-      }
-    }
+  void _calculateExperience() {
+    _flutterExperience = _setExperience(
+      firstTime: _flutterFirstCommit,
+      gapDuration: _flutterLastCommit.difference(
+        DateTime(2022, DateTime.may, 9),
+      ),
+    );
+    _androidExperience = _setExperience(
+      firstTime: _androidFirstCommit,
+      lastTime: _androidLastCommit,
+    );
+    _totalExperience = _setExperience(firstTime: _androidFirstCommit);
   }
 
   @override

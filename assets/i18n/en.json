@@ -12,7 +12,19 @@
     "flutter": "Flutter:",
     "android": "Android:",
     "projects": "Projects",
-    "days_to_birthday": "{days} days to birthday"
+    "days_to_birthday": "{days} days to birthday",
+    "years": {
+      "one": "1 year",
+      "other": "{value} years"
+    },
+    "months": {
+      "one": "1 month",
+      "other": "{value} months"
+    },
+    "days": {
+      "one": "1 day",
+      "other": "{value} days"
+    }
   },
   "projects": {
     "weather_fit": {

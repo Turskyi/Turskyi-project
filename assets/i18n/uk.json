@@ -12,7 +12,25 @@
     "flutter": "Флаттер:",
     "android": "Андроїд:",
     "projects": "Проєкти",
-    "days_to_birthday": "{days} днів до дня народження"
+    "days_to_birthday": "{days} днів до дня народження",
+    "years": {
+      "one": "1 рік",
+      "few": "{value} роки",
+      "many": "{value} років",
+      "other": "{value} років"
+    },
+    "months": {
+      "one": "1 місяць",
+      "few": "{value} місяці",
+      "many": "{value} місяців",
+      "other": "{value} місяців"
+    },
+    "days": {
+      "one": "1 день",
+      "few": "{value} дні",
+      "many": "{value} днів",
+      "other": "{value} днів"
+    }
   },
   "projects": {
     "weather_fit": {
