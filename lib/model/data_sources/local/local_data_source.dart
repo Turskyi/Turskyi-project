@@ -105,20 +105,6 @@ class LocalDataSource {
         },
       ),
       Project(
-        name: translate('projects.ethical_scanner.name'),
-        imageAssetPath:
-            '${constants.kFeatureGraphicPath}'
-            'ethical_scanner-feature_graphic.png',
-        // Renews on April 10, 2026. Price $10.46/year
-        primaryWebsiteUrl: translate('projects.ethical_scanner.url'),
-        fallbackWebsiteUrl: translate('projects.ethical_scanner.fallback_url'),
-        supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
-          PlatformType.android,
-          PlatformType.web,
-        },
-      ),
-      Project(
         name: translate('projects.life_coaching_ai.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -139,6 +125,20 @@ class LocalDataSource {
             'daoism_laozi_ai-feature_graphic.png',
         primaryWebsiteUrl: translate('projects.daoism_laozi_ai.url'),
         fallbackWebsiteUrl: translate('projects.daoism_laozi_ai.fallback_url'),
+        supportedPlatforms: <PlatformType>{
+          PlatformType.ios,
+          PlatformType.android,
+          PlatformType.web,
+        },
+      ),
+      Project(
+        name: translate('projects.ethical_scanner.name'),
+        imageAssetPath:
+            '${constants.kFeatureGraphicPath}'
+            'ethical_scanner-feature_graphic.png',
+        // Renews on April 10, 2026. Price $10.46/year
+        primaryWebsiteUrl: translate('projects.ethical_scanner.url'),
+        fallbackWebsiteUrl: translate('projects.ethical_scanner.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
