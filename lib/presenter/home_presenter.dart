@@ -4,10 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/model/models/project.dart';
-import 'package:turskyi/model/project_data_source.dart';
 import 'package:turskyi/presenter/time.dart';
+import 'package:turskyi/res/constants.dart' as constants;
+import 'package:turskyi/res/language.dart';
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/pages/home/home_view.dart';
@@ -21,10 +23,9 @@ class HomePresenter with ChangeNotifier {
   HomePresenter({
     required HomeView view,
     required TickerProvider tickerProvider,
-    required ProjectDataSource projectDataSource,
+    required LocalDataSource localDataSource,
   }) {
     _view = view;
-    _projectDataSource = projectDataSource;
     _fadeAnimationController = AnimationController(
       duration: Duration(seconds: Time.fade.value),
       vsync: tickerProvider,
@@ -55,15 +56,22 @@ class HomePresenter with ChangeNotifier {
       lastTime: _androidLastCommit,
     );
     _totalExperience = _setExperience(firstTime: _androidFirstCommit);
+    _language = localDataSource.getSavedLanguage();
+    _localDataSource = localDataSource;
   }
 
   late HomeView _view;
-  late ProjectDataSource _projectDataSource;
   late final Animation<double> _rotationAnimation;
 
   late AnimationController _fadeAnimationController;
   late AnimationController _rotationAnimationController;
   late CurvedAnimation _curvedAnimation;
+
+  late Language _language;
+
+  Language get language => _language;
+
+  late LocalDataSource _localDataSource;
 
   /// Controls degree of the rotation.
   Animation<double> get rotationAnimation => _rotationAnimation;
@@ -121,7 +129,7 @@ class HomePresenter with ChangeNotifier {
   /// controls the width of the "suffix" of the title
   double get suffixWidth => _suffixWidth;
 
-  List<Project> get allProjects => _projectDataSource.allProjects;
+  List<Project> get allProjects => _localDataSource.allProjects;
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
@@ -178,8 +186,11 @@ class HomePresenter with ChangeNotifier {
         today,
         today.isAfter(birthday) ? DateTime(today.year + 1, 1, 13) : birthday,
       );
-      _daysToBirthday = '$days days to birthday';
-      _wishlistWidth = Dimens.wishlistButtonWidth;
+      _daysToBirthday = translate(
+        'home.days_to_birthday',
+        args: <String, Object?>{'days': days},
+      );
+      _wishlistWidth = _language.isEnglish ? Dimens.wishlistButtonWidth : 240;
       _rotationAnimationController.forward();
     } else {
       _daysToBirthday = '';
@@ -192,7 +203,7 @@ class HomePresenter with ChangeNotifier {
   /// rotates "wishlist" logo and expands text
   void onTitleHover(PointerEvent event) {
     if (_suffixWidth == 0) {
-      _suffixWidth = 172;
+      _suffixWidth = _language.isEnglish ? 172 : 204;
     } else {
       _suffixWidth = 0;
     }
@@ -282,7 +293,7 @@ class HomePresenter with ChangeNotifier {
           // backend, to build a proper CORS-aware backend, until then use this
           // workaround.
           final String proxyPrimaryUrl =
-              'https://cors-anywhere.com/$primaryUrl';
+              '${constants.kCorsProxyUrl}$primaryUrl';
           final Response<void> response = await dio.head(proxyPrimaryUrl);
 
           if (response.statusCode == HttpStatus.ok) {
@@ -387,6 +398,20 @@ class HomePresenter with ChangeNotifier {
       // errors, but good to be safe)
       debugPrint('Error launching URL $url: $e');
       _view.displayMessage("Couldn't open the link: $url");
+    }
+  }
+
+  Future<void> changeLanguage(Language language) async {
+    if (language != _language) {
+      final bool isSaved = await _localDataSource.saveLanguageIsoCode(
+        language.isoLanguageCode,
+      );
+      if (isSaved && !_isLoading) {
+        _language = language;
+        notifyListeners();
+      } else {
+        //TODO: handle this case.
+      }
     }
   }
 

@@ -1,0 +1,70 @@
+{
+  "title": "Розробник Дмитро Турський",
+  "change_language": "Змінити мову",
+  "home": {
+    "name": "Дмитро Турський",
+    "title": "Розробник",
+    "suffix_title": "Флаттер/Андроїд",
+    "error": "помилка",
+    "cannot_launch": "Не вдалося відкрити",
+    "experience": "Досвід",
+    "total": "Загалом:",
+    "flutter": "Флаттер:",
+    "android": "Андроїд:",
+    "projects": "Проєкти",
+    "days_to_birthday": "{days} днів до дня народження"
+  },
+  "projects": {
+    "weather_fit": {
+      "name": "WeatherFit • Що вдягти?",
+      "url": "https://uk.weather-fit.com",
+      "fallback_url": "https://uk.weather.turskyi.com"
+    },
+    "ethical_scanner": {
+      "name": "Ethical Scanner • Перевірка товарів",
+      "url": "https://uk.ethical-scanner.com",
+      "fallback_url": "https://uk.ethical-scanner.turskyi.com"
+    },
+    "life_coaching_ai": {
+      "name": "Life-Coaching AI • Як бути?",
+      "url": "https://lifecoaching-ai.com"
+    },
+    "daoism_laozi_ai": {
+      "name": "Daoism • Laozi AI",
+      "url": "https://uk.daoizm.online",
+      "fallback_url": "https://uk.daoism.turskyi.com"
+    },
+    "politer_ai": {
+      "name": "Politer AI",
+      "url": "https://politerai.com",
+      "fallback_url": "https://politer.turskyi.com"
+    },
+    "portion_control": {
+      "name": "Portion Control",
+      "url": "https://uk.portion-control.turskyi.com",
+      "fallback_url": "https://portion-control-tracker.web.app"
+    },
+    "mala_knyzhka": {
+      "name": "Мала Книжка (Тарас Шевченко)",
+      "url": "https://mala-knyzhka.web.app"
+    },
+    "news_glance": {
+      "name": "News Glance • Висновки",
+      "url": "https://news.turskyi.com",
+      "fallback_url": "https://news-glanceai.vercel.app"
+    }
+  },
+  "support": {
+    "title": "Підтримка розробника Дмитра Турського",
+    "full_name": "Повне ім'я",
+    "email": "Ваша електронна адреса",
+    "message": "Повідомлення",
+    "send": "Надіслати",
+    "please_enter_name": "Будь ласка, введіть своє ім'я",
+    "please_enter_email": "Будь ласка, введіть свою електронну адресу",
+    "please_enter_valid_email": "Будь ласка, введіть дійсну електронну адресу",
+    "please_enter_message": "Будь ласка, введіть своє повідомлення",
+    "success_message": "Електронний лист успішно надіслано!",
+    "failure_message": "Не вдалося надіслати електронний лист."
+  }
+}

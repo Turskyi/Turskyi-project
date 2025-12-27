@@ -8,15 +8,17 @@ enum AppRoute {
   /// When navigating to the "/unity_game" route, build the [UnityGamePage] widget.
   unityGame,
   support,
-}
+  enHome,
+  ukHome;
 
-extension RouteExtension on AppRoute {
   String get path {
     const String home = '/';
 
     const String game = '${home}game';
     const String unityGame = '${home}unity_game';
     const String support = '${home}support';
+    const String enHome = '${home}en';
+    const String ukHome = '${home}uk';
 
     switch (this) {
       case AppRoute.home:
@@ -27,6 +29,10 @@ extension RouteExtension on AppRoute {
         return unityGame;
       case AppRoute.support:
         return support;
+      case AppRoute.enHome:
+        return enHome;
+      case AppRoute.ukHome:
+        return ukHome;
     }
   }
 }

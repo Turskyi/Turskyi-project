@@ -47,25 +47,25 @@ class SupportFormPresenter extends ChangeNotifier {
     final String customerEmail = _formData.email;
     try {
       await _resend.sendEmail(
-        from: constants.feedbackEmailSender,
-        to: <String>[constants.supportEmail],
-        subject: 'New Message Received from ${constants.appName}',
+        from: constants.kFeedbackEmailSender,
+        to: <String>[constants.kSupportEmail],
+        subject: 'New Message Received from ${constants.kAppName}',
         text:
             'New support message received:\n\n Email: $customerEmail\n\n'
             'Name: ${_formData.name}\n\n Message: ${_formData.message}.',
       );
 
       await _resend.sendEmail(
-        from: constants.feedbackEmailSender,
+        from: constants.kFeedbackEmailSender,
         to: <String>[customerEmail],
         subject:
             'Thank You! Your Support Message Has Been Sent to '
-            '${constants.appName}',
+            '${constants.kAppName}',
         text:
             'Thank you for reaching out to us! Your support message has been '
             'received and will be reviewed promptly. We appreciate your '
             'feedback and will get back to you soon.\n\nBest regards,\n'
-            'The ${constants.appName} Team.',
+            'The ${constants.kAppName} Team.',
       );
 
       _isSuccess = true;

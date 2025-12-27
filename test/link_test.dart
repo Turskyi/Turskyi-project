@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:turskyi/model/links.dart';
+import 'package:turskyi/model/links.dart' as links;
 import 'package:turskyi/res/values/strings.dart' as strings;
 import 'package:turskyi/view/routes/link.dart';
 
@@ -18,15 +18,15 @@ void main() {
     });
 
     test('address returns correct value', () {
-      expect(Link.github.address, Links.githubAddress);
-      expect(Link.gists.address, Links.gistsAddress);
-      expect(Link.linkedin.address, Links.linkedinAddress);
-      expect(Link.facebook.address, Links.facebookAddress);
-      expect(Link.myWishBoard.address, Links.wishBoardAddress);
-      expect(Link.goodreads.address, Links.goodReadsAddress);
-      expect(Link.laoziAi.address, Links.laoziAiAddress);
-      expect(Link.politerai.address, Links.politeraiAddress);
-      expect(Link.annaStore.address, Links.annaStoreAddress);
+      expect(Link.github.address, links.kGithubAddress);
+      expect(Link.gists.address, links.kGistsAddress);
+      expect(Link.linkedin.address, links.kLinkedinAddress);
+      expect(Link.facebook.address, links.kFacebookAddress);
+      expect(Link.myWishBoard.address, links.kWishBoardAddress);
+      expect(Link.goodreads.address, links.kGoodReadsAddress);
+      expect(Link.laoziAi.address, links.kLaoziAiAddress);
+      expect(Link.politerai.address, links.kPoliteraiAddress);
+      expect(Link.annaStore.address, links.kAnnaStoreAddress);
     });
   });
 }

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:turskyi/model/links.dart';
+import 'package:turskyi/model/links.dart' as links;
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/dimens.dart';
@@ -37,8 +37,9 @@ class Footer extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                      onTap: () =>
-                          model.onLaunchLink(Links.appleDeveloperAddress),
+                      onTap: () {
+                        model.onLaunchLink(links.kAppleDeveloperAddress);
+                      },
                       child: Image.asset(
                         '$imageAssents${strings.appStoreLogo}',
                         width: Dimens.indent140,
@@ -52,8 +53,9 @@ class Footer extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                    onTap: () =>
-                        model.onLaunchLink(Links.androidDeveloperAddress),
+                    onTap: () {
+                      model.onLaunchLink(links.kAndroidDeveloperAddress);
+                    },
                     child: Image.asset(
                       '$imageAssents${strings.googlePlayLogo}',
                       color: Colors.white,

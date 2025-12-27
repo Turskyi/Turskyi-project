@@ -1,21 +1,19 @@
-class Links {
-  static const String githubAddress = 'https://github.com/Turskyi';
-  static const String gistsAddress = 'https://gist.github.com/Turskyi';
-  static const String linkedinAddress =
-      'https://www.linkedin.com/company/dmytro-turskyi/';
-  static const String facebookAddress =
-      'https://www.facebook.com/groups/thecleanarchitecture/';
-  static const String wishBoardAddress = 'https://mywishboard.com/@turskyi';
-  static const String goodReadsAddress =
-      'https://www.goodreads.com/user/show/89268945-dmytro-turskyi';
-  static const String unityThreeDAddress = 'https://unitythreedgame.web.app';
-  static const String unityTwoDAddress = 'https://play-time-2d.web.app';
-  static const String androidDeveloperAddress =
-      'https://play.google.com/store/apps/dev?id=8790223297246728168';
-  static const String appleDeveloperAddress =
-      'https://apps.apple.com/us/developer/dmytro-turskyi/id1803716526';
+const String kGithubAddress = 'https://github.com/Turskyi';
+const String kGistsAddress = 'https://gist.github.com/Turskyi';
+const String kLinkedinAddress =
+    'https://www.linkedin.com/company/dmytro-turskyi/';
+const String kFacebookAddress =
+    'https://www.facebook.com/groups/thecleanarchitecture/';
+const String kWishBoardAddress = 'https://mywishboard.com/@turskyi';
+const String kGoodReadsAddress =
+    'https://www.goodreads.com/user/show/89268945-dmytro-turskyi';
+const String kUnityThreeDAddress = 'https://unitythreedgame.web.app';
+const String kUnityTwoDAddress = 'https://play-time-2d.web.app';
+const String kAndroidDeveloperAddress =
+    'https://play.google.com/store/apps/dev?id=8790223297246728168';
+const String kAppleDeveloperAddress =
+    'https://apps.apple.com/us/developer/dmytro-turskyi/id1803716526';
 
-  static const String politeraiAddress = 'https://politer.turskyi.com';
-  static const String laoziAiAddress = 'https://daoizm.online';
-  static const String annaStoreAddress = 'https://anartist.turskyi.com';
-}
+const String kPoliteraiAddress = 'https://politerai.com';
+const String kLaoziAiAddress = 'https://daoizm.online';
+const String kAnnaStoreAddress = 'https://anartist.turskyi.com';

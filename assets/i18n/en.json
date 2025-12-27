@@ -1,5 +1,6 @@
 {
   "title": "Developer Dmytro Turskyi",
+  "change_language": "Change language",
   "home": {
     "name": "Dmytro Turskyi",
     "title": "Developer",
@@ -9,6 +10,61 @@
     "experience": "Experience",
     "total": "Total:",
     "flutter": "Flutter:",
-    "android": "Android:"
+    "android": "Android:",
+    "projects": "Projects",
+    "days_to_birthday": "{days} days to birthday"
+  },
+  "projects": {
+    "weather_fit": {
+      "name": "WeatherFit",
+      "url": "https://en.weather-fit.com",
+      "fallback_url": "https://en.weather.turskyi.com"
+    },
+    "ethical_scanner": {
+      "name": "Ethical Scanner",
+      "url": "https://en.ethical-scanner.com",
+      "fallback_url": "https://en.ethical-scanner.turskyi.com"
+    },
+    "life_coaching_ai": {
+      "name": "Life-Coaching AI",
+      "url": "https://lifecoaching-ai.com"
+    },
+    "daoism_laozi_ai": {
+      "name": "Daoism • Laozi AI",
+      "url": "https://en.daoizm.online",
+      "fallback_url": "https://en.daoism.turskyi.com"
+    },
+    "politer_ai": {
+      "name": "Politer AI",
+      "url": "https://en.politerai.com",
+      "fallback_url": "https://en.politer.turskyi.com"
+    },
+    "portion_control": {
+      "name": "Portion Control",
+      "url": "https://en.portion-control.turskyi.com",
+      "fallback_url": "https://portion-control-tracker.web.app"
+    },
+    "mala_knyzhka": {
+      "name": "Mala Knyzhka (Taras Shevchenko)",
+      "url": "https://mala-knyzhka.web.app"
+    },
+    "news_glance": {
+      "name": "News Glance",
+      "url": "https://news.turskyi.com",
+      "fallback_url": "https://news-glanceai.vercel.app"
+    }
+  },
+  "support": {
+    "title": "Developer Dmytro Turskyi Support",
+    "full_name": "Full Name",
+    "email": "Your Email Address",
+    "message": "Message",
+    "send": "Send",
+    "please_enter_name": "Please enter your name",
+    "please_enter_email": "Please enter your email",
+    "please_enter_valid_email": "Please enter a valid email",
+    "please_enter_message": "Please enter your message",
+    "success_message": "Email sent successfully!",
+    "failure_message": "Failed to send email."
   }
 }

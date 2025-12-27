@@ -1,4 +1,4 @@
-import 'package:turskyi/model/links.dart';
+import 'package:turskyi/model/links.dart' as links;
 import 'package:turskyi/res/values/strings.dart' as strings;
 
 enum Link {
@@ -38,23 +38,23 @@ enum Link {
   String get address {
     switch (this) {
       case Link.github:
-        return Links.githubAddress;
+        return links.kGithubAddress;
       case Link.gists:
-        return Links.gistsAddress;
+        return links.kGistsAddress;
       case Link.linkedin:
-        return Links.linkedinAddress;
+        return links.kLinkedinAddress;
       case Link.facebook:
-        return Links.facebookAddress;
+        return links.kFacebookAddress;
       case Link.myWishBoard:
-        return Links.wishBoardAddress;
+        return links.kWishBoardAddress;
       case Link.goodreads:
-        return Links.goodReadsAddress;
+        return links.kGoodReadsAddress;
       case Link.laoziAi:
-        return Links.laoziAiAddress;
+        return links.kLaoziAiAddress;
       case Link.politerai:
-        return Links.politeraiAddress;
+        return links.kPoliteraiAddress;
       case Link.annaStore:
-        return Links.annaStoreAddress;
+        return links.kAnnaStoreAddress;
     }
   }
 }

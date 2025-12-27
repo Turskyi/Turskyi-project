@@ -103,8 +103,12 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
   Future<void> _insertProjectsOneByOne() async {
     for (int i = 0; i < widget.allProjects.length; i++) {
       await Future<void>.delayed(const Duration(milliseconds: 150));
-      _visibleProjects.putIfAbsent(i, () => widget.allProjects[i]);
-      _listKey.currentState?.insertItem(i);
+      if (mounted && widget.showProjects) {
+        _visibleProjects.putIfAbsent(i, () {
+          return widget.allProjects[i];
+        });
+        _listKey.currentState?.insertItem(i);
+      }
     }
   }
 
