@@ -130,54 +130,6 @@ class HomePresenter with ChangeNotifier {
         : _view.displayMessage("${translate("home.cannot_launch")} $link");
   }
 
-  String _setExperience({
-    required DateTime firstTime,
-    DateTime? lastTime,
-    Duration? gapDuration,
-  }) {
-    final int gapDays = gapDuration?.inDays ?? 0;
-    final int totalDays =
-        (lastTime ?? DateTime.now()).difference(firstTime).inDays - gapDays;
-    const int daysPerYear = 365;
-    const int daysPerMonth = 30;
-    /* "~/" is an integer division,
-     22~/7 can be said as Integer division of 22 by 7,
-      If either operand is a double
-       then the result of the truncating division a ~/ b
-        is equivalent to (a / b).truncate().toInt().*/
-    // count the years, discarding the remainder of the days
-    final int years = totalDays ~/ daysPerYear;
-    final int daysWithoutYears = totalDays - years * daysPerYear;
-    // count the months, discarding the remainder of the days
-    final int months = daysWithoutYears ~/ daysPerMonth;
-    // count the days, discarding the remainder of the years and months
-    final int days = daysWithoutYears - months * daysPerMonth;
-
-    final StringBuffer experienceStringBuffer = StringBuffer();
-    if (years > 0) {
-      experienceStringBuffer.write(
-        '${translatePlural('home.'
-        'years', years, args: <String, Object?>{'value': years})} ',
-      );
-    }
-    if (months > 0) {
-      experienceStringBuffer.write(
-        '${translatePlural('home.'
-        'months', months, args: <String, Object?>{'value': months})} ',
-      );
-    }
-    if (days > 0) {
-      experienceStringBuffer.write(
-        translatePlural(
-          'home.days',
-          days,
-          args: <String, Object?>{'value': days},
-        ),
-      );
-    }
-    return experienceStringBuffer.toString();
-  }
-
   /// rotates "wishlist" logo and expands text
   void onWishListButtonAnimate([
     PointerEvent event = const PointerMoveEvent(),
@@ -289,11 +241,13 @@ class HomePresenter with ChangeNotifier {
 
       if (response.statusCode == HttpStatus.ok) {
         await _launchUrl(primaryUrl);
-      } else {
+      } else if (fallbackUrl.isNotEmpty) {
         if (kDebugMode) {
           debugPrint('Unexpected status: ${response.statusCode}');
         }
         await _launchFallbackUrl(fallbackUrl);
+      } else {
+        await _launchUrl(primaryUrl);
       }
     } on DioException catch (e) {
       if (kDebugMode) {
@@ -316,7 +270,7 @@ class HomePresenter with ChangeNotifier {
 
           if (response.statusCode == HttpStatus.ok) {
             await _launchUrl(primaryUrl);
-          } else {
+          } else if (fallbackUrl.isNotEmpty) {
             if (kDebugMode) {
               debugPrint(
                 'DioException (cors-anywhere): Unexpected status while '
@@ -325,6 +279,8 @@ class HomePresenter with ChangeNotifier {
               );
             }
             await _launchFallbackUrl(fallbackUrl);
+          } else {
+            await _launchUrl(primaryUrl);
           }
         } on DioException catch (eCors) {
           if (kDebugMode) {
@@ -360,9 +316,11 @@ class HomePresenter with ChangeNotifier {
               );
               return;
             }
+          } else {
+            await _launchUrl(primaryUrl);
           }
         }
-      } else {
+      } else if (fallbackUrl.isNotEmpty) {
         if (kDebugMode) {
           debugPrint(
             'DioException (non-connection error) encountered for $primaryUrl: '
@@ -370,6 +328,8 @@ class HomePresenter with ChangeNotifier {
           );
         }
         await _handleFallbackUrl(fallbackUrl);
+      } else {
+        await _launchUrl(primaryUrl);
       }
     } catch (e) {
       if (kDebugMode) {
@@ -379,7 +339,11 @@ class HomePresenter with ChangeNotifier {
         );
       }
 
-      await _handleFallbackUrl(fallbackUrl);
+      if (fallbackUrl.isNotEmpty) {
+        await _handleFallbackUrl(fallbackUrl);
+      } else {
+        await _launchUrl(primaryUrl);
+      }
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -431,6 +395,54 @@ class HomePresenter with ChangeNotifier {
       lastTime: _androidLastCommit,
     );
     _totalExperience = _setExperience(firstTime: _androidFirstCommit);
+  }
+
+  String _setExperience({
+    required DateTime firstTime,
+    DateTime? lastTime,
+    Duration? gapDuration,
+  }) {
+    final int gapDays = gapDuration?.inDays ?? 0;
+    final int totalDays =
+        (lastTime ?? DateTime.now()).difference(firstTime).inDays - gapDays;
+    const int daysPerYear = 365;
+    const int daysPerMonth = 30;
+    /* "~/" is an integer division,
+     22~/7 can be said as Integer division of 22 by 7,
+      If either operand is a double
+       then the result of the truncating division a ~/ b
+        is equivalent to (a / b).truncate().toInt().*/
+    // count the years, discarding the remainder of the days
+    final int years = totalDays ~/ daysPerYear;
+    final int daysWithoutYears = totalDays - years * daysPerYear;
+    // count the months, discarding the remainder of the days
+    final int months = daysWithoutYears ~/ daysPerMonth;
+    // count the days, discarding the remainder of the years and months
+    final int days = daysWithoutYears - months * daysPerMonth;
+
+    final StringBuffer experienceStringBuffer = StringBuffer();
+    if (years > 0) {
+      experienceStringBuffer.write(
+        '${translatePlural('home.'
+        'years', years, args: <String, Object?>{'value': years})} ',
+      );
+    }
+    if (months > 0) {
+      experienceStringBuffer.write(
+        '${translatePlural('home.'
+        'months', months, args: <String, Object?>{'value': months})} ',
+      );
+    }
+    if (days > 0) {
+      experienceStringBuffer.write(
+        translatePlural(
+          'home.days',
+          days,
+          args: <String, Object?>{'value': days},
+        ),
+      );
+    }
+    return experienceStringBuffer.toString();
   }
 
   @override
