@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turskyi/localization/localization_delelegate_getter.dart'
     as locale;
@@ -9,11 +10,8 @@ import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/language.dart';
 import 'package:turskyi/view/app.dart';
-import 'package:turskyi/view/pages/game/unity_three_d_game_page.dart';
-import 'package:turskyi/view/pages/game/unity_two_d_game_page.dart';
-import 'package:turskyi/view/pages/home/home_page.dart';
-import 'package:turskyi/view/pages/support/support_page.dart';
 import 'package:turskyi/view/routes/app_route.dart';
+import 'package:turskyi/view/routes/routes.dart' as router;
 
 /// Justification of using the 'async' after [main]
 /// is taken from the official documentation at
@@ -29,7 +27,15 @@ void main() async {
 
   final LocalDataSource localDataSource = LocalDataSource(preferences);
 
-  final Language savedLanguage = localDataSource.getSavedLanguage();
+  final MainConfigs configs = MainConfigs();
+
+  Language initialLanguage = localDataSource.getSavedLanguage();
+
+  // Retrieves the host name (e.g., "https://turskyi.com/#/uk").
+  initialLanguage = await _resolveInitialLanguageFromUrl(
+    initialLanguage: initialLanguage,
+    localDataSource: localDataSource,
+  );
 
   final LocalizationDelegate localizationDelegate = await locale
       .getLocalizationDelegate(localDataSource);
@@ -38,32 +44,15 @@ void main() async {
     localizationDelegate.currentLocale.languageCode,
   );
 
-  if (savedLanguage != currentLanguage) {
-    final Locale locale = localeFromString(savedLanguage.isoLanguageCode);
-
-    localizationDelegate.changeLocale(locale);
-
-    // Notify listeners that the locale has changed so they can update.
-    localizationDelegate.onLocaleChanged?.call(locale);
+  if (initialLanguage != currentLanguage) {
+    _applyInitialLocale(
+      initialLanguage: initialLanguage,
+      localizationDelegate: localizationDelegate,
+    );
   }
 
-  final MainConfigs configs = MainConfigs();
-
   // Routes of all pages of the app.
-  final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
-    AppRoute.home.path: (BuildContext _) {
-      return HomePage(localDataSource: LocalDataSource(preferences));
-    },
-    AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
-    AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
-    AppRoute.support.path: (BuildContext _) => const SupportPage(),
-    AppRoute.enHome.path: (BuildContext _) {
-      return HomePage(localDataSource: LocalDataSource(preferences));
-    },
-    AppRoute.ukHome.path: (BuildContext _) {
-      return HomePage(localDataSource: LocalDataSource(preferences));
-    },
-  };
+  final Map<String, WidgetBuilder> routes = router.getRouteMap(localDataSource);
 
   runApp(
     LocalizedApp(
@@ -75,4 +64,50 @@ void main() async {
       ),
     ),
   );
+}
+
+Future<Language> _resolveInitialLanguageFromUrl({
+  required Language initialLanguage,
+  required LocalDataSource localDataSource,
+}) async {
+  // Retrieves the host name (e.g., "localhost" or "uk.turskyi.com").
+  final String host = Uri.base.host;
+
+  // Retrieves the fragment (e.g., "/en" or "https://turskyi.com/#/uk").
+  final String fragment = Uri.base.fragment;
+
+  for (final Language language in Language.values) {
+    final String currentLanguageCode = language.isoLanguageCode;
+    if (host.startsWith('$currentLanguageCode.') ||
+        fragment.contains('${AppRoute.home.path}$currentLanguageCode')) {
+      try {
+        Intl.defaultLocale = currentLanguageCode;
+      } catch (e, stackTrace) {
+        debugPrint(
+          'Failed to set Intl.defaultLocale to "$currentLanguageCode".\n'
+          'Error: $e\n'
+          'StackTrace: $stackTrace\n'
+          'Proceeding with previously set default locale or system default.',
+        );
+      }
+      initialLanguage = language;
+      // We save it so the rest of the app (like recommendations) uses this
+      // language.
+      await localDataSource.saveLanguageIsoCode(currentLanguageCode);
+      break;
+    }
+  }
+  return initialLanguage;
+}
+
+void _applyInitialLocale({
+  required Language initialLanguage,
+  required LocalizationDelegate localizationDelegate,
+}) {
+  final Locale locale = localeFromString(initialLanguage.isoLanguageCode);
+
+  localizationDelegate.changeLocale(locale);
+
+  // Notify listeners that the locale has changed so they can update.
+  localizationDelegate.onLocaleChanged?.call(locale);
 }
