@@ -5,21 +5,22 @@ description: Personal web page.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 homepage: https://turskyi.com
-version: 1.0.4
+
+version: 1.0.5
 
 environment:
   sdk: '>=3.9.2 <4.0.0'
 
 dependencies:
-  dio: ^5.9.1
+  dio: ^5.9.2
   email_validator: ^3.0.0
-  envied: ^1.3.2
-  envied_generator: ^1.3.2
+  envied: ^1.3.3
+  envied_generator: ^1.3.3
   flutter:
     sdk: flutter
 
   # display svg images
-  flutter_svg: ^2.2.3
+  flutter_svg: ^2.2.4
 
   #  localization
   flutter_translate:
@@ -39,8 +40,7 @@ dependencies:
   url_launcher: ^6.3.2
 
 dev_dependencies:
-  # Tried ^2.6.0, and it does not compile.
-  build_runner: ^2.10.5
+  build_runner: ^2.13.0
   flutter_test:
     sdk: flutter
 

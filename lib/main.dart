@@ -70,6 +70,7 @@ Future<Language> _resolveInitialLanguageFromUrl({
   required Language initialLanguage,
   required LocalDataSource localDataSource,
 }) async {
+  Language currentLanguage = initialLanguage;
   // Retrieves the host name (e.g., "localhost" or "uk.turskyi.com").
   final String host = Uri.base.host;
 
@@ -90,14 +91,14 @@ Future<Language> _resolveInitialLanguageFromUrl({
           'Proceeding with previously set default locale or system default.',
         );
       }
-      initialLanguage = language;
+      currentLanguage = language;
       // We save it so the rest of the app (like recommendations) uses this
       // language.
       await localDataSource.saveLanguageIsoCode(currentLanguageCode);
       break;
     }
   }
-  return initialLanguage;
+  return currentLanguage;
 }
 
 void _applyInitialLocale({
