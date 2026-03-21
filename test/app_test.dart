@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:turskyi/localization/localization_delelegate_getter.dart'
+import 'package:turskyi/localization/localization_delegate_getter.dart'
     as locale;
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/res/configs/builds/main/main_colors.dart';
