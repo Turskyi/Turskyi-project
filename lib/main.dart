@@ -6,7 +6,6 @@ import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/res/configs/builds/main/main_colors.dart';
 import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/res/configs/configs.dart';
-import 'package:turskyi/res/language.dart';
 import 'package:turskyi/view/app.dart';
 import 'package:turskyi/view/routes/routes.dart' as router;
 
@@ -24,23 +23,10 @@ void main() async {
 
   final MainConfigs configs = dependencies.mainConfigs;
 
-  final Language initialLanguage = await dependencies
-      .initializeAppLanguageUseCase
-      .call();
+  await dependencies.initializeAppLanguageUseCase.call();
 
   final LocalizationDelegate localizationDelegate =
       dependencies.localizationDelegate;
-
-  final Language currentLanguage = Language.fromIsoLanguageCode(
-    localizationDelegate.currentLocale.languageCode,
-  );
-
-  if (initialLanguage != currentLanguage) {
-    _applyInitialLocale(
-      initialLanguage: initialLanguage,
-      localizationDelegate: localizationDelegate,
-    );
-  }
 
   // Routes of all pages of the app.
   final Map<String, WidgetBuilder> routes = router.getRouteMap(localDataSource);
@@ -55,16 +41,4 @@ void main() async {
       ),
     ),
   );
-}
-
-void _applyInitialLocale({
-  required Language initialLanguage,
-  required LocalizationDelegate localizationDelegate,
-}) {
-  final Locale locale = localeFromString(initialLanguage.isoLanguageCode);
-
-  localizationDelegate.changeLocale(locale);
-
-  // Notify listeners that the locale has changed so they can update.
-  localizationDelegate.onLocaleChanged?.call(locale);
 }

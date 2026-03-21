@@ -1,13 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
+import 'package:turskyi/model/ports/app_locale_port.dart';
 import 'package:turskyi/res/language.dart';
 import 'package:turskyi/view/routes/app_route.dart';
 
 class InitializeAppLanguageUseCase {
-  const InitializeAppLanguageUseCase({required this.localDataSource});
+  const InitializeAppLanguageUseCase({
+    required this.localDataSource,
+    required this.appLocalePort,
+  });
 
   final LocalDataSource localDataSource;
+  final AppLocalePort appLocalePort;
 
   Future<Language> call() async {
     Language currentLanguage = localDataSource.getSavedLanguage();
@@ -33,6 +38,10 @@ class InitializeAppLanguageUseCase {
         await localDataSource.saveLanguageIsoCode(currentLanguageCode);
         break;
       }
+    }
+
+    if (currentLanguage != appLocalePort.currentLanguage) {
+      appLocalePort.applyLanguage(currentLanguage);
     }
 
     return currentLanguage;
