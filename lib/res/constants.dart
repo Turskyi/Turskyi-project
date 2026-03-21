@@ -1,7 +1,6 @@
 const String kAppName = 'Turskyi';
-// Expires Mar 13, 2026.
-const String kResendEmailDomain = 'kima.website';
 const String kDeveloperDomain = 'turskyi.com';
+const String kResendEmailDomain = kDeveloperDomain;
 const String kSupportEmail = 'support@$kDeveloperDomain';
 const String kImagePath = 'assets/images/';
 const String kFeatureGraphicPath = '${kImagePath}feature_graphics/';
