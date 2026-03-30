@@ -94,6 +94,33 @@
             font-family: Georgia, "Times New Roman", serif;
         }
 
+        #initial-splash {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #a6a7a7;
+            color: #ffffff;
+            text-align: center;
+            z-index: 9999;
+            transition: opacity 180ms ease;
+        }
+
+        #initial-splash.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #initial-splash h2 {
+            margin: 0;
+            padding: 0 24px;
+            font-size: clamp(2rem, 7vw, 4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: 0.02em;
+        }
+
         noscript {
             display: block;
             padding: 24px;
@@ -107,12 +134,38 @@
 
 <body>
 
+    <div aria-hidden="true" id="initial-splash">
+        <h2>Dmytro Turskyi<br>Дмитро Турський</h2>
+    </div>
+
     <h1
         style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
         Dmytro Turskyi - Дмитро Турський
     </h1>
 
     <!--suppress HtmlUnknownTarget -->
+    <script>
+        function hideInitialSplash() {
+            var splash = document.getElementById('initial-splash');
+            if (!splash || splash.classList.contains('hidden')) {
+                return;
+            }
+
+            splash.classList.add('hidden');
+            setTimeout(function () {
+                if (splash && splash.parentNode) {
+                    splash.parentNode.removeChild(splash);
+                }
+            }, 320);
+        }
+
+        window.addEventListener('flutter-first-frame', hideInitialSplash, {
+            once: true
+        });
+
+        // Fallback for cases when first-frame event is not emitted.
+        setTimeout(hideInitialSplash, 1200);
+    </script>
     <script async src="flutter_bootstrap.js"></script>
 
     <noscript>
