@@ -36,6 +36,9 @@ void main() async {
       localizationDelegate,
       Configs(
         configs: configs,
+        // Keep `MainColors` at composition root: it is a lightweight UI config
+        // with no async/setup dependencies, so injecting it via `Dependencies`
+        // would add DI noise without improving testability or flexibility.
         colors: MainColors(),
         child: App(routes: routes),
       ),
