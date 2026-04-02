@@ -18,6 +18,9 @@ class ProjectTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Animation<double> slideAnimation = removing
+        ? ReverseAnimation(animation)
+        : animation;
     final Tween<Offset> slideTween = Tween<Offset>(
       begin: removing ? Offset.zero : const Offset(1, 0),
       end: removing ? const Offset(1, 0) : Offset.zero,
@@ -25,7 +28,7 @@ class ProjectTile extends StatelessWidget {
     const double verticalPadding = 8.0;
     return SlideTransition(
       position: slideTween.animate(
-        CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+        CurvedAnimation(parent: slideAnimation, curve: Curves.easeInOut),
       ),
       child: FadeTransition(
         opacity: animation,

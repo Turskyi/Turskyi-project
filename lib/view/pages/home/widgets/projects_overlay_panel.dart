@@ -8,6 +8,7 @@ class ProjectsOverlayPanel extends StatefulWidget {
     required this.controller,
     required this.slideAnimation,
     required this.onDismiss,
+    required this.onProjectsHidden,
     required this.allProjects,
     super.key,
   });
@@ -16,6 +17,7 @@ class ProjectsOverlayPanel extends StatefulWidget {
   final AnimationController controller;
   final Animation<Offset> slideAnimation;
   final VoidCallback onDismiss;
+  final VoidCallback onProjectsHidden;
   final List<Project> allProjects;
 
   @override
@@ -23,16 +25,29 @@ class ProjectsOverlayPanel extends StatefulWidget {
 }
 
 class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final Map<int, Project> _visibleProjects = <int, Project>{};
+  static const Duration _itemAnimationDuration = Duration(milliseconds: 450);
+  static const Duration _itemInsertDelay = Duration(milliseconds: 150);
+
+  final List<_VisibleProjectEntry> _visibleProjects = <_VisibleProjectEntry>[];
+  bool _isProcessingVisibility = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.showProjects) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _processVisibilityChanges();
+        }
+      });
+    }
+  }
 
   @override
   void didUpdateWidget(covariant ProjectsOverlayPanel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.showProjects && _visibleProjects.isEmpty) {
-      _insertProjectsOneByOne();
-    } else if (!widget.showProjects && _visibleProjects.isNotEmpty) {
-      _removeProjectsOneByOne();
+    if (widget.showProjects != oldWidget.showProjects) {
+      _processVisibilityChanges();
     }
   }
 
@@ -64,29 +79,32 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                       child: Container(
                         width: 300,
                         color: Colors.transparent,
-                        child: AnimatedList(
-                          key: _listKey,
-                          initialItemCount: _visibleProjects.length,
+                        child: ListView.builder(
                           padding: const EdgeInsets.only(bottom: 80.0),
-                          itemBuilder:
-                              (
-                                BuildContext _,
-                                int index,
-                                Animation<double> animation,
-                              ) {
-                                final Project? project =
-                                    _visibleProjects[index];
-                                if (project != null) {
-                                  return ProjectTile(
-                                    key: ValueKey<String>(project.name),
-                                    project: project,
-                                    animation: animation,
-                                    removing: false,
-                                  );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
+                          itemCount: _visibleProjects.length,
+                          itemBuilder: (BuildContext _, int index) {
+                            final _VisibleProjectEntry entry =
+                                _visibleProjects[index];
+                            return TweenAnimationBuilder<double>(
+                              key: ValueKey<String>(entry.project.name),
+                              tween: Tween<double>(
+                                end: entry.isVisible ? 1 : 0,
+                              ),
+                              duration: _itemAnimationDuration,
+                              curve: Curves.easeInOut,
+                              builder:
+                                  (BuildContext _, double value, Widget? _) {
+                                    return ProjectTile(
+                                      key: ValueKey<String>(entry.project.name),
+                                      project: entry.project,
+                                      animation: AlwaysStoppedAnimation<double>(
+                                        value,
+                                      ),
+                                      removing: entry.isRemoving,
+                                    );
+                                  },
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -100,34 +118,89 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
     );
   }
 
-  Future<void> _insertProjectsOneByOne() async {
-    for (int i = 0; i < widget.allProjects.length; i++) {
-      await Future<void>.delayed(const Duration(milliseconds: 150));
-      if (mounted && widget.showProjects) {
-        _visibleProjects.putIfAbsent(i, () {
-          return widget.allProjects[i];
-        });
-        _listKey.currentState?.insertItem(i);
+  Future<void> _processVisibilityChanges() async {
+    if (_isProcessingVisibility) {
+      return;
+    }
+
+    _isProcessingVisibility = true;
+    try {
+      while (mounted) {
+        if (widget.showProjects) {
+          await _showProjectsOneByOne();
+        } else {
+          await _hideProjectsOneByOne();
+        }
+
+        final bool reachedTarget = widget.showProjects
+            ? _visibleProjects.length == widget.allProjects.length
+            : _visibleProjects.isEmpty;
+        if (reachedTarget) {
+          break;
+        }
+      }
+    } finally {
+      _isProcessingVisibility = false;
+      final bool needsAnotherPass = widget.showProjects
+          ? _visibleProjects.length < widget.allProjects.length
+          : _visibleProjects.isNotEmpty;
+      if (mounted && needsAnotherPass) {
+        _processVisibilityChanges();
       }
     }
   }
 
-  Future<void> _removeProjectsOneByOne() async {
-    for (int i = _visibleProjects.length - 1; i >= 0; i--) {
-      final Project? removedItem = _visibleProjects.remove(i);
-      if (removedItem != null) {
-        _listKey.currentState?.removeItem(
-          i,
-          (_, Animation<double> animation) => ProjectTile(
-            key: ValueKey<String>(removedItem.name),
-            project: removedItem,
-            animation: animation,
-            removing: true,
+  Future<void> _showProjectsOneByOne() async {
+    while (mounted &&
+        widget.showProjects &&
+        _visibleProjects.length < widget.allProjects.length) {
+      setState(() {
+        _visibleProjects.add(
+          _VisibleProjectEntry(
+            project: widget.allProjects[_visibleProjects.length],
           ),
-          duration: const Duration(milliseconds: 1000),
         );
+      });
+
+      if (_visibleProjects.length >= widget.allProjects.length) {
+        break;
       }
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      await Future<void>.delayed(_itemInsertDelay);
     }
   }
+
+  Future<void> _hideProjectsOneByOne() async {
+    while (mounted && _visibleProjects.isNotEmpty) {
+      final _VisibleProjectEntry lastEntry = _visibleProjects.last;
+      if (!lastEntry.isRemoving) {
+        setState(() {
+          lastEntry
+            ..isRemoving = true
+            ..isVisible = false;
+        });
+      }
+
+      await Future<void>.delayed(_itemAnimationDuration);
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _visibleProjects.remove(lastEntry);
+      });
+    }
+
+    if (!widget.showProjects) {
+      widget.onProjectsHidden();
+    }
+  }
+}
+
+class _VisibleProjectEntry {
+  _VisibleProjectEntry({required this.project});
+
+  final Project project;
+  bool isVisible = true;
+  bool isRemoving = false;
 }

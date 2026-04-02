@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +43,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin
     implements HomeView {
+  final ValueNotifier<bool> _showProjectsOverlayNotifier = ValueNotifier<bool>(
+    false,
+  );
   final ValueNotifier<bool> _showProjectsNotifier = ValueNotifier<bool>(false);
+  bool _desiredProjectsVisible = false;
+  bool _isProjectsTransitionRunning = false;
+  Completer<void>? _projectsHiddenCompleter;
 
   late final AnimationController _projectsController;
   late final Animation<Offset> _slideAnimation;
@@ -149,14 +157,25 @@ class _HomePageState extends State<HomePage>
                 Consumer<HomePresenter>(
                   builder: (BuildContext _, HomePresenter model, Widget? _) {
                     return ValueListenableBuilder<bool>(
-                      valueListenable: _showProjectsNotifier,
-                      builder: (BuildContext _, bool showProjects, Widget? _) {
-                        return ProjectsOverlayPanel(
-                          allProjects: model.allProjects,
-                          showProjects: showProjects,
-                          controller: _projectsController,
-                          slideAnimation: _slideAnimation,
-                          onDismiss: _toggleProjects,
+                      valueListenable: _showProjectsOverlayNotifier,
+                      builder: (BuildContext _, bool showOverlay, Widget? _) {
+                        if (!showOverlay) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: _showProjectsNotifier,
+                          builder:
+                              (BuildContext _, bool showProjects, Widget? _) {
+                                return ProjectsOverlayPanel(
+                                  allProjects: model.allProjects,
+                                  showProjects: showProjects,
+                                  controller: _projectsController,
+                                  slideAnimation: _slideAnimation,
+                                  onDismiss: _toggleProjects,
+                                  onProjectsHidden: _handleProjectsHidden,
+                                );
+                              },
                         );
                       },
                     );
@@ -208,14 +227,25 @@ class _HomePageState extends State<HomePage>
                 Consumer<HomePresenter>(
                   builder: (BuildContext _, HomePresenter model, Widget? _) {
                     return ValueListenableBuilder<bool>(
-                      valueListenable: _showProjectsNotifier,
-                      builder: (BuildContext _, bool showProjects, Widget? _) {
-                        return ProjectsOverlayPanel(
-                          allProjects: model.allProjects,
-                          showProjects: showProjects,
-                          controller: _projectsController,
-                          slideAnimation: _slideAnimation,
-                          onDismiss: _toggleProjects,
+                      valueListenable: _showProjectsOverlayNotifier,
+                      builder: (BuildContext _, bool showOverlay, Widget? _) {
+                        if (!showOverlay) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: _showProjectsNotifier,
+                          builder:
+                              (BuildContext _, bool showProjects, Widget? _) {
+                                return ProjectsOverlayPanel(
+                                  allProjects: model.allProjects,
+                                  showProjects: showProjects,
+                                  controller: _projectsController,
+                                  slideAnimation: _slideAnimation,
+                                  onDismiss: _toggleProjects,
+                                  onProjectsHidden: _handleProjectsHidden,
+                                );
+                              },
                         );
                       },
                     );
@@ -248,17 +278,88 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
+    _showProjectsOverlayNotifier.dispose();
+    _showProjectsNotifier.dispose();
     _projectsController.dispose();
     super.dispose();
   }
 
   void _toggleProjects() {
-    _showProjectsNotifier.value = !_showProjectsNotifier.value;
+    _desiredProjectsVisible = !_desiredProjectsVisible;
+    _processProjectsVisibility();
+  }
 
-    if (_showProjectsNotifier.value) {
-      _projectsController.forward();
-    } else {
-      _projectsController.reverse();
+  void _handleProjectsHidden() {
+    if (_projectsHiddenCompleter != null &&
+        !_projectsHiddenCompleter!.isCompleted) {
+      _projectsHiddenCompleter!.complete();
+    }
+  }
+
+  Future<void> _processProjectsVisibility() async {
+    if (_isProjectsTransitionRunning) {
+      return;
+    }
+
+    _isProjectsTransitionRunning = true;
+    try {
+      while (mounted) {
+        if (_desiredProjectsVisible) {
+          if (!_showProjectsOverlayNotifier.value) {
+            _showProjectsOverlayNotifier.value = true;
+            await _projectsController.forward();
+            if (!mounted) {
+              return;
+            }
+          }
+
+          if (!_desiredProjectsVisible) {
+            continue;
+          }
+
+          if (!_showProjectsNotifier.value) {
+            _showProjectsNotifier.value = true;
+          }
+        } else {
+          if (_showProjectsNotifier.value) {
+            _projectsHiddenCompleter ??= Completer<void>();
+            _showProjectsNotifier.value = false;
+            await _projectsHiddenCompleter!.future;
+            _projectsHiddenCompleter = null;
+            if (!mounted) {
+              return;
+            }
+          }
+
+          if (_desiredProjectsVisible) {
+            continue;
+          }
+
+          if (_showProjectsOverlayNotifier.value) {
+            await _projectsController.reverse();
+            if (!mounted) {
+              return;
+            }
+            _showProjectsOverlayNotifier.value = false;
+          }
+        }
+
+        final bool settled = _desiredProjectsVisible
+            ? _showProjectsOverlayNotifier.value && _showProjectsNotifier.value
+            : !_showProjectsOverlayNotifier.value &&
+                  !_showProjectsNotifier.value;
+        if (settled) {
+          break;
+        }
+      }
+    } finally {
+      _isProjectsTransitionRunning = false;
+      final bool needsAnotherPass = _desiredProjectsVisible
+          ? !_showProjectsOverlayNotifier.value || !_showProjectsNotifier.value
+          : _showProjectsOverlayNotifier.value || _showProjectsNotifier.value;
+      if (mounted && needsAnotherPass) {
+        _processProjectsVisibility();
+      }
     }
   }
 }
