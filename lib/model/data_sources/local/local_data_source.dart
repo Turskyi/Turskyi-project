@@ -158,19 +158,6 @@ class LocalDataSource {
           PlatformType.ios,
         },
       ),
-      Project(
-        name: 'Politer AI',
-        imageAssetPath:
-            '${constants.kFeatureGraphicPath}'
-            'politer_ai-feature_graphic.png',
-        primaryWebsiteUrl: translate('projects.politer_ai.url'),
-        fallbackWebsiteUrl: translate('projects.politer_ai.fallback_url'),
-        supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
-          PlatformType.android,
-          PlatformType.web,
-        },
-      ),
       const Project(
         name: 'InvestTracks',
         imageAssetPath:
@@ -181,6 +168,19 @@ class LocalDataSource {
         primaryWebsiteUrl: 'https://investtracks.com',
         // No `fallbackWebsiteUrl` because it will not support authentication
         // on another domain.
+        supportedPlatforms: <PlatformType>{
+          PlatformType.ios,
+          PlatformType.android,
+          PlatformType.web,
+        },
+      ),
+      Project(
+        name: 'Politer AI',
+        imageAssetPath:
+            '${constants.kFeatureGraphicPath}'
+            'politer_ai-feature_graphic.png',
+        primaryWebsiteUrl: translate('projects.politer_ai.url'),
+        fallbackWebsiteUrl: translate('projects.politer_ai.fallback_url'),
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
