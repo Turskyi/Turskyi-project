@@ -98,12 +98,7 @@ class _HomePageState extends State<HomePage>
         SnackBar(
           duration: const Duration(seconds: 10),
           content: SelectableText.rich(span),
-          action: SnackBarAction(
-            label: 'X',
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
-          ),
+          showCloseIcon: true,
         ),
       );
     } else {
@@ -111,12 +106,7 @@ class _HomePageState extends State<HomePage>
         SnackBar(
           duration: const Duration(seconds: 6),
           content: SelectableText(message),
-          action: SnackBarAction(
-            label: 'X',
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
-          ),
+          showCloseIcon: true,
         ),
       );
     }

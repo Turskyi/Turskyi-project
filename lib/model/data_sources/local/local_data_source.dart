@@ -146,6 +146,19 @@ class LocalDataSource {
         },
       ),
       Project(
+        name: 'Portion Control',
+        imageAssetPath:
+            '${constants.kFeatureGraphicPath}'
+            'portion_control-feature_graphic.png',
+        primaryWebsiteUrl: translate('projects.portion_control.url'),
+        fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
+        supportedPlatforms: <PlatformType>{
+          PlatformType.android,
+          PlatformType.web,
+          PlatformType.ios,
+        },
+      ),
+      Project(
         name: 'Politer AI',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -174,19 +187,7 @@ class LocalDataSource {
           PlatformType.web,
         },
       ),
-      Project(
-        name: 'Portion Control',
-        imageAssetPath:
-            '${constants.kFeatureGraphicPath}'
-            'portion_control-feature_graphic.png',
-        primaryWebsiteUrl: translate('projects.portion_control.url'),
-        fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
-        supportedPlatforms: <PlatformType>{
-          PlatformType.android,
-          PlatformType.web,
-          PlatformType.ios,
-        },
-      ),
+
       Project(
         name: translate('projects.mala_knyzhka.name'),
         imageAssetPath:
