@@ -171,38 +171,10 @@ class _SupportPageState extends State<SupportPage> {
                             onPressed: presenter.isLoading || formState == null
                                 ? null
                                 : () async {
-                                    if (formState.validate()) {
-                                      await presenter.sendSupportEmail();
-                                      if (presenter.isSuccess &&
-                                          context.mounted) {
-                                        presenter.resetForm();
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              translate(
-                                                'support.success_message',
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      } else if (context.mounted) {
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              presenter.errorMessage.isNotEmpty
-                                                  ? presenter.errorMessage
-                                                  : translate(
-                                                      'support.failure_message',
-                                                    ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    }
+                                    await _submitForm(
+                                      formState: formState,
+                                      presenter: presenter,
+                                    );
                                   },
                             child: presenter.isLoading
                                 ? const SizedBox(
@@ -221,5 +193,43 @@ class _SupportPageState extends State<SupportPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _submitForm({
+    required FormState formState,
+    required SupportFormPresenter presenter,
+  }) async {
+    if (formState.validate()) {
+      await presenter.sendSupportEmail();
+      if (presenter.isSuccess && mounted) {
+        presenter.resetForm();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(translate('support.success_message')),
+            action: SnackBarAction(
+              label: 'X',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      } else if (mounted) {
+        final String errorMsg = presenter.errorMessage.isNotEmpty
+            ? presenter.errorMessage
+            : translate('support.failure_message');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMsg),
+            action: SnackBarAction(
+              label: 'X',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      }
+    }
   }
 }

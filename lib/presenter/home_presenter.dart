@@ -228,125 +228,134 @@ class HomePresenter with ChangeNotifier {
   ///
   /// 5. If both attempts fail — we show the fallback site.
   ///    - In some edge cases (e.g. Clerk domain lock), fallback is just an
-  ///    explanation/snackbar.
+  ///    explanation/snack-bar.
   Future<void> checkAndLaunchProjectWebsite(Project project) async {
-    _isLoading = true;
-    notifyListeners();
     final String primaryUrl = project.primaryWebsiteUrl;
     final String fallbackUrl = project.fallbackWebsiteUrl;
-    final Dio dio = Dio();
 
-    try {
-      final Response<void> response = await dio.head(primaryUrl);
+    // When there is no fallback, every code path ends up launching the primary
+    // URL anyway. Skip the async health check so the browser's user-gesture
+    // context is preserved — otherwise Safari blocks the new tab as a popup.
+    if (fallbackUrl.isEmpty) {
+      await _launchUrl(primaryUrl);
+    } else {
+      _isLoading = true;
+      notifyListeners();
+      final Dio dio = Dio();
 
-      if (response.statusCode == HttpStatus.ok) {
-        await _launchUrl(primaryUrl);
-      } else if (fallbackUrl.isNotEmpty) {
-        if (kDebugMode) {
-          debugPrint('Unexpected status: ${response.statusCode}');
-        }
-        await _launchFallbackUrl(fallbackUrl);
-      } else {
-        await _launchUrl(primaryUrl);
-      }
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        debugPrint('Dio error while checking $primaryUrl:');
-        debugPrint('Type: ${e.type}');
-        debugPrint('Message: ${e.message}');
-        debugPrint('Error: ${e.error}');
-        debugPrint('Response: ${e.response}');
-      }
+      try {
+        final Response<void> response = await dio.head(primaryUrl);
 
-      if (e.type == DioExceptionType.connectionError) {
-        try {
-          // TODO: migrate hosting website from github pages to a platform that
-          // allows custom API routes, somewhere we can set up a serverless
-          // backend, to build a proper CORS-aware backend, until then use this
-          // workaround.
-          final String proxyPrimaryUrl =
-              '${constants.kCorsProxyUrl}$primaryUrl';
-          final Response<void> response = await dio.head(proxyPrimaryUrl);
-
-          if (response.statusCode == HttpStatus.ok) {
-            await _launchUrl(primaryUrl);
-          } else if (fallbackUrl.isNotEmpty) {
-            if (kDebugMode) {
-              debugPrint(
-                'DioException (cors-anywhere): Unexpected status while '
-                'checking proxy $primaryUrl -> $proxyPrimaryUrl: '
-                '${response.statusCode}',
-              );
-            }
-            await _launchFallbackUrl(fallbackUrl);
-          } else {
-            await _launchUrl(primaryUrl);
-          }
-        } on DioException catch (eCors) {
+        if (response.statusCode == HttpStatus.ok) {
+          await _launchUrl(primaryUrl);
+        } else if (fallbackUrl.isNotEmpty) {
           if (kDebugMode) {
-            debugPrint(
-              'Dio error while checking proxy $primaryUrl: \n'
-              'eCors.type: ${eCors.type}, \n'
-              'eCors.message: ${eCors.message}, \n'
-              'eCors.error: ${eCors.error}, \n'
-              'eCors.response: ${eCors.response}.',
-            );
+            debugPrint('Unexpected status: ${response.statusCode}');
           }
+          await _launchFallbackUrl(fallbackUrl);
+        } else {
+          await _launchUrl(primaryUrl);
+        }
+      } on DioException catch (e) {
+        if (kDebugMode) {
+          debugPrint('Dio error while checking $primaryUrl:');
+          debugPrint('Type: ${e.type}');
+          debugPrint('Message: ${e.message}');
+          debugPrint('Error: ${e.error}');
+          debugPrint('Response: ${e.response}');
+        }
 
-          if (fallbackUrl.isNotEmpty) {
-            await _handleFallbackUrl(fallbackUrl);
-          } else if (eCors.type == DioExceptionType.connectionError) {
-            try {
+        if (e.type == DioExceptionType.connectionError) {
+          try {
+            // TODO: migrate hosting website from github pages to a platform
+            //  that allows custom API routes, somewhere we can set up a
+            //  serverless backend, to build a proper CORS-aware backend, until
+            //  then use this workaround.
+            final String proxyPrimaryUrl =
+                '${constants.kCorsProxyUrl}$primaryUrl';
+            final Response<void> response = await dio.head(proxyPrimaryUrl);
+
+            if (response.statusCode == HttpStatus.ok) {
               await _launchUrl(primaryUrl);
-            } catch (eLaunch) {
+            } else if (fallbackUrl.isNotEmpty) {
               if (kDebugMode) {
                 debugPrint(
-                  '‼️ Last attempt to launch primary URL "$primaryUrl" '
-                  'FAILED.\n'
-                  '   Previous attempts (direct HEAD, proxy HEAD) resulted in '
-                  'DioExceptionType.connectionError.\n'
-                  '   Current _launchUrl error type: ${eLaunch.runtimeType}\n'
-                  '   Current _launchUrl error: $eLaunch',
+                  'DioException (cors-anywhere): Unexpected status while '
+                  'checking proxy $primaryUrl -> $proxyPrimaryUrl: '
+                  '${response.statusCode}',
                 );
               }
-              _view.displayMessage(
-                'Unfortunately, this project is not accessible at the moment. '
-                'You can contact the developer via '
-                'https://turskyi.com/#/support to find out more.',
-              );
-              return;
+              await _launchFallbackUrl(fallbackUrl);
+            } else {
+              await _launchUrl(primaryUrl);
             }
-          } else {
-            await _launchUrl(primaryUrl);
+          } on DioException catch (eCors) {
+            if (kDebugMode) {
+              debugPrint(
+                'Dio error while checking proxy $primaryUrl: \n'
+                'eCors.type: ${eCors.type}, \n'
+                'eCors.message: ${eCors.message}, \n'
+                'eCors.error: ${eCors.error}, \n'
+                'eCors.response: ${eCors.response}.',
+              );
+            }
+
+            if (fallbackUrl.isNotEmpty) {
+              await _handleFallbackUrl(fallbackUrl);
+            } else if (eCors.type == DioExceptionType.connectionError) {
+              try {
+                await _launchUrl(primaryUrl);
+              } catch (eLaunch) {
+                if (kDebugMode) {
+                  debugPrint(
+                    '‼️ Last attempt to launch primary URL "$primaryUrl" '
+                    'FAILED.\n'
+                    '   Previous attempts (direct HEAD, proxy HEAD) resulted '
+                    'in DioExceptionType.connectionError.\n'
+                    '   Current _launchUrl error type: ${eLaunch.runtimeType}\n'
+                    '   Current _launchUrl error: $eLaunch',
+                  );
+                }
+                _view.displayMessage(
+                  'Unfortunately, this project is not accessible at the '
+                  'moment. '
+                  'You can contact the developer via '
+                  'https://turskyi.com/#/support to find out more.',
+                );
+                return;
+              }
+            } else {
+              await _launchUrl(primaryUrl);
+            }
           }
+        } else if (fallbackUrl.isNotEmpty) {
+          if (kDebugMode) {
+            debugPrint(
+              'DioException (non-connection error) encountered for '
+              '$primaryUrl: $e',
+            );
+          }
+          await _handleFallbackUrl(fallbackUrl);
+        } else {
+          await _launchUrl(primaryUrl);
         }
-      } else if (fallbackUrl.isNotEmpty) {
+      } catch (e) {
         if (kDebugMode) {
           debugPrint(
-            'DioException (non-connection error) encountered for $primaryUrl: '
-            '$e',
+            'Generic catch block: An unexpected error of type ${e.runtimeType} '
+            'occurred: $e',
           );
         }
-        await _handleFallbackUrl(fallbackUrl);
-      } else {
-        await _launchUrl(primaryUrl);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        debugPrint(
-          'Generic catch block: An unexpected error of type ${e.runtimeType} '
-          'occurred: $e',
-        );
-      }
 
-      if (fallbackUrl.isNotEmpty) {
-        await _handleFallbackUrl(fallbackUrl);
-      } else {
-        await _launchUrl(primaryUrl);
+        if (fallbackUrl.isNotEmpty) {
+          await _handleFallbackUrl(fallbackUrl);
+        } else {
+          await _launchUrl(primaryUrl);
+        }
+      } finally {
+        _isLoading = false;
+        notifyListeners();
       }
-    } finally {
-      _isLoading = false;
-      notifyListeners();
     }
   }
 
