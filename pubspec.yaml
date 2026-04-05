@@ -6,7 +6,7 @@ description: Personal web page of Dmytro Turskyi.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 homepage: https://turskyi.com
 
-version: 1.2.0
+version: 1.2.1
 
 environment:
   sdk: '>=3.9.2 <4.0.0'

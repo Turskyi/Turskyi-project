@@ -206,29 +206,16 @@ class _SupportPageState extends State<SupportPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(translate('support.success_message')),
-            action: SnackBarAction(
-              label: 'X',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
+            showCloseIcon: true,
           ),
         );
       } else if (mounted) {
         final String errorMsg = presenter.errorMessage.isNotEmpty
             ? presenter.errorMessage
             : translate('support.failure_message');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(errorMsg),
-            action: SnackBarAction(
-              label: 'X',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(errorMsg), showCloseIcon: true));
       }
     }
   }
