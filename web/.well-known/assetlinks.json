@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.turskyi.weather_fit",
+      "sha256_cert_fingerprints": [
+        "83:55:69:75:37:58:7B:01:2A:E7:03:2D:ED:84:08:8B:87:D5:8A:65:0C:97:30:37:9C:5F:68:D1:B6:65:56:7C"
+      ]
+    }
+  }
+]
