@@ -1,0 +1,28 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "26QZ8BPZFL.com.turskyi.weatherFit"
+                ],
+                "components": [
+                    {
+                        "/": "/about"
+                    },
+                    {
+                        "/": "/support"
+                    },
+                    {
+                        "/": "/privacy-policy"
+                    },
+                    {
+                        "/": "/search"
+                    },
+                    {
+                        "/": "/"
+                    }
+                ]
+            }
+        ]
+    }
+}
