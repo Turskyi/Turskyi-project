@@ -187,7 +187,18 @@ class LocalDataSource {
           PlatformType.web,
         },
       ),
-
+      Project(
+        name: translate('projects.news_glance.name'),
+        imageAssetPath:
+            '${constants.kFeatureGraphicPath}news_glance-feature_graphic.png',
+        primaryWebsiteUrl: 'https://newsglanceai.com',
+        fallbackWebsiteUrl: 'https://news-glanceai.vercel.app',
+        supportedPlatforms: <PlatformType>{
+          PlatformType.android,
+          PlatformType.web,
+          PlatformType.ios,
+        },
+      ),
       Project(
         name: translate('projects.mala_knyzhka.name'),
         imageAssetPath:
@@ -196,17 +207,6 @@ class LocalDataSource {
         fallbackWebsiteUrl:
             '${constants.kGooglePlayBaseUrl}'
             'com.turskyi.malaknyzhka',
-        supportedPlatforms: <PlatformType>{
-          PlatformType.android,
-          PlatformType.web,
-        },
-      ),
-      Project(
-        name: translate('projects.news_glance.name'),
-        imageAssetPath:
-            '${constants.kFeatureGraphicPath}news_glance-feature_graphic.png',
-        primaryWebsiteUrl: 'https://news.turskyi.com',
-        fallbackWebsiteUrl: 'https://news-glanceai.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
           PlatformType.web,
