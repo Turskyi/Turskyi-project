@@ -14,7 +14,7 @@ class FlutterTranslateAppLocalePort implements AppLocalePort {
   );
 
   @override
-  void applyLanguage(Language language) {
+  void applyLanguage(final Language language) {
     final Locale locale = localeFromString(language.isoLanguageCode);
 
     localizationDelegate.changeLocale(locale);

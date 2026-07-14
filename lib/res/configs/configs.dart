@@ -20,7 +20,7 @@ class Configs extends InheritedWidget {
   final BaseConfigs configs;
 
   @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
+  bool updateShouldNotify(covariant final InheritedWidget oldWidget) => false;
 
   /// Retrieves the closest instance of this class that encloses the given
   /// context.
@@ -51,7 +51,7 @@ class Configs extends InheritedWidget {
   ///
   /// Throws a [FlutterError] if no [Configs] ancestor is found in the widget
   /// tree.
-  static Configs of(BuildContext context) {
+  static Configs of(final BuildContext context) {
     final Configs? appConfigs = context.dependOnInheritedWidgetOfExactType(
       aspect: Configs,
     );
@@ -72,7 +72,7 @@ class Configs extends InheritedWidget {
   }
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<BaseColors>('colors', colors));
     properties.add(DiagnosticsProperty<BaseConfigs>('configs', configs));

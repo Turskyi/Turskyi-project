@@ -16,7 +16,7 @@ import 'package:turskyi/view/pages/support/support_page.dart';
 import 'package:turskyi/view/routes/app_route.dart';
 
 void main() {
-  testWidgets('App renders home screen', (WidgetTester tester) async {
+  testWidgets('App renders home screen', (final WidgetTester tester) async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
 
     /// Init language.

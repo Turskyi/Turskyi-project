@@ -12,7 +12,7 @@ class FacebookButton extends StatelessWidget {
   const FacebookButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return FittedBox(
       child: Container(
         height: Dimens.heightColorButton,
@@ -27,37 +27,42 @@ class FacebookButton extends StatelessWidget {
           ],
         ),
         child: Consumer<HomePresenter>(
-          builder: (BuildContext context, HomePresenter model, Widget? _) {
-            return TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Configs.of(context).colors.colorFacebook,
-                minimumSize: const Size(88, 36),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.indent16,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: radii.borderRadius,
-                  side: BorderSide(
-                    color: Configs.of(context).colors.colorFacebook,
-                  ),
-                ),
-              ),
-              onPressed: () => model.onLaunchLink(Link.facebook.address),
-              child: kIsWeb
-                  ? Image.asset(
-                      '${Configs.of(context).configs.imageAssents}'
-                      'pic_facebook.png',
-                      width: Dimens.widthFacebook,
-                      fit: BoxFit.cover,
-                    )
-                  : SvgPicture.asset(
-                      '${Configs.of(context).configs.imageAssents}'
-                      'pic_facebook.svg',
-                      width: Dimens.widthFacebook,
-                      fit: BoxFit.cover,
+          builder:
+              (
+                final BuildContext context,
+                final HomePresenter model,
+                Widget? _,
+              ) {
+                return TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Configs.of(context).colors.colorFacebook,
+                    minimumSize: const Size(88, 36),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.indent16,
                     ),
-            );
-          },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: radii.borderRadius,
+                      side: BorderSide(
+                        color: Configs.of(context).colors.colorFacebook,
+                      ),
+                    ),
+                  ),
+                  onPressed: () => model.onLaunchLink(Link.facebook.address),
+                  child: kIsWeb
+                      ? Image.asset(
+                          '${Configs.of(context).configs.imageAssents}'
+                          'pic_facebook.png',
+                          width: Dimens.widthFacebook,
+                          fit: BoxFit.cover,
+                        )
+                      : SvgPicture.asset(
+                          '${Configs.of(context).configs.imageAssents}'
+                          'pic_facebook.svg',
+                          width: Dimens.widthFacebook,
+                          fit: BoxFit.cover,
+                        ),
+                );
+              },
         ),
       ),
     );

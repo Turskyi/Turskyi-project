@@ -25,20 +25,25 @@ class WishlistButtonWidget extends StatelessWidget {
   final String dayCount;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return FittedBox(
       child: Consumer<HomePresenter>(
-        builder: (BuildContext context, HomePresenter model, Widget? button) {
-          if (kIsWeb) {
-            return MouseRegion(
-              onEnter: model.onWishListButtonAnimate,
-              onExit: model.onWishListButtonAnimate,
-              child: button,
-            );
-          } else {
-            return button ?? const SizedBox();
-          }
-        },
+        builder:
+            (
+              final BuildContext context,
+              final HomePresenter model,
+              final Widget? button,
+            ) {
+              if (kIsWeb) {
+                return MouseRegion(
+                  onEnter: model.onWishListButtonAnimate,
+                  onExit: model.onWishListButtonAnimate,
+                  child: button,
+                );
+              } else {
+                return button ?? const SizedBox();
+              }
+            },
         child: AnimatedContainer(
           margin: const EdgeInsets.all(Dimens.indent8),
           width: wishlistWidth,

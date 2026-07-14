@@ -10,7 +10,7 @@ class UnityTwoDGamePage extends StatelessWidget {
   const UnityTwoDGamePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     setupWebView(
       Configs.of(context).configs.htmlGameName,
       links.kUnityTwoDAddress,

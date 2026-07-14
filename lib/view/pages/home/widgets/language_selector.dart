@@ -15,7 +15,7 @@ class LanguageSelector extends StatelessWidget {
   final Language currentLanguage;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return Positioned(
       top: Dimens.indent24,
@@ -33,7 +33,7 @@ class LanguageSelector extends StatelessWidget {
           child: PopupMenuButton<Language>(
             tooltip: translate('change_language'),
             color: Colors.grey.shade900,
-            onSelected: (Language lang) {
+            onSelected: (final Language lang) {
               // Change locale used by flutter_translate.
               // flutter_translate accepts locale as string like 'en' or 'uk'.
               changeLocale(context, lang.isoLanguageCode)
@@ -43,7 +43,7 @@ class LanguageSelector extends StatelessWidget {
               });
             },
             itemBuilder: (BuildContext _) {
-              return Language.values.map((Language lang) {
+              return Language.values.map((final Language lang) {
                 return PopupMenuItem<Language>(
                   value: lang,
                   child: Row(

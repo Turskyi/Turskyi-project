@@ -9,7 +9,7 @@ class ProjectsButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return Positioned(
       top: Dimens.indent24,

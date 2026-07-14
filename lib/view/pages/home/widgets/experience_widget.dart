@@ -17,7 +17,7 @@ class ExperienceWidget extends StatelessWidget {
   final String totalExperience;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final TextStyle? textStyle = isLarge

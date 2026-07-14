@@ -6,14 +6,19 @@ class FabWidget extends StatelessWidget {
   const FabWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Consumer<HomePresenter>(
-      builder: (BuildContext context, HomePresenter model, Widget? child) {
-        return FloatingActionButton(
-          onPressed: model.onPhoneButtonPressed,
-          child: child,
-        );
-      },
+      builder:
+          (
+            final BuildContext context,
+            final HomePresenter model,
+            final Widget? child,
+          ) {
+            return FloatingActionButton(
+              onPressed: model.onPhoneButtonPressed,
+              child: child,
+            );
+          },
       child: const Icon(Icons.phone),
     );
   }

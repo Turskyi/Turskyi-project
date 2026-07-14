@@ -57,7 +57,7 @@ void main() {
 }
 
 class FakeAppLocalePort implements AppLocalePort {
-  FakeAppLocalePort({required Language currentLanguage})
+  FakeAppLocalePort({required final Language currentLanguage})
     : _currentLanguage = currentLanguage;
 
   final List<Language> appliedLanguages = <Language>[];
@@ -67,7 +67,7 @@ class FakeAppLocalePort implements AppLocalePort {
   Language get currentLanguage => _currentLanguage;
 
   @override
-  void applyLanguage(Language language) {
+  void applyLanguage(final Language language) {
     appliedLanguages.add(language);
     _currentLanguage = language;
   }

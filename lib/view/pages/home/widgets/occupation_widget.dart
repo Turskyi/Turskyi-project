@@ -10,7 +10,7 @@ class OccupationWidget extends StatelessWidget {
   const OccupationWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final double? fontSize = isLarge
@@ -29,7 +29,11 @@ class OccupationWidget extends StatelessWidget {
           ),
         ),
         builder:
-            (BuildContext context, HomePresenter model, Widget? homeTitle) {
+            (
+              final BuildContext context,
+              final HomePresenter model,
+              final Widget? homeTitle,
+            ) {
               return FadeTransition(
                 opacity: model.curvedAnimation,
                 child: MouseRegion(

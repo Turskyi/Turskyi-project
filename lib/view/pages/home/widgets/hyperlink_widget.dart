@@ -9,7 +9,7 @@ class HyperlinkWidget extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final double? fontSize = isLarge

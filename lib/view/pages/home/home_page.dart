@@ -37,7 +37,7 @@ class HomePage extends StatefulWidget {
   final LocalDataSource localDataSource;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  void displayMessage(String message) {
+  void displayMessage(final String message) {
     final RegExp linkRegex = RegExp(r'(https?://\S+)', caseSensitive: false);
 
     final Match? match = linkRegex.firstMatch(message);
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return ChangeNotifierProvider<HomePresenter>(
       create: (BuildContext _) {
@@ -140,118 +140,143 @@ class _HomePageState extends State<HomePage>
           body: Stack(
             children: <Widget>[
               Consumer<HomePresenter>(
-                builder: (BuildContext _, HomePresenter model, Widget? _) {
-                  return ProjectsButton(
-                    key: ValueKey<Language>(model.language),
-                    onPressed: _toggleProjects,
-                  );
-                },
+                builder:
+                    (BuildContext _, final HomePresenter model, Widget? _) {
+                      return ProjectsButton(
+                        key: ValueKey<Language>(model.language),
+                        onPressed: _toggleProjects,
+                      );
+                    },
               ),
               Consumer<HomePresenter>(
-                builder: (BuildContext _, HomePresenter model, Widget? _) {
-                  return LanguageSelector(
-                    currentLanguage: model.language,
-                    onLanguageSelected: model.changeLanguage,
-                  );
-                },
+                builder:
+                    (BuildContext _, final HomePresenter model, Widget? _) {
+                      return LanguageSelector(
+                        currentLanguage: model.language,
+                        onLanguageSelected: model.changeLanguage,
+                      );
+                    },
               ),
               if (isLarge)
                 Consumer<HomePresenter>(
-                  builder: (BuildContext _, HomePresenter model, Widget? _) {
-                    return ValueListenableBuilder<bool>(
-                      valueListenable: _showProjectsOverlayNotifier,
-                      builder: (BuildContext _, bool showOverlay, Widget? _) {
-                        if (!showOverlay) {
-                          return const SizedBox.shrink();
-                        }
-
+                  builder:
+                      (BuildContext _, final HomePresenter model, Widget? _) {
                         return ValueListenableBuilder<bool>(
-                          valueListenable: _showProjectsNotifier,
+                          valueListenable: _showProjectsOverlayNotifier,
                           builder:
-                              (BuildContext _, bool showProjects, Widget? _) {
-                                return ProjectsOverlayPanel(
-                                  allProjects: model.allProjects,
-                                  showProjects: showProjects,
-                                  controller: _projectsController,
-                                  slideAnimation: _slideAnimation,
-                                  onDismiss: _toggleProjects,
-                                  onProjectsHidden: _handleProjectsHidden,
+                              (
+                                BuildContext _,
+                                final bool showOverlay,
+                                Widget? _,
+                              ) {
+                                if (!showOverlay) {
+                                  return const SizedBox.shrink();
+                                }
+
+                                return ValueListenableBuilder<bool>(
+                                  valueListenable: _showProjectsNotifier,
+                                  builder:
+                                      (
+                                        BuildContext _,
+                                        final bool showProjects,
+                                        Widget? _,
+                                      ) {
+                                        return ProjectsOverlayPanel(
+                                          allProjects: model.allProjects,
+                                          showProjects: showProjects,
+                                          controller: _projectsController,
+                                          slideAnimation: _slideAnimation,
+                                          onDismiss: _toggleProjects,
+                                          onProjectsHidden:
+                                              _handleProjectsHidden,
+                                        );
+                                      },
                                 );
                               },
                         );
                       },
-                    );
-                  },
                 ),
               Consumer<HomePresenter>(
-                builder: (BuildContext _, HomePresenter model, Widget? _) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isLarge
-                                ? Dimens.indent24
-                                : Dimens.indent12,
-                            vertical: isLarge
-                                ? Dimens.indent24
-                                : Dimens.indent12,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              FullNameText(key: widget.key),
-                              OccupationWidget(key: widget.key),
-                              HyperlinkGroup(
-                                onLaunchLink: model.onLaunchLink,
-                                links: const <Link>[
-                                  Link.github,
-                                  Link.gists,
-                                  Link.linkedin,
+                builder:
+                    (BuildContext _, final HomePresenter model, Widget? _) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isLarge
+                                    ? Dimens.indent24
+                                    : Dimens.indent12,
+                                vertical: isLarge
+                                    ? Dimens.indent24
+                                    : Dimens.indent12,
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  FullNameText(key: widget.key),
+                                  OccupationWidget(key: widget.key),
+                                  HyperlinkGroup(
+                                    onLaunchLink: model.onLaunchLink,
+                                    links: const <Link>[
+                                      Link.github,
+                                      Link.gists,
+                                      Link.linkedin,
+                                    ],
+                                  ),
+                                  const SocialButtonsRow(),
+                                  ExperienceWidget(
+                                    flutterExperience: model.flutterExperience,
+                                    androidExperience: model.androidExperience,
+                                    totalExperience: model.totalExperience,
+                                  ),
                                 ],
                               ),
-                              const SocialButtonsRow(),
-                              ExperienceWidget(
-                                flutterExperience: model.flutterExperience,
-                                androidExperience: model.androidExperience,
-                                totalExperience: model.totalExperience,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      const Footer(),
-                    ],
-                  );
-                },
+                          const Footer(),
+                        ],
+                      );
+                    },
               ),
               if (!isLarge)
                 Consumer<HomePresenter>(
-                  builder: (BuildContext _, HomePresenter model, Widget? _) {
-                    return ValueListenableBuilder<bool>(
-                      valueListenable: _showProjectsOverlayNotifier,
-                      builder: (BuildContext _, bool showOverlay, Widget? _) {
-                        if (!showOverlay) {
-                          return const SizedBox.shrink();
-                        }
-
+                  builder:
+                      (BuildContext _, final HomePresenter model, Widget? _) {
                         return ValueListenableBuilder<bool>(
-                          valueListenable: _showProjectsNotifier,
+                          valueListenable: _showProjectsOverlayNotifier,
                           builder:
-                              (BuildContext _, bool showProjects, Widget? _) {
-                                return ProjectsOverlayPanel(
-                                  allProjects: model.allProjects,
-                                  showProjects: showProjects,
-                                  controller: _projectsController,
-                                  slideAnimation: _slideAnimation,
-                                  onDismiss: _toggleProjects,
-                                  onProjectsHidden: _handleProjectsHidden,
+                              (
+                                BuildContext _,
+                                final bool showOverlay,
+                                Widget? _,
+                              ) {
+                                if (!showOverlay) {
+                                  return const SizedBox.shrink();
+                                }
+
+                                return ValueListenableBuilder<bool>(
+                                  valueListenable: _showProjectsNotifier,
+                                  builder:
+                                      (
+                                        BuildContext _,
+                                        final bool showProjects,
+                                        Widget? _,
+                                      ) {
+                                        return ProjectsOverlayPanel(
+                                          allProjects: model.allProjects,
+                                          showProjects: showProjects,
+                                          controller: _projectsController,
+                                          slideAnimation: _slideAnimation,
+                                          onDismiss: _toggleProjects,
+                                          onProjectsHidden:
+                                              _handleProjectsHidden,
+                                        );
+                                      },
                                 );
                               },
                         );
                       },
-                    );
-                  },
                 ),
               Consumer<HomePresenter>(
                 child: Positioned.fill(
@@ -262,13 +287,18 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                 ),
-                builder: (BuildContext _, HomePresenter model, Widget? child) {
-                  if (model.isLoading && child != null) {
-                    return child;
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
+                builder:
+                    (
+                      BuildContext _,
+                      final HomePresenter model,
+                      final Widget? child,
+                    ) {
+                      if (model.isLoading && child != null) {
+                        return child;
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
               ),
             ],
           ),

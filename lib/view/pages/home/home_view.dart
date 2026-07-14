@@ -7,5 +7,5 @@ abstract interface class HomeView {
   const HomeView();
 
   /// [displayMessage] accepts [String] text and showing [SnackBar]
-  void displayMessage(String message);
+  void displayMessage(final String message);
 }

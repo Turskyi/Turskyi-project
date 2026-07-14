@@ -9,7 +9,7 @@ import 'package:turskyi/res/language.dart';
 
 void main() {
   testWidgets('FlutterTranslateAppLocalePort applies selected language', (
-    WidgetTester tester,
+    final WidgetTester tester,
   ) async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     final SharedPreferences preferences = await SharedPreferences.getInstance();

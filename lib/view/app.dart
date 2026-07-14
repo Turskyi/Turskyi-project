@@ -16,7 +16,7 @@ class App extends StatelessWidget {
   final Map<String, WidgetBuilder> routes;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     Resend(apiKey: Env.resendApiKey);
     return MaterialApp(
       debugShowCheckedModeBanner: false,

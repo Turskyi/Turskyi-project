@@ -15,135 +15,150 @@ class Footer extends StatelessWidget {
   const Footer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return Align(
       alignment: FractionalOffset.bottomCenter,
       child: SizedBox(
         height: 80.0,
         child: Consumer<HomePresenter>(
-          builder: (BuildContext context, HomePresenter model, Widget? _) {
-            final String imageAssents = Configs.of(
-              context,
-            ).configs.imageAssents;
-            return ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                // Apple developer button.
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                      onTap: () {
-                        model.onLaunchLink(links.kAppleDeveloperAddress);
-                      },
+          builder:
+              (
+                final BuildContext context,
+                final HomePresenter model,
+                Widget? _,
+              ) {
+                final String imageAssents = Configs.of(
+                  context,
+                ).configs.imageAssents;
+                return ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    // Apple developer button.
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(
+                            Dimens.buttonRadius,
+                          ),
+                          onTap: () {
+                            model.onLaunchLink(links.kAppleDeveloperAddress);
+                          },
+                          child: Image.asset(
+                            '$imageAssents${strings.appStoreLogo}',
+                            width: Dimens.indent140,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Android developer button.
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(
+                          Dimens.buttonRadius,
+                        ),
+                        onTap: () {
+                          model.onLaunchLink(links.kAndroidDeveloperAddress);
+                        },
+                        child: Image.asset(
+                          '$imageAssents${strings.googlePlayLogo}',
+                          color: Colors.white,
+                          width: Dimens.indent140,
+                        ),
+                      ),
+                    ),
+                    RawMaterialButton(
+                      onPressed: () =>
+                          model.onLaunchLink(Link.annaStore.address),
+                      padding: const EdgeInsets.all(Dimens.indent8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          Dimens.buttonRadius,
+                        ), // Square shape
+                      ),
                       child: Image.asset(
-                        '$imageAssents${strings.appStoreLogo}',
-                        width: Dimens.indent140,
+                        '$imageAssents${strings.nextJsIcon}',
+                        height: Dimens.indent40,
+                        color: Colors.white,
                       ),
                     ),
-                  ),
-                ),
-
-                // Android developer button.
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                    onTap: () {
-                      model.onLaunchLink(links.kAndroidDeveloperAddress);
-                    },
-                    child: Image.asset(
-                      '$imageAssents${strings.googlePlayLogo}',
-                      color: Colors.white,
-                      width: Dimens.indent140,
-                    ),
-                  ),
-                ),
-                RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(Link.annaStore.address),
-                  padding: const EdgeInsets.all(Dimens.indent8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      Dimens.buttonRadius,
-                    ), // Square shape
-                  ),
-                  child: Image.asset(
-                    '$imageAssents${strings.nextJsIcon}',
-                    height: Dimens.indent40,
-                    color: Colors.white,
-                  ),
-                ),
-                RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(Link.laoziAi.address),
-                  padding: const EdgeInsets.all(Dimens.indent8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      Dimens.buttonRadius,
-                    ), // Square shape
-                  ),
-                  child: SvgPicture.asset(
-                    '$imageAssents${strings.geminiLogo}',
-                    height: Dimens.indent64,
-                  ),
-                ),
-                RawMaterialButton(
-                  onPressed: () => model.onLaunchLink(Link.politerai.address),
-                  padding: const EdgeInsets.all(Dimens.indent8),
-                  shape: const CircleBorder(),
-                  child: Image.asset(
-                    '$imageAssents${strings.gpt}',
-                    height: Dimens.indent64,
-                  ),
-                ),
-
-                // Determine if we should show game button.
-                if (kIsWeb && isLarge)
-                  RawMaterialButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoute.unityGame.path),
-                    padding: const EdgeInsets.all(Dimens.indent8),
-                    shape: const CircleBorder(),
-                    child: Image.asset(
-                      '$imageAssents${strings.unity2dLogo}',
-                      height: Dimens.indent64,
-                    ),
-                  ),
-                if (kIsWeb && isLarge)
-                  RawMaterialButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoute.game.path),
-                    padding: const EdgeInsets.all(Dimens.indent20),
-                    shape: const CircleBorder(),
-                    child: SvgPicture.asset(
-                      '$imageAssents${strings.unityLogo}',
-                      height: Dimens.indent40,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
+                    RawMaterialButton(
+                      onPressed: () => model.onLaunchLink(Link.laoziAi.address),
+                      padding: const EdgeInsets.all(Dimens.indent8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          Dimens.buttonRadius,
+                        ), // Square shape
+                      ),
+                      child: SvgPicture.asset(
+                        '$imageAssents${strings.geminiLogo}',
+                        height: Dimens.indent64,
                       ),
                     ),
-                  ),
+                    RawMaterialButton(
+                      onPressed: () =>
+                          model.onLaunchLink(Link.politerai.address),
+                      padding: const EdgeInsets.all(Dimens.indent8),
+                      shape: const CircleBorder(),
+                      child: Image.asset(
+                        '$imageAssents${strings.gpt}',
+                        height: Dimens.indent64,
+                      ),
+                    ),
 
-                RawMaterialButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, AppRoute.support.path),
-                  padding: const EdgeInsets.all(Dimens.indent8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimens.buttonRadius),
-                  ),
-                  child: const Icon(
-                    Icons.support_agent,
-                    size: Dimens.indent40,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            );
-          },
+                    // Determine if we should show game button.
+                    if (kIsWeb && isLarge)
+                      RawMaterialButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoute.unityGame.path,
+                        ),
+                        padding: const EdgeInsets.all(Dimens.indent8),
+                        shape: const CircleBorder(),
+                        child: Image.asset(
+                          '$imageAssents${strings.unity2dLogo}',
+                          height: Dimens.indent64,
+                        ),
+                      ),
+                    if (kIsWeb && isLarge)
+                      RawMaterialButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AppRoute.game.path),
+                        padding: const EdgeInsets.all(Dimens.indent20),
+                        shape: const CircleBorder(),
+                        child: SvgPicture.asset(
+                          '$imageAssents${strings.unityLogo}',
+                          height: Dimens.indent40,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+
+                    RawMaterialButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRoute.support.path),
+                      padding: const EdgeInsets.all(Dimens.indent8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          Dimens.buttonRadius,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.support_agent,
+                        size: Dimens.indent40,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                );
+              },
         ),
       ),
     );

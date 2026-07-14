@@ -10,7 +10,7 @@ class UnityThreeDGamePage extends StatelessWidget {
   const UnityThreeDGamePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     setupWebView(
       Configs.of(context).configs.htmlName,
       links.kUnityThreeDAddress,

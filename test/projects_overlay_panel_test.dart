@@ -7,7 +7,7 @@ import 'package:turskyi/view/pages/home/widgets/projects_overlay_panel.dart';
 
 void main() {
   testWidgets('projects appear one by one with staggered delay', (
-    WidgetTester tester,
+    final WidgetTester tester,
   ) async {
     await tester.pumpWidget(const _TestHost());
 
@@ -31,7 +31,7 @@ void main() {
   });
 
   testWidgets('rapid dismiss and reopen does not throw', (
-    WidgetTester tester,
+    final WidgetTester tester,
   ) async {
     await tester.pumpWidget(const _TestHost());
 
@@ -50,7 +50,7 @@ void main() {
   });
 }
 
-int _projectTileCount(WidgetTester tester) {
+int _projectTileCount(final WidgetTester tester) {
   return tester.widgetList<ProjectTile>(find.byType(ProjectTile)).length;
 }
 
@@ -129,7 +129,7 @@ class _TestHostState extends State<_TestHost> with TickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Stack(
