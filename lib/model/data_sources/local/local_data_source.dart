@@ -204,9 +204,7 @@ class LocalDataSource {
         imageAssetPath:
             '${constants.kFeatureGraphicPath}taras_feature_graphic.png',
         primaryWebsiteUrl: translate('projects.mala_knyzhka.url'),
-        fallbackWebsiteUrl:
-            '${constants.kGooglePlayBaseUrl}'
-            'com.turskyi.malaknyzhka',
+        fallbackWebsiteUrl: 'https://mala-knyzhka.web.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.ios,
           PlatformType.android,
