@@ -4,7 +4,7 @@ import 'dart:ui_web';
 
 import 'package:turskyi/res/values/strings.dart' as strings;
 
-void setupWebView(String viewType, String src) {
+void setupWebView(final String viewType, final String src) {
   platformViewRegistry.registerViewFactory(viewType, (Object? _) {
     return IFrameElement()
       ..src = src

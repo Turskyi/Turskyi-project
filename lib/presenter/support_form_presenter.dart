@@ -22,7 +22,7 @@ class SupportFormPresenter extends ChangeNotifier {
 
   String get errorMessage => _errorMessage;
 
-  void updateFormData(String field, String value) {
+  void updateFormData(final String field, final String value) {
     _formData = _formData.copyWith(
       name: field == 'name' ? value : null,
       email: field == 'email' ? value : null,

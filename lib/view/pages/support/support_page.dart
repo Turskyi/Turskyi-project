@@ -18,7 +18,7 @@ class _SupportPageState extends State<SupportPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return ChangeNotifierProvider<SupportFormPresenter>(
       create: (BuildContext _) => SupportFormPresenter(),
       child: Scaffold(
@@ -65,8 +65,8 @@ class _SupportPageState extends State<SupportPage> {
             child: Consumer<SupportFormPresenter>(
               builder:
                   (
-                    BuildContext context,
-                    SupportFormPresenter presenter,
+                    final BuildContext context,
+                    final SupportFormPresenter presenter,
                     Widget? _,
                   ) {
                     final FormState? formState = _formKey.currentState;
@@ -91,13 +91,13 @@ class _SupportPageState extends State<SupportPage> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            validator: (String? value) {
+                            validator: (final String? value) {
                               if (value == null || value.isEmpty) {
                                 return translate('support.please_enter_name');
                               }
                               return null;
                             },
-                            onChanged: (String value) {
+                            onChanged: (final String value) {
                               presenter.updateFormData('name', value);
                             },
                           ),
@@ -119,7 +119,7 @@ class _SupportPageState extends State<SupportPage> {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: (String? value) {
+                            validator: (final String? value) {
                               if (value == null || value.isEmpty) {
                                 return translate('support.please_enter_email');
                               }
@@ -130,7 +130,7 @@ class _SupportPageState extends State<SupportPage> {
                               }
                               return null;
                             },
-                            onChanged: (String value) {
+                            onChanged: (final String value) {
                               presenter.updateFormData('email', value);
                             },
                           ),
@@ -154,7 +154,7 @@ class _SupportPageState extends State<SupportPage> {
                               ),
                             ),
                             maxLines: 5,
-                            validator: (String? value) {
+                            validator: (final String? value) {
                               if (value == null || value.isEmpty) {
                                 return translate(
                                   'support.please_enter_message',
@@ -162,7 +162,7 @@ class _SupportPageState extends State<SupportPage> {
                               }
                               return null;
                             },
-                            onChanged: (String value) {
+                            onChanged: (final String value) {
                               presenter.updateFormData('message', value);
                             },
                           ),
@@ -196,8 +196,8 @@ class _SupportPageState extends State<SupportPage> {
   }
 
   Future<void> _submitForm({
-    required FormState formState,
-    required SupportFormPresenter presenter,
+    required final FormState formState,
+    required final SupportFormPresenter presenter,
   }) async {
     if (formState.validate()) {
       await presenter.sendSupportEmail();

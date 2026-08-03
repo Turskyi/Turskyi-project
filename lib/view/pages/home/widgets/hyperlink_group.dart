@@ -14,7 +14,7 @@ class HyperlinkGroup extends StatelessWidget {
   final List<Link> links;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Wrap(
       children: <Widget>[
         for (final Link link in links)

@@ -6,7 +6,7 @@ class FullNameText extends StatelessWidget {
   const FullNameText({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Text(

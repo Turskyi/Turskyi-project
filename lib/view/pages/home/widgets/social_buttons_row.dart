@@ -11,7 +11,7 @@ class SocialButtonsRow extends StatelessWidget {
   const SocialButtonsRow({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -19,7 +19,7 @@ class SocialButtonsRow extends StatelessWidget {
         const FacebookButton(),
         Flexible(
           child: Consumer<HomePresenter>(
-            builder: (BuildContext _, HomePresenter model, Widget? _) {
+            builder: (BuildContext _, final HomePresenter model, Widget? _) {
               return WishlistButtonWidget(
                 dayCount: model.daysToBirthday,
                 wishlistWidth: model.wishlistWidth,

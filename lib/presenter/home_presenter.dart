@@ -21,9 +21,9 @@ import 'package:url_launcher/url_launcher_string.dart';
 class HomePresenter with ChangeNotifier {
   /// Constructor for [HomePresenter] class.
   HomePresenter({
-    required HomeView view,
-    required TickerProvider tickerProvider,
-    required LocalDataSource localDataSource,
+    required final HomeView view,
+    required final TickerProvider tickerProvider,
+    required final LocalDataSource localDataSource,
   }) {
     _view = view;
     _fadeAnimationController = AnimationController(
@@ -62,7 +62,7 @@ class HomePresenter with ChangeNotifier {
 
   Language get language => _language;
 
-  late LocalDataSource _localDataSource;
+  late final LocalDataSource _localDataSource;
 
   /// Controls degree of the rotation.
   Animation<double> get rotationAnimation => _rotationAnimation;
@@ -124,7 +124,7 @@ class HomePresenter with ChangeNotifier {
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab
-  Future<void> onLaunchLink(String link) async {
+  Future<void> onLaunchLink(final String link) async {
     await canLaunchUrlString(link)
         ? await launchUrlString(link)
         : _view.displayMessage("${translate("home.cannot_launch")} $link");
@@ -132,7 +132,7 @@ class HomePresenter with ChangeNotifier {
 
   /// rotates "wishlist" logo and expands text
   void onWishListButtonAnimate([
-    PointerEvent event = const PointerMoveEvent(),
+    final PointerEvent event = const PointerMoveEvent(),
   ]) {
     if (daysToBirthday.isEmpty) {
       final DateTime today = DateTime.now();
@@ -156,7 +156,7 @@ class HomePresenter with ChangeNotifier {
   }
 
   /// rotates "wishlist" logo and expands text
-  void onTitleHover(PointerEvent event) {
+  void onTitleHover(final PointerEvent event) {
     if (_suffixWidth == 0) {
       _suffixWidth = _language.isEnglish ? 172 : 204;
     } else {
@@ -165,7 +165,7 @@ class HomePresenter with ChangeNotifier {
     notifyListeners();
   }
 
-  int _daysBetween(DateTime from, DateTime to) {
+  int _daysBetween(final DateTime from, final DateTime to) {
     return (to.difference(from).inHours / 24).round();
   }
 
@@ -182,7 +182,7 @@ class HomePresenter with ChangeNotifier {
     await launchUrl(launchUri);
   }
 
-  Future<void> changeLanguage(Language language) async {
+  Future<void> changeLanguage(final Language language) async {
     if (language != _language) {
       final bool isSaved = await _localDataSource.saveLanguageIsoCode(
         language.isoLanguageCode,
@@ -229,7 +229,7 @@ class HomePresenter with ChangeNotifier {
   /// 5. If both attempts fail — we show the fallback site.
   ///    - In some edge cases (e.g. Clerk domain lock), fallback is just an
   ///    explanation/snack-bar.
-  Future<void> checkAndLaunchProjectWebsite(Project project) async {
+  Future<void> checkAndLaunchProjectWebsite(final Project project) async {
     final String primaryUrl = project.primaryWebsiteUrl;
     final String fallbackUrl = project.fallbackWebsiteUrl;
 
@@ -359,14 +359,14 @@ class HomePresenter with ChangeNotifier {
     }
   }
 
-  Future<void> _handleFallbackUrl(String fallbackUrl) async {
+  Future<void> _handleFallbackUrl(final String fallbackUrl) async {
     _view.displayMessage(
       "Couldn't reach the main website. Opening fallback URL.",
     );
     await _launchFallbackUrl(fallbackUrl);
   }
 
-  Future<void> _launchFallbackUrl(String fallbackUrl) async {
+  Future<void> _launchFallbackUrl(final String fallbackUrl) async {
     if (fallbackUrl.trim().isEmpty) {
       _view.displayMessage(
         'Unfortunately, this project is not accessible at the moment. '
@@ -381,7 +381,7 @@ class HomePresenter with ChangeNotifier {
 
   /// Launches a given URL.
   /// Displays an error message if the URL cannot be launched.
-  Future<void> _launchUrl(String url) async {
+  Future<void> _launchUrl(final String url) async {
     try {
       await launchUrl(Uri.parse(url));
     } catch (e) {
@@ -407,9 +407,9 @@ class HomePresenter with ChangeNotifier {
   }
 
   String _setExperience({
-    required DateTime firstTime,
-    DateTime? lastTime,
-    Duration? gapDuration,
+    required final DateTime firstTime,
+    final DateTime? lastTime,
+    final Duration? gapDuration,
   }) {
     final int gapDays = gapDuration?.inDays ?? 0;
     final int totalDays =

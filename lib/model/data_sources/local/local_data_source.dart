@@ -14,9 +14,9 @@ class LocalDataSource {
 
   final SharedPreferences _preferences;
 
-  Future<bool> saveLanguageIsoCode(String languageIsoCode) {
+  Future<bool> saveLanguageIsoCode(final String languageIsoCode) {
     final bool isSupported = Language.values.any(
-      (Language lang) => lang.isoLanguageCode == languageIsoCode,
+      (final Language lang) => lang.isoLanguageCode == languageIsoCode,
     );
 
     final String safeLanguageCode = isSupported
@@ -37,7 +37,7 @@ class LocalDataSource {
     final bool isSavedLanguageSupported =
         savedLanguageIsoCode != null &&
         Language.values.any(
-          (Language lang) => lang.isoLanguageCode == savedLanguageIsoCode,
+          (final Language lang) => lang.isoLanguageCode == savedLanguageIsoCode,
         );
 
     final String systemLanguageCode =
@@ -45,7 +45,7 @@ class LocalDataSource {
 
     String defaultLanguageCode =
         Language.values.any(
-          (Language lang) => lang.isoLanguageCode == systemLanguageCode,
+          (final Language lang) => lang.isoLanguageCode == systemLanguageCode,
         )
         ? systemLanguageCode
         : Language.en.isoLanguageCode;
@@ -202,12 +202,13 @@ class LocalDataSource {
       Project(
         name: translate('projects.mala_knyzhka.name'),
         imageAssetPath:
-            '${constants.kFeatureGraphicPath}mala_knyzhka-feature_graphic.png',
-        primaryWebsiteUrl: 'https://mala-knyzhka.web.app',
+            '${constants.kFeatureGraphicPath}taras_feature_graphic.png',
+        primaryWebsiteUrl: translate('projects.mala_knyzhka.url'),
         fallbackWebsiteUrl:
             '${constants.kGooglePlayBaseUrl}'
             'com.turskyi.malaknyzhka',
         supportedPlatforms: <PlatformType>{
+          PlatformType.ios,
           PlatformType.android,
           PlatformType.web,
         },

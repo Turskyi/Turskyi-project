@@ -10,7 +10,7 @@ class GoodReadsButton extends StatelessWidget {
   const GoodReadsButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return FittedBox(
       child: Consumer<HomePresenter>(
         child: Padding(
@@ -21,20 +21,23 @@ class GoodReadsButton extends StatelessWidget {
             width: 112.0,
           ),
         ),
-        builder: (BuildContext _, HomePresenter model, Widget? image) {
-          return TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: const Color(0xFFE9E9E9),
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.indent16),
-              shape: RoundedRectangleBorder(
-                borderRadius: radii.borderRadius,
-                side: const BorderSide(color: Color(0xFFD8D5C2)),
-              ),
-            ),
-            onPressed: () => model.onLaunchLink(Link.goodreads.address),
-            child: image ?? const SizedBox(),
-          );
-        },
+        builder:
+            (BuildContext _, final HomePresenter model, final Widget? image) {
+              return TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFFE9E9E9),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.indent16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: radii.borderRadius,
+                    side: const BorderSide(color: Color(0xFFD8D5C2)),
+                  ),
+                ),
+                onPressed: () => model.onLaunchLink(Link.goodreads.address),
+                child: image ?? const SizedBox(),
+              );
+            },
       ),
     );
   }

@@ -17,7 +17,7 @@ class ProjectTile extends StatelessWidget {
   final bool removing;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final Animation<double> slideAnimation = removing
         ? ReverseAnimation(animation)
         : animation;
@@ -94,7 +94,7 @@ class ProjectTile extends StatelessWidget {
                           child: Wrap(
                             spacing: 4,
                             children: project.supportedPlatforms.map((
-                              PlatformType platform,
+                              final PlatformType platform,
                             ) {
                               final IconData icon = switch (platform) {
                                 PlatformType.android => Icons.android,

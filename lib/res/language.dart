@@ -24,7 +24,7 @@ enum Language {
 
   bool get isEnglish => this == Language.en;
 
-  static Language fromIsoLanguageCode(String isoLanguageCode) {
+  static Language fromIsoLanguageCode(final String isoLanguageCode) {
     switch (isoLanguageCode.trim().toLowerCase()) {
       case _englishIsoLanguageCode:
         return Language.en;

@@ -44,7 +44,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
   }
 
   @override
-  void didUpdateWidget(covariant ProjectsOverlayPanel oldWidget) {
+  void didUpdateWidget(covariant final ProjectsOverlayPanel oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.showProjects != oldWidget.showProjects) {
       _processVisibilityChanges();
@@ -52,7 +52,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Positioned.fill(
       child: IgnorePointer(
         ignoring: !widget.showProjects,
@@ -82,7 +82,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                         child: ListView.builder(
                           padding: const EdgeInsets.only(bottom: 80.0),
                           itemCount: _visibleProjects.length,
-                          itemBuilder: (BuildContext _, int index) {
+                          itemBuilder: (BuildContext _, final int index) {
                             final _VisibleProjectEntry entry =
                                 _visibleProjects[index];
                             return TweenAnimationBuilder<double>(
@@ -93,7 +93,11 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                               duration: _itemAnimationDuration,
                               curve: Curves.easeInOut,
                               builder:
-                                  (BuildContext _, double value, Widget? _) {
+                                  (
+                                    BuildContext _,
+                                    final double value,
+                                    Widget? _,
+                                  ) {
                                     return ProjectTile(
                                       key: ValueKey<String>(entry.project.name),
                                       project: entry.project,

@@ -18,7 +18,7 @@ class LoadingIndicator extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Center(

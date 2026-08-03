@@ -1,4 +1,4 @@
-include: package:lint/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
@@ -50,4 +50,5 @@ linter:
     prefer_final_fields: true
     prefer_final_locals: true
     prefer_final_in_for_each: true
+    prefer_final_parameters: true
 

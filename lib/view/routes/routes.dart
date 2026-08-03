@@ -6,7 +6,7 @@ import 'package:turskyi/view/pages/home/home_page.dart';
 import 'package:turskyi/view/pages/support/support_page.dart';
 import 'package:turskyi/view/routes/app_route.dart';
 
-Map<String, WidgetBuilder> getRouteMap(LocalDataSource localDataSource) {
+Map<String, WidgetBuilder> getRouteMap(final LocalDataSource localDataSource) {
   return <String, WidgetBuilder>{
     AppRoute.home.path: (BuildContext _) {
       return HomePage(localDataSource: localDataSource);

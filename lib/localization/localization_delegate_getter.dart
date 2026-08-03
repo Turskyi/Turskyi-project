@@ -3,12 +3,12 @@ import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/res/language.dart';
 
 Future<LocalizationDelegate> getLocalizationDelegate(
-  LocalDataSource localDataSource,
+  final LocalDataSource localDataSource,
 ) async {
   final LocalizationDelegate localizationDelegate =
       await LocalizationDelegate.create(
         fallbackLocale: localDataSource.getLanguageIsoCode(),
-        supportedLocales: Language.values.map((Language language) {
+        supportedLocales: Language.values.map((final Language language) {
           return language.isoLanguageCode;
         }).toList(),
       );
