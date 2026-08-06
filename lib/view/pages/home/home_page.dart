@@ -68,51 +68,6 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  void displayMessage(final String message) {
-    final RegExp linkRegex = RegExp(r'(https?://\S+)', caseSensitive: false);
-
-    final Match? match = linkRegex.firstMatch(message);
-    final String? link = match?.group(0);
-    if (match != null && link != null) {
-      final int start = match.start;
-      final int end = match.end;
-
-      final TextSpan span = TextSpan(
-        style: const TextStyle(color: Colors.white),
-        children: <InlineSpan>[
-          TextSpan(text: message.substring(0, start)),
-          TextSpan(
-            text: link,
-            style: const TextStyle(
-              color: Colors.lightBlueAccent,
-              decoration: TextDecoration.underline,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => launchUrl(Uri.parse(link)),
-          ),
-          TextSpan(text: message.substring(end)),
-        ],
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 10),
-          content: SelectableText.rich(span),
-          showCloseIcon: true,
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 6),
-          content: SelectableText(message),
-          showCloseIcon: true,
-        ),
-      );
-    }
-  }
-
-  @override
   Widget build(final BuildContext context) {
     final bool isLarge = screen.isLarge(context);
     return ChangeNotifierProvider<HomePresenter>(
@@ -306,6 +261,51 @@ class _HomePageState extends State<HomePage>
         ),
       ),
     );
+  }
+
+  @override
+  void displayMessage(final String message) {
+    final RegExp linkRegex = RegExp(r'(https?://\S+)', caseSensitive: false);
+
+    final Match? match = linkRegex.firstMatch(message);
+    final String? link = match?.group(0);
+    if (match != null && link != null) {
+      final int start = match.start;
+      final int end = match.end;
+
+      final TextSpan span = TextSpan(
+        style: const TextStyle(color: Colors.white),
+        children: <InlineSpan>[
+          TextSpan(text: message.substring(0, start)),
+          TextSpan(
+            text: link,
+            style: const TextStyle(
+              color: Colors.lightBlueAccent,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => launchUrl(Uri.parse(link)),
+          ),
+          TextSpan(text: message.substring(end)),
+        ],
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 10),
+          content: SelectableText.rich(span),
+          showCloseIcon: true,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 6),
+          content: SelectableText(message),
+          showCloseIcon: true,
+        ),
+      );
+    }
   }
 
   @override

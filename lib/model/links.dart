@@ -15,5 +15,5 @@ const String kAppleDeveloperAddress =
     'https://apps.apple.com/us/developer/dmytro-turskyi/id1803716526';
 
 const String kPoliteraiAddress = 'https://politerai.com';
-const String kLaoziAiAddress = 'https://daoizm.online';
+const String kLaoziAiAddress = 'https://daoismonline.com';
 const String kAnnaStoreAddress = 'https://anartist.turskyi.com';
