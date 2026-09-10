@@ -221,6 +221,7 @@ class LocalDataSource {
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
           PlatformType.web,
+          PlatformType.ios,
         },
       ),
       const Project(
