@@ -6,8 +6,9 @@ part 'support_response.g.dart';
 class SupportResponse {
   const SupportResponse({required this.success, required this.message});
 
-  factory SupportResponse.fromJson(final Map<String, dynamic> json) =>
-      _$SupportResponseFromJson(json);
+  factory SupportResponse.fromJson(final Map<String, Object?> json) {
+    return _$SupportResponseFromJson(json);
+  }
 
   final bool success;
   final String message;

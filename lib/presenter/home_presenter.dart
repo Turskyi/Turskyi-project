@@ -5,10 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
+import 'package:turskyi/model/data_sources/remote/support_api_client.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/model/models/project.dart';
+import 'package:turskyi/model/models/url_health_response.dart';
 import 'package:turskyi/presenter/time.dart';
-import 'package:turskyi/res/constants.dart' as constants;
 import 'package:turskyi/res/language.dart';
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/res/values/strings.dart' as strings;
@@ -24,7 +25,8 @@ class HomePresenter with ChangeNotifier {
     required final HomeView view,
     required final TickerProvider tickerProvider,
     required final LocalDataSource localDataSource,
-  }) {
+    final SupportApiClient? apiClient,
+  }) : _apiClient = apiClient ?? SupportApiClient(Dio()) {
     _view = view;
     _fadeAnimationController = AnimationController(
       duration: Duration(seconds: Time.fade.value),
@@ -51,6 +53,7 @@ class HomePresenter with ChangeNotifier {
     _calculateExperience();
   }
 
+  late final SupportApiClient _apiClient;
   late HomeView _view;
   late final Animation<double> _rotationAnimation;
 
@@ -274,42 +277,37 @@ class HomePresenter with ChangeNotifier {
 
         if (e.type == DioExceptionType.connectionError) {
           try {
-            // TODO: migrate hosting website from github pages to a platform
-            //  that allows custom API routes, somewhere we can set up a
-            //  serverless backend, to build a proper CORS-aware backend, until
-            //  then use this workaround.
-            final String proxyPrimaryUrl =
-                '${constants.kCorsProxyUrl}$primaryUrl';
-            final Response<void> response = await dio.head(proxyPrimaryUrl);
+            final UrlHealthResponse healthResult = await _apiClient
+                .checkUrlHealth(primaryUrl);
+            final bool isAvailable = healthResult.available;
 
-            if (response.statusCode == HttpStatus.ok) {
+            if (isAvailable) {
               await _launchUrl(primaryUrl);
             } else if (fallbackUrl.isNotEmpty) {
               if (kDebugMode) {
                 debugPrint(
-                  'DioException (cors-anywhere): Unexpected status while '
-                  'checking proxy $primaryUrl -> $proxyPrimaryUrl: '
-                  '${response.statusCode}',
+                  'Cloudflare Worker `/health` check reported '
+                  '$primaryUrl is not available.',
                 );
               }
               await _launchFallbackUrl(fallbackUrl);
             } else {
               await _launchUrl(primaryUrl);
             }
-          } on DioException catch (eCors) {
+          } on DioException catch (eHealth) {
             if (kDebugMode) {
               debugPrint(
-                'Dio error while checking proxy $primaryUrl: \n'
-                'eCors.type: ${eCors.type}, \n'
-                'eCors.message: ${eCors.message}, \n'
-                'eCors.error: ${eCors.error}, \n'
-                'eCors.response: ${eCors.response}.',
+                'Dio error while checking /health for $primaryUrl: \n'
+                'eHealth.type: ${eHealth.type}, \n'
+                'eHealth.message: ${eHealth.message}, \n'
+                'eHealth.error: ${eHealth.error}, \n'
+                'eHealth.response: ${eHealth.response}.',
               );
             }
 
             if (fallbackUrl.isNotEmpty) {
               await _handleFallbackUrl(fallbackUrl);
-            } else if (eCors.type == DioExceptionType.connectionError) {
+            } else if (eHealth.type == DioExceptionType.connectionError) {
               try {
                 await _launchUrl(primaryUrl);
               } catch (eLaunch) {
@@ -317,8 +315,8 @@ class HomePresenter with ChangeNotifier {
                   debugPrint(
                     '‼️ Last attempt to launch primary URL "$primaryUrl" '
                     'FAILED.\n'
-                    '   Previous attempts (direct HEAD, proxy HEAD) resulted '
-                    'in DioExceptionType.connectionError.\n'
+                    '   Previous attempts (direct HEAD, Worker `/health`) '
+                    'resulted in DioExceptionType.connectionError.\n'
                     '   Current _launchUrl error type: ${eLaunch.runtimeType}\n'
                     '   Current _launchUrl error: $eLaunch',
                   );

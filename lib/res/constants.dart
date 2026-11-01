@@ -9,7 +9,6 @@ const String kGooglePlayBaseUrl =
 const String kDoNotReplySenderName = 'Do Not Reply';
 const String kFeedbackEmailSender =
     '$kDoNotReplySenderName $kAppName <no-reply@$kResendEmailDomain>';
-const String kCorsProxyUrl = 'https://corsproxy.io/?';
 
 // https://dash.cloudflare.com/1918e9a6ac2794ef899bc1056f0cde51/workers/services/view/turskyi-support-api/production
 const String kSupportWorkerBaseUrl =

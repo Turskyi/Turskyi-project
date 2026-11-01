@@ -4,13 +4,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:turskyi/model/data_sources/remote/support_api_client.dart'
-    as _i3;
-import 'package:turskyi/model/models/support_form_data.dart' as _i5;
+    as _i4;
+import 'package:turskyi/model/models/support_form_data.dart' as _i6;
 import 'package:turskyi/model/models/support_response.dart' as _i2;
+import 'package:turskyi/model/models/url_health_response.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -34,26 +35,45 @@ class _FakeSupportResponse_0 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
+class _FakeUrlHealthResponse_1 extends _i1.SmartFake
+    implements _i3.UrlHealthResponse {
+  _FakeUrlHealthResponse_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [SupportApiClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupportApiClient extends _i1.Mock implements _i3.SupportApiClient {
+class MockSupportApiClient extends _i1.Mock implements _i4.SupportApiClient {
   MockSupportApiClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.SupportResponse> sendSupportEmail(
-    _i5.SupportFormData? formData,
+  _i5.Future<_i2.SupportResponse> sendSupportEmail(
+    _i6.SupportFormData? formData,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#sendSupportEmail, [formData]),
-            returnValue: _i4.Future<_i2.SupportResponse>.value(
+            returnValue: _i5.Future<_i2.SupportResponse>.value(
               _FakeSupportResponse_0(
                 this,
                 Invocation.method(#sendSupportEmail, [formData]),
               ),
             ),
           )
-          as _i4.Future<_i2.SupportResponse>);
+          as _i5.Future<_i2.SupportResponse>);
+
+  @override
+  _i5.Future<_i3.UrlHealthResponse> checkUrlHealth(String? url) =>
+      (super.noSuchMethod(
+            Invocation.method(#checkUrlHealth, [url]),
+            returnValue: _i5.Future<_i3.UrlHealthResponse>.value(
+              _FakeUrlHealthResponse_1(
+                this,
+                Invocation.method(#checkUrlHealth, [url]),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.UrlHealthResponse>);
 }

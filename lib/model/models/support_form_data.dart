@@ -10,8 +10,9 @@ class SupportFormData {
     required this.message,
   });
 
-  factory SupportFormData.fromJson(final Map<String, dynamic> json) =>
-      _$SupportFormDataFromJson(json);
+  factory SupportFormData.fromJson(final Map<String, Object?> json) {
+    return _$SupportFormDataFromJson(json);
+  }
 
   final String name;
   final String email;
