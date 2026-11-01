@@ -112,45 +112,6 @@ class _HomePageState extends State<HomePage>
                       );
                     },
               ),
-              if (isLarge)
-                Consumer<HomePresenter>(
-                  builder:
-                      (BuildContext _, final HomePresenter model, Widget? _) {
-                        return ValueListenableBuilder<bool>(
-                          valueListenable: _showProjectsOverlayNotifier,
-                          builder:
-                              (
-                                BuildContext _,
-                                final bool showOverlay,
-                                Widget? _,
-                              ) {
-                                if (!showOverlay) {
-                                  return const SizedBox.shrink();
-                                }
-
-                                return ValueListenableBuilder<bool>(
-                                  valueListenable: _showProjectsNotifier,
-                                  builder:
-                                      (
-                                        BuildContext _,
-                                        final bool showProjects,
-                                        Widget? _,
-                                      ) {
-                                        return ProjectsOverlayPanel(
-                                          allProjects: model.allProjects,
-                                          showProjects: showProjects,
-                                          controller: _projectsController,
-                                          slideAnimation: _slideAnimation,
-                                          onDismiss: _toggleProjects,
-                                          onProjectsHidden:
-                                              _handleProjectsHidden,
-                                        );
-                                      },
-                                );
-                              },
-                        );
-                      },
-                ),
               Consumer<HomePresenter>(
                 builder:
                     (BuildContext _, final HomePresenter model, Widget? _) {
@@ -194,6 +155,45 @@ class _HomePageState extends State<HomePage>
                       );
                     },
               ),
+              if (isLarge)
+                Consumer<HomePresenter>(
+                  builder:
+                      (BuildContext _, final HomePresenter model, Widget? _) {
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: _showProjectsOverlayNotifier,
+                          builder:
+                              (
+                                BuildContext _,
+                                final bool showOverlay,
+                                Widget? _,
+                              ) {
+                                if (showOverlay) {
+                                  return ValueListenableBuilder<bool>(
+                                    valueListenable: _showProjectsNotifier,
+                                    builder:
+                                        (
+                                          BuildContext _,
+                                          final bool showProjects,
+                                          Widget? _,
+                                        ) {
+                                          return ProjectsOverlayPanel(
+                                            allProjects: model.allProjects,
+                                            showProjects: showProjects,
+                                            controller: _projectsController,
+                                            slideAnimation: _slideAnimation,
+                                            onDismiss: _toggleProjects,
+                                            onProjectsHidden:
+                                                _handleProjectsHidden,
+                                          );
+                                        },
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
+                        );
+                      },
+                ),
               if (!isLarge)
                 Consumer<HomePresenter>(
                   builder:
@@ -206,29 +206,29 @@ class _HomePageState extends State<HomePage>
                                 final bool showOverlay,
                                 Widget? _,
                               ) {
-                                if (!showOverlay) {
+                                if (showOverlay) {
+                                  return ValueListenableBuilder<bool>(
+                                    valueListenable: _showProjectsNotifier,
+                                    builder:
+                                        (
+                                          BuildContext _,
+                                          final bool showProjects,
+                                          Widget? _,
+                                        ) {
+                                          return ProjectsOverlayPanel(
+                                            allProjects: model.allProjects,
+                                            showProjects: showProjects,
+                                            controller: _projectsController,
+                                            slideAnimation: _slideAnimation,
+                                            onDismiss: _toggleProjects,
+                                            onProjectsHidden:
+                                                _handleProjectsHidden,
+                                          );
+                                        },
+                                  );
+                                } else {
                                   return const SizedBox.shrink();
                                 }
-
-                                return ValueListenableBuilder<bool>(
-                                  valueListenable: _showProjectsNotifier,
-                                  builder:
-                                      (
-                                        BuildContext _,
-                                        final bool showProjects,
-                                        Widget? _,
-                                      ) {
-                                        return ProjectsOverlayPanel(
-                                          allProjects: model.allProjects,
-                                          showProjects: showProjects,
-                                          controller: _projectsController,
-                                          slideAnimation: _slideAnimation,
-                                          onDismiss: _toggleProjects,
-                                          onProjectsHidden:
-                                              _handleProjectsHidden,
-                                        );
-                                      },
-                                );
                               },
                         );
                       },
