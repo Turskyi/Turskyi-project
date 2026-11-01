@@ -119,7 +119,7 @@ class LocalDataSource {
         },
       ),
       Project(
-        name: 'Daoism • Laozi AI',
+        name: translate('projects.daoism_laozi_ai.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
             'daoism_laozi_ai-feature_graphic.png',

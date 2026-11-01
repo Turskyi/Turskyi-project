@@ -86,7 +86,9 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                             final _VisibleProjectEntry entry =
                                 _visibleProjects[index];
                             return TweenAnimationBuilder<double>(
-                              key: ValueKey<String>(entry.project.name),
+                              key: ValueKey<String>(
+                                entry.project.imageAssetPath,
+                              ),
                               tween: Tween<double>(
                                 end: entry.isVisible ? 1 : 0,
                               ),
@@ -99,7 +101,9 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
                                     Widget? _,
                                   ) {
                                     return ProjectTile(
-                                      key: ValueKey<String>(entry.project.name),
+                                      key: ValueKey<String>(
+                                        entry.project.imageAssetPath,
+                                      ),
                                       project: entry.project,
                                       animation: AlwaysStoppedAnimation<double>(
                                         value,
