@@ -43,6 +43,15 @@ The Flutter project for supporting personal website
   named such that another developer reading the code can easily understand their
   function.
 
+## Backend Architecture (Cloudflare Worker Proxy)
+
+Support emails are processed securely via a Cloudflare Worker backend proxy (`turskyi-support-api`) to keep secrets off the client side:
+- **Worker Source Code:** [`backend/turskyi-support-api/worker.js`](backend/turskyi-support-api/worker.js)
+- **Cloudflare Dashboard:** [Cloudflare Worker Service](https://dash.cloudflare.com/1918e9a6ac2794ef899bc1056f0cde51/workers/services/view/turskyi-support-api/production)
+- **Worker Endpoint URL:** `https://turskyi-support-api.dmytro-turskyi.workers.dev/support`
+- **Runtime Secret:** `RESEND_API_KEY` stored securely in Cloudflare Worker runtime variables.
+- **Flutter Integration:** Managed via Retrofit in [`lib/model/data_sources/remote/support_api_client.dart`](lib/model/data_sources/remote/support_api_client.dart).
+
 <details style="border: 1px solid #aaa; border-radius: 4px; padding: 0.5em 0.5em 0;">
   <summary style="font-weight: bold; margin: -0.5em -0.5em 0; padding: 0.5em; border-bottom: 1px solid #aaa;">Architectural pattern:
 

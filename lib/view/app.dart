@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:resend/resend.dart';
-import 'package:turskyi/env/env.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/themes.dart';
 import 'package:turskyi/view/routes/app_route.dart';
@@ -17,7 +15,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    Resend(apiKey: Env.resendApiKey);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: translate('title'),

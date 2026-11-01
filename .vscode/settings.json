@@ -19,7 +19,8 @@
     "dart",
     "typescriptreact",
     "typescript",
-    "html"
+    "html",
+    "javascript"
   ],
   "spellright.parserByClass": {
     "Log": {

@@ -1,10 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:resend/resend.dart';
+import 'package:turskyi/model/data_sources/remote/support_api_client.dart';
 import 'package:turskyi/model/models/support_form_data.dart';
-import 'package:turskyi/res/constants.dart' as constants;
+import 'package:turskyi/model/models/support_response.dart';
 
 class SupportFormPresenter extends ChangeNotifier {
-  final Resend _resend = Resend.instance;
+  SupportFormPresenter({final SupportApiClient? apiClient})
+    : _apiClient = apiClient ?? SupportApiClient(Dio());
+
+  final SupportApiClient _apiClient;
   SupportFormData _formData = const SupportFormData(
     name: '',
     email: '',
@@ -44,31 +48,18 @@ class SupportFormPresenter extends ChangeNotifier {
     _isSuccess = false;
     _errorMessage = '';
     notifyListeners();
-    final String customerEmail = _formData.email;
+
     try {
-      await _resend.sendEmail(
-        from: constants.kFeedbackEmailSender,
-        to: <String>[constants.kSupportEmail],
-        subject: 'New Message Received from ${constants.kAppName}',
-        text:
-            'New support message received:\n\n Email: $customerEmail\n\n'
-            'Name: ${_formData.name}\n\n Message: ${_formData.message}.',
+      final SupportResponse response = await _apiClient.sendSupportEmail(
+        _formData,
       );
-
-      await _resend.sendEmail(
-        from: constants.kFeedbackEmailSender,
-        to: <String>[customerEmail],
-        subject:
-            'Thank You! Your Support Message Has Been Sent to '
-            '${constants.kAppName}',
-        text:
-            'Thank you for reaching out to us! Your support message has been '
-            'received and will be reviewed promptly. We appreciate your '
-            'feedback and will get back to you soon.\n\nBest regards,\n'
-            'The ${constants.kAppName} Team.',
-      );
-
-      _isSuccess = true;
+      if (response.success) {
+        _isSuccess = true;
+      } else {
+        _errorMessage = response.message.isNotEmpty
+            ? response.message
+            : 'Failed to send message. Please try again.';
+      }
     } catch (e) {
       _errorMessage = 'An error occurred: $e';
     } finally {

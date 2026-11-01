@@ -55,9 +55,9 @@ patterns are documented - follow these references before changing behaviour.
 ## External integrations & important packages
 
 - Key packages: `shared_preferences`, `flutter_translate`, `dio`,
-  `url_launcher`,
-  `resend` (initialized in `lib/view/app.dart`). Check `pubspec.yaml` for full
+  `url_launcher`, `retrofit`, `json_annotation`. Check `pubspec.yaml` for full
   list.
+- Backend API: Cloudflare Worker proxy (`turskyi-support-api`) at `https://turskyi-support-api.dmytro-turskyi.workers.dev/support`. Source code: `backend/turskyi-support-api/worker.js`. Accessed in Flutter via Retrofit client `SupportApiClient` (`lib/model/data_sources/remote/support_api_client.dart`).
 - URL health check + fallback logic lives in
   `HomePresenter.checkAndLaunchProjectWebsite`.
   Be careful when editing - logic includes direct HEAD checks, CORS proxy retry,
