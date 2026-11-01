@@ -187,12 +187,19 @@ class HomePresenter with ChangeNotifier {
       final bool isSaved = await _localDataSource.saveLanguageIsoCode(
         language.isoLanguageCode,
       );
-      if (isSaved && !_isLoading) {
+      if (isSaved) {
         _language = language;
         _calculateExperience();
         notifyListeners();
       } else {
-        //TODO: handle this case.
+        if (kDebugMode) {
+          debugPrint(
+            'Failed to save language ISO code: ${language.isoLanguageCode}',
+          );
+        }
+        _language = language;
+        _calculateExperience();
+        notifyListeners();
       }
     }
   }
