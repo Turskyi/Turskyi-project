@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:turskyi/model/models/ranking_response.dart';
 import 'package:turskyi/model/models/support_form_data.dart';
 import 'package:turskyi/model/models/support_response.dart';
 import 'package:turskyi/model/models/url_health_response.dart';
@@ -55,4 +56,32 @@ abstract class SupportApiClient {
   ///   ```
   @GET('/health')
   Future<UrlHealthResponse> checkUrlHealth(@Query('url') final String url);
+
+  /// Fetches lifetime download/user statistics across iOS, Android, and Web.
+  ///
+  /// **Postman / cURL Example:**
+  /// - **Method:** `GET`
+  /// - **URL:** `https://turskyi-support-api.dmytro-turskyi.workers.dev/ranking`
+  /// - **Response (200 OK):**
+  ///   ```json
+  ///   {
+  ///     "updatedAt": "2026-11-03T00:53:56.430Z",
+  ///     "subrequestsCount": 32,
+  ///     "apps": [
+  ///       {
+  ///         "id": "weather_fit",
+  ///         "total": 5352,
+  ///         "ios": 247,
+  ///         "android": 3755,
+  ///         "web": 1350
+  ///       }
+  ///     ],
+  ///     "status": {
+  ///       "googleAuth": true,
+  ///       "ascSales": true
+  ///     }
+  ///   }
+  ///   ```
+  @GET('/ranking')
+  Future<RankingResponse> fetchRanking();
 }

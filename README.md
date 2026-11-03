@@ -52,6 +52,14 @@ Support emails are processed securely via a Cloudflare Worker backend proxy (`tu
 - **Runtime Secret:** `RESEND_API_KEY` stored securely in Cloudflare Worker runtime variables.
 - **Flutter Integration:** Managed via Retrofit in [`lib/model/data_sources/remote/support_api_client.dart`](lib/model/data_sources/remote/support_api_client.dart).
 
+## Dynamic App Ranking & Order Calculation
+
+Portfolio app cards are automatically ordered and badged by total lifetime new users/downloads:
+- **Data Aggregation:** The Cloudflare Worker endpoint `GET /ranking` combines stats from **Google Analytics Data API v1beta** (Web & Android), **Google Play Developer Reporting API** (Android installs), and **App Store Connect Sales API** (iOS downloads).
+- **Local Caching & Revalidation:** The Flutter client stores ranking data locally using **Drift** (SQLite with Web WASM support), implementing a 7-day stale-while-revalidate policy.
+- **Sorting & Tiebreaker:** Projects are sorted descending by total lifetime users (`ios + android + web`), with the original hardcoded project order serving as the fallback and tiebreaker.
+- **Platform Badges:** Each platform icon on a project card displays a compact user count chip for transparency and quick metrics visibility.
+
 <details style="border: 1px solid #aaa; border-radius: 4px; padding: 0.5em 0.5em 0;">
   <summary style="font-weight: bold; margin: -0.5em -0.5em 0; padding: 0.5em; border-bottom: 1px solid #aaa;">Architectural pattern:
 

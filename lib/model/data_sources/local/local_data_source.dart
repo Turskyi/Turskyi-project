@@ -93,6 +93,7 @@ class LocalDataSource {
   List<Project> get allProjects {
     return <Project>[
       Project(
+        id: 'weather_fit',
         name: translate('projects.weather_fit.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}weather_fit-feature_graphic.png',
@@ -105,6 +106,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'life_coaching_ai',
         name: translate('projects.life_coaching_ai.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -119,6 +121,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'daoism_laozi_ai',
         name: translate('projects.daoism_laozi_ai.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -132,6 +135,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'ethical_scanner',
         name: translate('projects.ethical_scanner.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -146,6 +150,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'portion_control',
         name: 'Portion Control',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -159,6 +164,7 @@ class LocalDataSource {
         },
       ),
       const Project(
+        id: 'investtracks',
         name: 'InvestTracks',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -175,6 +181,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'politer_ai',
         name: 'Politer AI',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -188,6 +195,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'news_glance',
         name: translate('projects.news_glance.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}news_glance-feature_graphic.png',
@@ -200,6 +208,7 @@ class LocalDataSource {
         },
       ),
       Project(
+        id: 'mala_knyzhka',
         name: translate('projects.mala_knyzhka.name'),
         imageAssetPath:
             '${constants.kFeatureGraphicPath}taras_feature_graphic.png',
@@ -212,6 +221,7 @@ class LocalDataSource {
         },
       ),
       const Project(
+        id: 'anartist_store',
         name: "Anna's Artistic Store",
         imageAssetPath:
             '${constants.kFeatureGraphicPath}'
@@ -225,6 +235,7 @@ class LocalDataSource {
         },
       ),
       const Project(
+        id: 'travelling',
         name: 'Travelling',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}travelling-feature_graphic.png',
@@ -234,6 +245,7 @@ class LocalDataSource {
         supportedPlatforms: <PlatformType>{PlatformType.android},
       ),
       const Project(
+        id: 'sensilence',
         name: 'Відчуття.Тиші & Zigmund Afraid',
         imageAssetPath:
             '${constants.kFeatureGraphicPath}vt-feature_graphic.png',

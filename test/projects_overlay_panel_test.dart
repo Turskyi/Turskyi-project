@@ -71,6 +71,7 @@ class _TestHostState extends State<_TestHost> with TickerProviderStateMixin {
 
   final List<Project> _projects = const <Project>[
     Project(
+      id: 'one',
       name: 'One',
       imageAssetPath: 'assets/images/feature_graphics/project_1.png',
       primaryWebsiteUrl: 'https://example.com/one',
@@ -80,12 +81,14 @@ class _TestHostState extends State<_TestHost> with TickerProviderStateMixin {
       },
     ),
     Project(
+      id: 'two',
       name: 'Two',
       imageAssetPath: 'assets/images/feature_graphics/project_2.png',
       primaryWebsiteUrl: 'https://example.com/two',
       supportedPlatforms: <PlatformType>{PlatformType.ios, PlatformType.web},
     ),
     Project(
+      id: 'three',
       name: 'Three',
       imageAssetPath: 'assets/images/feature_graphics/project_3.png',
       primaryWebsiteUrl: 'https://example.com/three',

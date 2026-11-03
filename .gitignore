@@ -47,3 +47,4 @@ app.*.map.json
 env.g.dart
 coverage
 coverage_report
+/.artifacts/

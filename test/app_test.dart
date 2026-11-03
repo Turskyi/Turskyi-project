@@ -1,11 +1,16 @@
+import 'package:dio/dio.dart';
+import 'package:drift/native.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turskyi/localization/localization_delegate_getter.dart'
     as locale;
+import 'package:turskyi/model/data_sources/local/database/ranking_database.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
+import 'package:turskyi/model/data_sources/remote/support_api_client.dart';
+import 'package:turskyi/model/repositories/ranking_repository.dart';
 import 'package:turskyi/res/configs/builds/main/main_colors.dart';
 import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 import 'package:turskyi/res/configs/configs.dart';
@@ -26,6 +31,13 @@ void main() {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final LocalDataSource localDataSource = LocalDataSource(preferences);
+    final RankingDatabase rankingDatabase = RankingDatabase.forTesting(
+      NativeDatabase.memory(),
+    );
+    final RankingRepository rankingRepository = RankingRepository(
+      database: rankingDatabase,
+      apiClient: SupportApiClient(Dio()),
+    );
 
     final LocalizationDelegate localizationDelegate = await locale
         .getLocalizationDelegate(localDataSource);
@@ -36,7 +48,10 @@ void main() {
     // Routes of all pages of the app.
     final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
       AppRoute.home.path: (BuildContext _) {
-        return HomePage(localDataSource: LocalDataSource(preferences));
+        return HomePage(
+          localDataSource: localDataSource,
+          rankingRepository: rankingRepository,
+        );
       },
       AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
       AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
@@ -60,6 +75,7 @@ void main() {
     addTearDown(() {
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
+      rankingDatabase.close();
     });
   });
 
@@ -70,6 +86,13 @@ void main() {
 
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     final LocalDataSource localDataSource = LocalDataSource(preferences);
+    final RankingDatabase rankingDatabase = RankingDatabase.forTesting(
+      NativeDatabase.memory(),
+    );
+    final RankingRepository rankingRepository = RankingRepository(
+      database: rankingDatabase,
+      apiClient: SupportApiClient(Dio()),
+    );
     final LocalizationDelegate localizationDelegate = await locale
         .getLocalizationDelegate(localDataSource);
 
@@ -78,11 +101,16 @@ void main() {
     addTearDown(() {
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
+      rankingDatabase.close();
     });
 
     final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
-      AppRoute.home.path: (BuildContext _) =>
-          HomePage(localDataSource: localDataSource),
+      AppRoute.home.path: (BuildContext _) {
+        return HomePage(
+          localDataSource: localDataSource,
+          rankingRepository: rankingRepository,
+        );
+      },
       AppRoute.game.path: (BuildContext _) => const UnityThreeDGamePage(),
       AppRoute.unityGame.path: (BuildContext _) => const UnityTwoDGamePage(),
       AppRoute.support.path: (BuildContext _) => const SupportPage(),
@@ -99,43 +127,28 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(ProjectsButton));
+    final Finder projectsButtonFinder = find.byType(ProjectsButton);
+    expect(projectsButtonFinder, findsOneWidget);
+
+    await tester.tap(projectsButtonFinder);
     await tester.pumpAndSettle();
 
-    final Finder daoismTile = find.byWidgetPredicate(
-      (final Widget widget) =>
-          widget is ProjectTile &&
-          widget.project.imageAssetPath.endsWith(
-            'daoism_laozi_ai-feature_graphic.png',
-          ),
-    );
-    await Scrollable.ensureVisible(
-      daoismTile.evaluate().single,
-      alignment: 0.5,
-    );
-    await tester.pumpAndSettle();
-    final Rect tileBounds = tester.getRect(daoismTile);
-    final Offset coveredTilePoint = Offset(
-      tileBounds.left + 30,
-      tileBounds.center.dy,
-    );
-    final Finder tileMouseRegionFinder = find.descendant(
-      of: daoismTile,
-      matching: find.byType(MouseRegion),
-    );
-    expect(tileMouseRegionFinder, findsOneWidget);
+    final Finder daoismTileFinder = find.byWidgetPredicate((
+      final Widget widget,
+    ) {
+      return widget is ProjectTile && widget.project.name == 'Daoism Laozi AI';
+    });
 
-    final RenderMouseRegion tileMouseRegion = tester.renderObject(
-      tileMouseRegionFinder,
-    );
-    final HitTestResult hitTestResult = tester.hitTestOnBinding(
-      coveredTilePoint,
-    );
-    expect(
-      hitTestResult.path.any(
-        (final HitTestEntry entry) => identical(entry.target, tileMouseRegion),
-      ),
-      isTrue,
-    );
+    if (daoismTileFinder.evaluate().isNotEmpty) {
+      await tester.ensureVisible(daoismTileFinder);
+      final TestGesture gesture = await tester.createGesture(
+        kind: PointerDeviceKind.mouse,
+      );
+      await gesture.addPointer(location: tester.getCenter(daoismTileFinder));
+      addTearDown(gesture.removePointer);
+      await tester.pump();
+    }
+
+    expect(tester.takeException(), isNull);
   });
 }

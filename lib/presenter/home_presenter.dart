@@ -8,7 +8,9 @@ import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/model/data_sources/remote/support_api_client.dart';
 import 'package:turskyi/model/date_times.dart' as date_times;
 import 'package:turskyi/model/models/project.dart';
+import 'package:turskyi/model/models/project_ranking.dart';
 import 'package:turskyi/model/models/url_health_response.dart';
+import 'package:turskyi/model/repositories/ranking_repository.dart';
 import 'package:turskyi/presenter/time.dart';
 import 'package:turskyi/res/language.dart';
 import 'package:turskyi/res/values/dimens.dart';
@@ -25,8 +27,10 @@ class HomePresenter with ChangeNotifier {
     required final HomeView view,
     required final TickerProvider tickerProvider,
     required final LocalDataSource localDataSource,
+    required final RankingRepository rankingRepository,
     final SupportApiClient? apiClient,
-  }) : _apiClient = apiClient ?? SupportApiClient(Dio()) {
+  }) : _apiClient = apiClient ?? SupportApiClient(Dio()),
+       _rankingRepository = rankingRepository {
     _view = view;
     _fadeAnimationController = AnimationController(
       duration: Duration(seconds: Time.fade.value),
@@ -48,12 +52,15 @@ class HomePresenter with ChangeNotifier {
     );
     _fadeAnimationController.forward();
     _localDataSource = localDataSource;
+    _projects = localDataSource.allProjects;
     _language = localDataSource.getSavedLanguage();
 
     _calculateExperience();
+    _initRankings();
   }
 
   late final SupportApiClient _apiClient;
+  final RankingRepository _rankingRepository;
   late HomeView _view;
   late final Animation<double> _rotationAnimation;
 
@@ -123,7 +130,59 @@ class HomePresenter with ChangeNotifier {
   /// controls the width of the "suffix" of the title
   double get suffixWidth => _suffixWidth;
 
-  List<Project> get allProjects => _localDataSource.allProjects;
+  List<Project> _projects = <Project>[];
+
+  List<Project> get allProjects => _projects;
+
+  Future<void> _initRankings() async {
+    final List<ProjectRanking> cached = await _rankingRepository
+        .getCachedRankings();
+    if (cached.isNotEmpty) {
+      _applyRankingsAndSort(cached);
+    }
+
+    final bool isStale = await _rankingRepository.isCacheStale();
+    if (isStale || cached.isEmpty) {
+      final List<ProjectRanking> fresh = await _rankingRepository
+          .fetchAndSaveRankings();
+      if (fresh.isNotEmpty) {
+        _applyRankingsAndSort(fresh);
+      }
+    }
+  }
+
+  void _applyRankingsAndSort(final List<ProjectRanking> rankings) {
+    if (rankings.isEmpty) {
+      return;
+    }
+    final Map<String, ProjectRanking> rankingMap = <String, ProjectRanking>{
+      for (final ProjectRanking ranking in rankings) ranking.id: ranking,
+    };
+
+    final List<Project> initialProjects = _localDataSource.allProjects;
+    final Map<String, int> initialOrderMap = <String, int>{
+      for (int i = 0; i < initialProjects.length; i++) initialProjects[i].id: i,
+    };
+
+    _projects = initialProjects.map((final Project project) {
+      final ProjectRanking? ranking = rankingMap[project.id];
+      return project.copyWithRanking(ranking);
+    }).toList();
+
+    _projects.sort((final Project a, final Project b) {
+      final int totalA = a.ranking?.total ?? 0;
+      final int totalB = b.ranking?.total ?? 0;
+
+      if (totalA != totalB) {
+        return totalB.compareTo(totalA);
+      }
+      final int orderA = initialOrderMap[a.id] ?? 0;
+      final int orderB = initialOrderMap[b.id] ?? 0;
+      return orderA.compareTo(orderB);
+    });
+
+    notifyListeners();
+  }
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
   /// and opens the page in new browser tab

@@ -29,7 +29,10 @@ void main() async {
       dependencies.localizationDelegate;
 
   // Routes of all pages of the app.
-  final Map<String, WidgetBuilder> routes = router.getRouteMap(localDataSource);
+  final Map<String, WidgetBuilder> routes = router.getRouteMap(
+    localDataSource: localDataSource,
+    rankingRepository: dependencies.rankingRepository,
+  );
 
   runApp(
     LocalizedApp(

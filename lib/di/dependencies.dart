@@ -1,5 +1,7 @@
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:turskyi/model/data_sources/local/database/ranking_database.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
+import 'package:turskyi/model/repositories/ranking_repository.dart';
 import 'package:turskyi/model/use_cases/initialize_app_language_use_case.dart';
 import 'package:turskyi/res/configs/builds/main/main_configs.dart';
 
@@ -9,10 +11,14 @@ class Dependencies {
     required this.mainConfigs,
     required this.initializeAppLanguageUseCase,
     required this.localizationDelegate,
+    required this.rankingDatabase,
+    required this.rankingRepository,
   });
 
   final LocalDataSource localDataSource;
   final MainConfigs mainConfigs;
   final InitializeAppLanguageUseCase initializeAppLanguageUseCase;
   final LocalizationDelegate localizationDelegate;
+  final RankingDatabase rankingDatabase;
+  final RankingRepository rankingRepository;
 }

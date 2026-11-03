@@ -4,12 +4,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:turskyi/model/data_sources/remote/support_api_client.dart'
-    as _i4;
-import 'package:turskyi/model/models/support_form_data.dart' as _i6;
+    as _i5;
+import 'package:turskyi/model/models/ranking_response.dart' as _i4;
+import 'package:turskyi/model/models/support_form_data.dart' as _i7;
 import 'package:turskyi/model/models/support_response.dart' as _i2;
 import 'package:turskyi/model/models/url_health_response.dart' as _i3;
 
@@ -41,39 +42,58 @@ class _FakeUrlHealthResponse_1 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
+class _FakeRankingResponse_2 extends _i1.SmartFake
+    implements _i4.RankingResponse {
+  _FakeRankingResponse_2(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [SupportApiClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupportApiClient extends _i1.Mock implements _i4.SupportApiClient {
+class MockSupportApiClient extends _i1.Mock implements _i5.SupportApiClient {
   MockSupportApiClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.SupportResponse> sendSupportEmail(
-    _i6.SupportFormData? formData,
+  _i6.Future<_i2.SupportResponse> sendSupportEmail(
+    _i7.SupportFormData? formData,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#sendSupportEmail, [formData]),
-            returnValue: _i5.Future<_i2.SupportResponse>.value(
+            returnValue: _i6.Future<_i2.SupportResponse>.value(
               _FakeSupportResponse_0(
                 this,
                 Invocation.method(#sendSupportEmail, [formData]),
               ),
             ),
           )
-          as _i5.Future<_i2.SupportResponse>);
+          as _i6.Future<_i2.SupportResponse>);
 
   @override
-  _i5.Future<_i3.UrlHealthResponse> checkUrlHealth(String? url) =>
+  _i6.Future<_i3.UrlHealthResponse> checkUrlHealth(String? url) =>
       (super.noSuchMethod(
             Invocation.method(#checkUrlHealth, [url]),
-            returnValue: _i5.Future<_i3.UrlHealthResponse>.value(
+            returnValue: _i6.Future<_i3.UrlHealthResponse>.value(
               _FakeUrlHealthResponse_1(
                 this,
                 Invocation.method(#checkUrlHealth, [url]),
               ),
             ),
           )
-          as _i5.Future<_i3.UrlHealthResponse>);
+          as _i6.Future<_i3.UrlHealthResponse>);
+
+  @override
+  _i6.Future<_i4.RankingResponse> fetchRanking() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchRanking, []),
+            returnValue: _i6.Future<_i4.RankingResponse>.value(
+              _FakeRankingResponse_2(
+                this,
+                Invocation.method(#fetchRanking, []),
+              ),
+            ),
+          )
+          as _i6.Future<_i4.RankingResponse>);
 }

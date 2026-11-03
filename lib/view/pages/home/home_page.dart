@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
+import 'package:turskyi/model/repositories/ranking_repository.dart';
 import 'package:turskyi/presenter/home_presenter.dart';
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/language.dart';
@@ -32,9 +33,14 @@ import 'package:url_launcher/url_launcher.dart';
 /// And we need to use [TickerProviderStateMixin] to work with
 /// [AnimationController].
 class HomePage extends StatefulWidget {
-  const HomePage({required this.localDataSource, super.key});
+  const HomePage({
+    required this.localDataSource,
+    required this.rankingRepository,
+    super.key,
+  });
 
   final LocalDataSource localDataSource;
+  final RankingRepository rankingRepository;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -76,6 +82,7 @@ class _HomePageState extends State<HomePage>
           view: this,
           tickerProvider: this,
           localDataSource: widget.localDataSource,
+          rankingRepository: widget.rankingRepository,
         );
       },
       child: DecoratedBox(
