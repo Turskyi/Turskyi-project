@@ -56,7 +56,6 @@ class HomePresenter with ChangeNotifier {
     _language = localDataSource.getSavedLanguage();
 
     _calculateExperience();
-    _initRankings();
   }
 
   late final SupportApiClient _apiClient;
@@ -134,19 +133,27 @@ class HomePresenter with ChangeNotifier {
 
   List<Project> get allProjects => _projects;
 
-  Future<void> _initRankings() async {
-    final List<ProjectRanking> cached = await _rankingRepository
-        .getCachedRankings();
-    if (cached.isNotEmpty) {
-      _applyRankingsAndSort(cached);
-    }
+  bool _hasLoadedRankings = false;
 
-    final bool isStale = await _rankingRepository.isCacheStale();
-    if (isStale || cached.isEmpty) {
-      final List<ProjectRanking> fresh = await _rankingRepository
-          .fetchAndSaveRankings();
-      if (fresh.isNotEmpty) {
-        _applyRankingsAndSort(fresh);
+  Future<void> loadRankings() async {
+    if (_hasLoadedRankings) {
+      return;
+    } else {
+      _hasLoadedRankings = true;
+
+      final List<ProjectRanking> cached = await _rankingRepository
+          .getCachedRankings();
+      if (cached.isNotEmpty) {
+        _applyRankingsAndSort(cached);
+      }
+
+      final bool isStale = await _rankingRepository.isCacheStale();
+      if (isStale || cached.isEmpty) {
+        final List<ProjectRanking> fresh = await _rankingRepository
+            .fetchAndSaveRankings();
+        if (fresh.isNotEmpty) {
+          _applyRankingsAndSort(fresh);
+        }
       }
     }
   }
@@ -154,34 +161,36 @@ class HomePresenter with ChangeNotifier {
   void _applyRankingsAndSort(final List<ProjectRanking> rankings) {
     if (rankings.isEmpty) {
       return;
+    } else {
+      final Map<String, ProjectRanking> rankingMap = <String, ProjectRanking>{
+        for (final ProjectRanking ranking in rankings) ranking.id: ranking,
+      };
+
+      final List<Project> initialProjects = _localDataSource.allProjects;
+      final Map<String, int> initialOrderMap = <String, int>{
+        for (int i = 0; i < initialProjects.length; i++)
+          initialProjects[i].id: i,
+      };
+
+      _projects = initialProjects.map((final Project project) {
+        final ProjectRanking? ranking = rankingMap[project.id];
+        return project.copyWithRanking(ranking);
+      }).toList();
+
+      _projects.sort((final Project a, final Project b) {
+        final int totalA = a.ranking?.total ?? 0;
+        final int totalB = b.ranking?.total ?? 0;
+
+        if (totalA != totalB) {
+          return totalB.compareTo(totalA);
+        }
+        final int orderA = initialOrderMap[a.id] ?? 0;
+        final int orderB = initialOrderMap[b.id] ?? 0;
+        return orderA.compareTo(orderB);
+      });
+
+      notifyListeners();
     }
-    final Map<String, ProjectRanking> rankingMap = <String, ProjectRanking>{
-      for (final ProjectRanking ranking in rankings) ranking.id: ranking,
-    };
-
-    final List<Project> initialProjects = _localDataSource.allProjects;
-    final Map<String, int> initialOrderMap = <String, int>{
-      for (int i = 0; i < initialProjects.length; i++) initialProjects[i].id: i,
-    };
-
-    _projects = initialProjects.map((final Project project) {
-      final ProjectRanking? ranking = rankingMap[project.id];
-      return project.copyWithRanking(ranking);
-    }).toList();
-
-    _projects.sort((final Project a, final Project b) {
-      final int totalA = a.ranking?.total ?? 0;
-      final int totalB = b.ranking?.total ?? 0;
-
-      if (totalA != totalB) {
-        return totalB.compareTo(totalA);
-      }
-      final int orderA = initialOrderMap[a.id] ?? 0;
-      final int orderB = initialOrderMap[b.id] ?? 0;
-      return orderA.compareTo(orderB);
-    });
-
-    notifyListeners();
   }
 
   /// [onLaunchLink] accepts "link", checks if this link can be launched
