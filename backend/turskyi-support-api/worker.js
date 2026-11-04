@@ -658,15 +658,16 @@ async function fetchGooglePlayReportingApiInstalls(
 
 const defaultGaPropertyMap = {
   weather_fit: { android: '431049413', web: '527741989' },
-  life_coaching_ai: { android: '515588911' },
+  life_coaching_ai: { android: '515588911', web: '515588911' },
   daoism_laozi_ai: { android: '446333120', web: '540496553' },
   ethical_scanner: { android: '421491625', web: '531235007' },
   portion_control: { android: '478313827', web: '527582436' },
-  investtracks: { android: '469159580' },
+  investtracks: { android: '469159580', web: '469159580' },
   politer_ai: { android: '418628235', web: '530865911' },
   news_glance: { android: '429042593', web: '429042593' },
   mala_knyzhka: { android: '471305318', web: '547254127' },
-  anartist_store: { android: '561863322', web: '438752601' },
+  anartist_store: { android: '438752601', web: '561863322' },
+  composeship: { android: '560732955', web: '560732955' },
 };
 
 const defaultAppMetadataMap = {
@@ -686,7 +687,7 @@ const defaultAppMetadataMap = {
     androidPackage: 'com.turskyi.ethical_scanner',
     appleId: '6743681663',
   },
-  portion_content: {
+  portion_control: {
     androidPackage: 'com.turskyi.portion_control',
     appleId: '6743641654',
   },
@@ -709,6 +710,9 @@ const defaultAppMetadataMap = {
   anartist_store: {
     androidPackage: 'store.anartist.anartiststore',
     appleId: '6743679208',
+  },
+  composeship: {
+    androidPackage: 'com.composeship',
   },
   travelling: { androidPackage: 'io.github.turskyi.travellingpro' },
   sensilence: { androidPackage: 'com.music.android.sensilence' },
