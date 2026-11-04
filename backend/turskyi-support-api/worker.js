@@ -614,6 +614,11 @@ async function fetchGooglePlayReportingApiInstalls(
 ) {
   if (!accessToken || !packageName) return null;
   try {
+    const now = new Date();
+    const endYear = now.getFullYear();
+    const endMonth = now.getMonth() + 1;
+    const endDay = now.getDate();
+
     subrequestsRef.count++;
     const url = `https://playdeveloperreporting.googleapis.com/v1beta/apps/${packageName}:queryInstallMetrics`;
     const res = await fetch(url, {
@@ -627,7 +632,7 @@ async function fetchGooglePlayReportingApiInstalls(
         timelineSpec: {
           aggregationPeriod: 'DAILY',
           startTime: { year: 2024, month: 1, day: 1 },
-          endTime: { year: 2026, month: 12, day: 31 },
+          endTime: { year: endYear, month: endMonth, day: endDay },
         },
       }),
     });
