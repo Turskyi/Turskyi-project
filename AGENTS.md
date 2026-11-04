@@ -42,6 +42,12 @@ patterns are documented - follow these references before changing behaviour.
   `.github/copilot-instructions.md`).
 - Presenters are the single place for business logic - avoid putting logic in
   view widgets. Use `ChangeNotifier` patterns already in `presenter/`.
+- Domain & subdomain context: `turskyi.com` is the apex domain. Independent
+  subprojects operate on subdomains (e.g., `anartist.turskyi.com` for
+  `nextjs-ecommerce`). Third-party services (Google Analytics, GTM, Search
+  Console) may send notifications referencing `turskyi.com` that actually
+  pertain to a subdomain project. Always inspect both the apex project and
+  subdomain projects when investigating domain-level services or email alerts.
 
 ## Localization & language selection
 
