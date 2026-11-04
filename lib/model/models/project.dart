@@ -43,6 +43,25 @@ class Project {
     return supportedPlatforms.containsAll(PlatformType.values.toSet());
   }
 
+  /// Returns [supportedPlatforms] sorted in the canonical order defined by
+  /// [PlatformType.values] (i.e., [PlatformType.android], [PlatformType.ios],
+  /// [PlatformType.web]).
+  ///
+  /// **Why ordering in data sources does not matter:**
+  /// Regardless of the insertion order of elements in [supportedPlatforms]
+  /// within local or remote data sources, this getter evaluates membership
+  /// against [PlatformType.values].
+  ///
+  /// **How the sorting decides the order:**
+  /// [PlatformType.values] provides the fixed, canonical order of platforms as
+  /// declared in the [PlatformType] enum. Iterating over [PlatformType.values]
+  /// and filtering by `supportedPlatforms.contains` produces a deterministic
+  /// list ordered strictly by enum index (`android` -> `ios` -> `web`),
+  /// ensuring platform icons are displayed consistently across UI components.
+  List<PlatformType> get sortedSupportedPlatforms {
+    return PlatformType.values.where(supportedPlatforms.contains).toList();
+  }
+
   Project copyWithRanking(final ProjectRanking? ranking) {
     return Project(
       id: id,

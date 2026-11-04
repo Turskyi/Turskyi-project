@@ -100,8 +100,8 @@ class LocalDataSource {
         primaryWebsiteUrl: translate('projects.weather_fit.url'),
         fallbackWebsiteUrl: translate('projects.weather_fit.fallback_url'),
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -115,8 +115,8 @@ class LocalDataSource {
         // No `fallbackWebsiteUrl` because it will not support authentication
         // on another domain.
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -129,8 +129,8 @@ class LocalDataSource {
         primaryWebsiteUrl: translate('projects.daoism_laozi_ai.url'),
         fallbackWebsiteUrl: translate('projects.daoism_laozi_ai.fallback_url'),
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -144,8 +144,8 @@ class LocalDataSource {
         primaryWebsiteUrl: translate('projects.ethical_scanner.url'),
         fallbackWebsiteUrl: translate('projects.ethical_scanner.fallback_url'),
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -159,8 +159,8 @@ class LocalDataSource {
         fallbackWebsiteUrl: 'https://portion-control-tracker.web.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
-          PlatformType.web,
           PlatformType.ios,
+          PlatformType.web,
         },
       ),
       const Project(
@@ -175,8 +175,8 @@ class LocalDataSource {
         // No `fallbackWebsiteUrl` because it will not support authentication
         // on another domain.
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -189,8 +189,8 @@ class LocalDataSource {
         primaryWebsiteUrl: translate('projects.politer_ai.url'),
         fallbackWebsiteUrl: translate('projects.politer_ai.fallback_url'),
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -203,8 +203,8 @@ class LocalDataSource {
         fallbackWebsiteUrl: 'https://news-glanceai.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
-          PlatformType.web,
           PlatformType.ios,
+          PlatformType.web,
         },
       ),
       Project(
@@ -215,8 +215,8 @@ class LocalDataSource {
         primaryWebsiteUrl: translate('projects.mala_knyzhka.url'),
         fallbackWebsiteUrl: 'https://mala-knyzhka.web.app',
         supportedPlatforms: <PlatformType>{
-          PlatformType.ios,
           PlatformType.android,
+          PlatformType.ios,
           PlatformType.web,
         },
       ),
@@ -230,8 +230,8 @@ class LocalDataSource {
         fallbackWebsiteUrl: 'https://an-artist-art.vercel.app',
         supportedPlatforms: <PlatformType>{
           PlatformType.android,
-          PlatformType.web,
           PlatformType.ios,
+          PlatformType.web,
         },
       ),
       const Project(

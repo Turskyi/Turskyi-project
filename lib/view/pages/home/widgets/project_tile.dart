@@ -96,7 +96,7 @@ class ProjectTile extends StatelessWidget {
                           child: Wrap(
                             spacing: 6,
                             runSpacing: 4,
-                            children: project.supportedPlatforms.map((
+                            children: project.sortedSupportedPlatforms.map((
                               final PlatformType platform,
                             ) {
                               final IconData icon = switch (platform) {
