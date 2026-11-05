@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:turskyi/model/data_sources/local/database/ranking_database.dart';
 import 'package:turskyi/model/data_sources/remote/support_api_client.dart';
@@ -30,23 +32,40 @@ class RankingRepository {
     }
   }
 
-  /// Fetches fresh ranking data from backend `/ranking`, updates Drift database,
-  /// and returns fresh list of [ProjectRanking]s.
+  /// Fetches fresh ranking data from backend `/ranking`,
+  /// updates Drift database, and returns fresh list of [ProjectRanking]s.
+  ///
+  /// **Monotonic Metric Protection:** Ensures that if an incoming network
+  /// metric temporarily drops to 0 due to a transient upstream API timeout or
+  /// outage, the higher cached metric is preserved so user counts never
+  /// regress.
   Future<List<ProjectRanking>> fetchAndSaveRankings() async {
     try {
       final RankingResponse response = await _apiClient.fetchRanking();
       final DateTime fetchTime =
           DateTime.tryParse(response.updatedAt) ?? DateTime.now();
 
+      final List<ProjectRanking> cachedRankings = await _database
+          .getAllRankings();
+      final Map<String, ProjectRanking> cachedMap = <String, ProjectRanking>{
+        for (final ProjectRanking r in cachedRankings) r.id: r,
+      };
+
       final List<ProjectRanking> rankings = response.apps.map((
         final AppRankingDto dto,
       ) {
+        final ProjectRanking? existing = cachedMap[dto.id];
+        final int ios = math.max(existing?.ios ?? 0, dto.ios);
+        final int android = math.max(existing?.android ?? 0, dto.android);
+        final int web = math.max(existing?.web ?? 0, dto.web);
+        final int total = ios + android + web;
+
         return ProjectRanking(
           id: dto.id,
-          total: dto.total,
-          ios: dto.ios,
-          android: dto.android,
-          web: dto.web,
+          total: total,
+          ios: ios,
+          android: android,
+          web: web,
           updatedAt: fetchTime,
         );
       }).toList();
