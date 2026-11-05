@@ -53,7 +53,7 @@ In Cloudflare Worker Settings > **Variables and Secrets**:
   "mala_knyzhka": { "androidPackage": "com.turskyi.malaknyzhka", "appleId": "6743679879" },
   "anartist_store": { "androidPackage": "store.anartist.anartiststore", "appleId": "6743679208" },
   "composeship": { "androidPackage": "com.composeship" },
-  "travelling": { "androidPackage": "io.github.turskyi.travellingpro" },
+  "travelling": { "androidPackage": "ua.turskyi.travelling" },
   "sensilence": { "androidPackage": "com.music.android.sensilence" }
 }
 ```

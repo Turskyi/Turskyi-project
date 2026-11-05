@@ -563,47 +563,68 @@ function parseAscTsv(tsvText, salesMap, debugLogs) {
   }
 }
 
-async function fetchGA4Data(accessToken, propertyId, subrequestsRef, debugLogs) {
+async function fetchGA4Data(
+  accessToken,
+  propertyId,
+  subrequestsRef,
+  debugLogs
+) {
   if (!accessToken || !propertyId) return { web: 0, android: 0, ios: 0 };
-  try {
-    subrequestsRef.count++;
-    const res = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
-          dimensions: [{ name: 'platform' }],
-          metrics: [{ name: 'newUsers' }],
-        }),
-      }
-    );
 
-    if (!res.ok) {
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      subrequestsRef.count++;
+      const res = await fetch(
+        `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
+            dimensions: [{ name: 'platform' }],
+            metrics: [{ name: 'newUsers' }],
+          }),
+        }
+      );
+
+      if (res.ok) {
+        const data = await res.json();
+        const result = { web: 0, android: 0, ios: 0 };
+        const rows = data.rows || [];
+        for (const row of rows) {
+          const platform =
+            row.dimensionValues?.[0]?.value?.toLowerCase() || '';
+          const count = parseInt(row.metricValues?.[0]?.value, 10) || 0;
+          if (platform.includes('web')) result.web += count;
+          else if (platform.includes('android')) result.android += count;
+          else if (platform.includes('ios')) result.ios += count;
+        }
+        return result;
+      }
+
       const errText = await res.text();
+      if (
+        attempt === 1 &&
+        (res.status === 502 || res.status === 503 || res.status === 429)
+      ) {
+        await new Promise((r) => setTimeout(r, 300));
+        continue;
+      }
       debugLogs.push(`GA4 prop ${propertyId} error: ${res.status} ${errText}`);
       return { web: 0, android: 0, ios: 0 };
+    } catch (e) {
+      if (attempt === 1) {
+        await new Promise((r) => setTimeout(r, 300));
+        continue;
+      }
+      debugLogs.push(`GA4 prop ${propertyId} exception: ${e.message}`);
+      return { web: 0, android: 0, ios: 0 };
     }
-    const data = await res.json();
-    const result = { web: 0, android: 0, ios: 0 };
-    const rows = data.rows || [];
-    for (const row of rows) {
-      const platform =
-        row.dimensionValues?.[0]?.value?.toLowerCase() || '';
-      const count = parseInt(row.metricValues?.[0]?.value, 10) || 0;
-      if (platform.includes('web')) result.web += count;
-      else if (platform.includes('android')) result.android += count;
-      else if (platform.includes('ios')) result.ios += count;
-    }
-    return result;
-  } catch (e) {
-    debugLogs.push(`GA4 prop ${propertyId} exception: ${e.message}`);
-    return { web: 0, android: 0, ios: 0 };
   }
+  return { web: 0, android: 0, ios: 0 };
 }
 
 async function fetchGooglePlayReportingApiInstalls(
@@ -644,16 +665,23 @@ async function fetchGooglePlayReportingApiInstalls(
       for (const row of rows) {
         const vals = row.metricValues || row.values || [];
         for (const v of vals) {
-          const n = parseInt(v, 10) || 0;
+          let n = 0;
+          if (typeof v === 'number') {
+            n = v;
+          } else if (typeof v === 'string') {
+            n = parseInt(v, 10) || 0;
+          } else if (v && typeof v === 'object') {
+            const valStr =
+              v.decimalValue?.value || v.integerValue?.value || v.value;
+            n = parseInt(valStr, 10) || 0;
+          }
           totalInstalls += n;
         }
       }
       return totalInstalls > 0 ? totalInstalls : null;
     } else {
       const errText = await res.text();
-      if (res.status !== 404) {
-        debugLogs.push(`Play API ${packageName} error: ${res.status} ${errText}`);
-      }
+      debugLogs.push(`Play API ${packageName} error: ${res.status} ${errText}`);
     }
   } catch (e) {
     debugLogs.push(`Play API ${packageName} exception: ${e.message}`);
@@ -719,6 +747,6 @@ const defaultAppMetadataMap = {
   composeship: {
     androidPackage: 'com.composeship',
   },
-  travelling: { androidPackage: 'io.github.turskyi.travellingpro' },
+  travelling: { androidPackage: 'ua.turskyi.travelling' },
   sensilence: { androidPackage: 'com.music.android.sensilence' },
 };
