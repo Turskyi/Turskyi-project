@@ -25,7 +25,7 @@ export default {
         : 'https://turskyi.com',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Vary': 'Origin',
+      Vary: 'Origin',
     };
 
     // Handle browser CORS preflight
@@ -153,11 +153,11 @@ export default {
         // Parse environment maps safely
         const gaPropertyMap = parseJsonSafe(
           env.GA_PROPERTY_MAP,
-          defaultGaPropertyMap
+          defaultGaPropertyMap,
         );
         const appMetadataMap = parseJsonSafe(
           env.APP_METADATA_MAP,
-          defaultAppMetadataMap
+          defaultAppMetadataMap,
         );
 
         // Run data providers in parallel
@@ -165,7 +165,7 @@ export default {
           getGoogleAccessToken(
             env.GA_SERVICE_ACCOUNT_JSON,
             subrequestsRef,
-            debugLogs
+            debugLogs,
           ),
           fetchAscSales(env, subrequestsRef, debugLogs),
         ]);
@@ -191,27 +191,31 @@ export default {
         const playInstallsMap = {};
 
         if (googleAccessToken) {
-          const gaFetches = Array.from(uniquePropertyIds).map(async (propId) => {
-            const stats = await fetchGA4Data(
-              googleAccessToken,
-              propId,
-              subrequestsRef,
-              debugLogs
-            );
-            gaDataMap[propId] = stats;
-          });
-
-          const playFetches = Object.values(appMetadataMap).map(async (metadata) => {
-            if (metadata.androidPackage) {
-              const installs = await fetchGooglePlayReportingApiInstalls(
+          const gaFetches = Array.from(uniquePropertyIds).map(
+            async (propId) => {
+              const stats = await fetchGA4Data(
                 googleAccessToken,
-                metadata.androidPackage,
+                propId,
                 subrequestsRef,
-                debugLogs
+                debugLogs,
               );
-              playInstallsMap[metadata.androidPackage] = installs;
-            }
-          });
+              gaDataMap[propId] = stats;
+            },
+          );
+
+          const playFetches = Object.values(appMetadataMap).map(
+            async (metadata) => {
+              if (metadata.androidPackage) {
+                const installs = await fetchGooglePlayReportingApiInstalls(
+                  googleAccessToken,
+                  metadata.androidPackage,
+                  subrequestsRef,
+                  debugLogs,
+                );
+                playInstallsMap[metadata.androidPackage] = installs;
+              }
+            },
+          );
 
           await Promise.allSettled([...gaFetches, ...playFetches]);
         }
@@ -248,7 +252,11 @@ export default {
             }
 
             // Check App Store Connect sales for iOS (match by appleId, androidPackage, or appId)
-            const ascKeys = [metadata.appleId, metadata.androidPackage, appId].filter(Boolean);
+            const ascKeys = [
+              metadata.appleId,
+              metadata.androidPackage,
+              appId,
+            ].filter(Boolean);
             for (const key of ascKeys) {
               if (ascSalesByAppleId[key]) {
                 iosUsers = Math.max(iosUsers, ascSalesByAppleId[key]);
@@ -265,7 +273,7 @@ export default {
               android: androidUsers,
               web: webUsers,
             };
-          })
+          }),
         );
 
         const apps = appResults
@@ -346,8 +354,7 @@ async function getGoogleAccessToken(saJson, subrequestsRef, debugLogs) {
     debugLogs.push('GA_SERVICE_ACCOUNT_JSON missing');
     return null;
   }
-  const sa =
-    typeof saJson === 'string' ? parseJsonSafe(saJson, null) : saJson;
+  const sa = typeof saJson === 'string' ? parseJsonSafe(saJson, null) : saJson;
   if (!sa || !sa.private_key || !sa.client_email) {
     debugLogs.push('GA_SERVICE_ACCOUNT_JSON invalid format');
     return null;
@@ -362,7 +369,7 @@ async function getGoogleAccessToken(saJson, subrequestsRef, debugLogs) {
       .replace(pemFooter, '')
       .replace(/\s/g, '');
     const binaryDer = Uint8Array.from(atob(pemContents), (c) =>
-      c.charCodeAt(0)
+      c.charCodeAt(0),
     );
 
     const key = await crypto.subtle.importKey(
@@ -370,7 +377,7 @@ async function getGoogleAccessToken(saJson, subrequestsRef, debugLogs) {
       binaryDer.buffer,
       { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
       false,
-      ['sign']
+      ['sign'],
     );
 
     const now = Math.floor(Date.now() / 1000);
@@ -385,13 +392,13 @@ async function getGoogleAccessToken(saJson, subrequestsRef, debugLogs) {
     };
 
     const unsignedJwt = `${base64url(JSON.stringify(header))}.${base64url(
-      JSON.stringify(claimSet)
+      JSON.stringify(claimSet),
     )}`;
 
     const signature = await crypto.subtle.sign(
       'RSASSA-PKCS1-v1_5',
       key,
-      new TextEncoder().encode(unsignedJwt)
+      new TextEncoder().encode(unsignedJwt),
     );
 
     const jwt = `${unsignedJwt}.${base64url(signature)}`;
@@ -431,16 +438,14 @@ async function getAscJwt(env) {
     .replace(pemHeader, '')
     .replace(pemFooter, '')
     .replace(/\s/g, '');
-  const binaryDer = Uint8Array.from(atob(pemContents), (c) =>
-    c.charCodeAt(0)
-  );
+  const binaryDer = Uint8Array.from(atob(pemContents), (c) => c.charCodeAt(0));
 
   const key = await crypto.subtle.importKey(
     'pkcs8',
     binaryDer.buffer,
     { name: 'ECDSA', namedCurve: 'P-256' },
     false,
-    ['sign']
+    ['sign'],
   );
 
   const now = Math.floor(Date.now() / 1000);
@@ -453,13 +458,13 @@ async function getAscJwt(env) {
   };
 
   const unsignedToken = `${base64url(JSON.stringify(header))}.${base64url(
-    JSON.stringify(payload)
+    JSON.stringify(payload),
   )}`;
 
   const derSig = await crypto.subtle.sign(
     { name: 'ECDSA', hash: { name: 'SHA-256' } },
     key,
-    new TextEncoder().encode(unsignedToken)
+    new TextEncoder().encode(unsignedToken),
   );
 
   return `${unsignedToken}.${base64url(derSig)}`;
@@ -484,7 +489,7 @@ async function fetchAscSales(env, subrequestsRef, debugLogs) {
       const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${jwt}`,
-          'Accept': 'application/a-gzip',
+          Accept: 'application/a-gzip',
         },
       });
       if (res.ok && res.body) {
@@ -511,7 +516,7 @@ async function fetchAscSales(env, subrequestsRef, debugLogs) {
       const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${jwt}`,
-          'Accept': 'application/a-gzip',
+          Accept: 'application/a-gzip',
         },
       });
       if (res.ok && res.body) {
@@ -535,7 +540,7 @@ function parseAscTsv(tsvText, salesMap, debugLogs) {
   const appleIdIdx = header.findIndex((h) => h.trim() === 'Apple Identifier');
   const skuIdx = header.findIndex((h) => h.trim() === 'SKU');
   const productTypeIdx = header.findIndex(
-    (h) => h.trim() === 'Product Type Identifier'
+    (h) => h.trim() === 'Product Type Identifier',
   );
   const unitsIdx = header.findIndex((h) => h.trim() === 'Units');
 
@@ -548,11 +553,13 @@ function parseAscTsv(tsvText, salesMap, debugLogs) {
     if (cols.length <= unitsIdx) continue;
     const appleId = appleIdIdx !== -1 ? cols[appleIdIdx]?.trim() : null;
     const sku = skuIdx !== -1 ? cols[skuIdx]?.trim() : null;
-    const prodType =
-      productTypeIdx !== -1 ? cols[productTypeIdx]?.trim() : '1';
+    const prodType = productTypeIdx !== -1 ? cols[productTypeIdx]?.trim() : '1';
     const units = parseInt(cols[unitsIdx]?.trim(), 10) || 0;
 
-    if (units > 0 && (productTypeIdx === -1 || validProductTypes.has(prodType))) {
+    if (
+      units > 0 &&
+      (productTypeIdx === -1 || validProductTypes.has(prodType))
+    ) {
       if (appleId) {
         salesMap[appleId] = (salesMap[appleId] || 0) + units;
       }
@@ -567,7 +574,7 @@ async function fetchGA4Data(
   accessToken,
   propertyId,
   subrequestsRef,
-  debugLogs
+  debugLogs,
 ) {
   if (!accessToken || !propertyId) return { web: 0, android: 0, ios: 0 };
 
@@ -587,7 +594,7 @@ async function fetchGA4Data(
             dimensions: [{ name: 'platform' }],
             metrics: [{ name: 'newUsers' }],
           }),
-        }
+        },
       );
 
       if (res.ok) {
@@ -595,8 +602,7 @@ async function fetchGA4Data(
         const result = { web: 0, android: 0, ios: 0 };
         const rows = data.rows || [];
         for (const row of rows) {
-          const platform =
-            row.dimensionValues?.[0]?.value?.toLowerCase() || '';
+          const platform = row.dimensionValues?.[0]?.value?.toLowerCase() || '';
           const count = parseInt(row.metricValues?.[0]?.value, 10) || 0;
           if (platform.includes('web')) result.web += count;
           else if (platform.includes('android')) result.android += count;
@@ -631,7 +637,7 @@ async function fetchGooglePlayReportingApiInstalls(
   accessToken,
   packageName,
   subrequestsRef,
-  debugLogs
+  debugLogs,
 ) {
   if (!accessToken || !packageName) return null;
   try {
