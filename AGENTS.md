@@ -104,5 +104,5 @@ patterns are documented - follow these references before changing behaviour.
 If anything in this file is unclear, or you need a behaviour clarified, ask the
 repo owner before making assumptions (see `.github/copilot-instructions.md`).
 
-# This file should never exceed 200 lines of code, meaning, this line should never be below line number 200. If we need to add something to this file, we simply have to remove something less critical.
+# This file should never exceed 200 lines of code, meaning, this line should never be below line number 200. If we need to add something to this file, we simply have to remove something less critical or make text less verbose.
 
