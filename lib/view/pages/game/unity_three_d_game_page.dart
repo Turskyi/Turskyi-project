@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:turskyi/model/links.dart' as links;
 import 'package:turskyi/res/configs/configs.dart';
 import 'package:turskyi/res/values/dimens.dart';

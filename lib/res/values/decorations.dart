@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:turskyi/res/values/dimens.dart';
 
 /// Decoration attribute which used in [Container] around [Text] to set dark

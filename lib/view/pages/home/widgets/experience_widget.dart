@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:turskyi/res/values/decorations.dart' as decorations;
 import 'package:turskyi/res/values/dimens.dart';
 import 'package:turskyi/view/util/screen.dart' as screen;

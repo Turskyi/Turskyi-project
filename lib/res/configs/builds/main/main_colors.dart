@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:turskyi/res/configs/base/base_colors.dart';
 
 /// [MainColors] is a class containing list of project specific color values

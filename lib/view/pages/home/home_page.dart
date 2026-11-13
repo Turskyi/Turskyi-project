@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
 import 'package:turskyi/model/repositories/ranking_repository.dart';

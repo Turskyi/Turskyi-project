@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turskyi/localization/localization_delegate_getter.dart'
     as locale;

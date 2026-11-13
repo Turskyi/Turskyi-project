@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:turskyi/model/models/project.dart';
 import 'package:turskyi/model/models/project_ranking.dart';

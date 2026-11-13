@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:turskyi/di/dependencies.dart';
 import 'package:turskyi/di/injector.dart' as di;
 import 'package:turskyi/model/data_sources/local/local_data_source.dart';
