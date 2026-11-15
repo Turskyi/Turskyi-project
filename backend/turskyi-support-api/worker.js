@@ -1,6 +1,7 @@
 /**
  * @fileoverview Cloudflare Worker for turskyi.com
  * Deploy copy for Cloudflare Worker: turskyi-support-api
+ * Dashboard: https://dash.cloudflare.com/1918e9a6ac2794ef899bc1056f0cde51/workers/services/edit/turskyi-support-api/production
  *
  * Endpoints:
  * - POST /support : Sends support emails using Resend.
@@ -202,6 +203,8 @@ export default {
           if (gaProps.web) uniquePropertiesAdd(uniquePropertyIds, gaProps.web);
           if (gaProps.android)
             uniquePropertiesAdd(uniquePropertyIds, gaProps.android);
+          if (gaProps.ios)
+            uniquePropertiesAdd(uniquePropertyIds, gaProps.ios);
         }
 
         // Fetch GA4 data and Play Developer Reporting API data in parallel
@@ -253,6 +256,9 @@ export default {
             }
             if (gaProps.android && gaDataMap[gaProps.android]) {
               rawAndroid += gaDataMap[gaProps.android].android || 0;
+            }
+            if (gaProps.ios && gaDataMap[gaProps.ios]) {
+              rawIos += gaDataMap[gaProps.ios].ios || 0;
             }
 
             // Check Google Play Developer Reporting API installs
@@ -741,6 +747,8 @@ const defaultGaPropertyMap = {
   mala_knyzhka: { android: '471305318', web: '547254127' },
   anartist_store: { android: '438752601', web: '561863322' },
   composeship: { android: '560732955', web: '560732955' },
+  travelling: { android: '252238367', web: '252238367', ios: '252238367' },
+  sensilence: { android: '276364738' },
 };
 
 const defaultAppMetadataMap = {

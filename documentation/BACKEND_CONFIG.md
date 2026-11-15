@@ -35,7 +35,9 @@ In Cloudflare Worker Settings > **Variables and Secrets**:
   "news_glance": { "android": "429042593", "web": "429042593" },
   "mala_knyzhka": { "android": "471305318", "web": "547254127" },
   "anartist_store": { "android": "438752601", "web": "561863322" },
-  "composeship": { "android": "560732955", "web": "560732955" }
+  "composeship": { "android": "560732955", "web": "560732955" },
+  "travelling": { "android": "252238367", "web": "252238367", "ios": "252238367" },
+  "sensilence": { "android": "276364738" }
 }
 ```
 
