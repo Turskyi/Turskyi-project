@@ -35,6 +35,17 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
   final List<VisibleProjectEntry> _visibleProjects = <VisibleProjectEntry>[];
   bool _isProcessingVisibility = false;
 
+  List<Project> get _uniqueProjects {
+    final List<Project> projects = <Project>[];
+    final Set<String> projectIds = <String>{};
+    for (final Project project in widget.allProjects) {
+      if (projectIds.add(project.id)) {
+        projects.add(project);
+      }
+    }
+    return projects;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -185,7 +196,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
         }
 
         final bool reachedTarget = widget.showProjects
-            ? _visibleProjects.length == widget.allProjects.length
+            ? _visibleProjects.length >= _uniqueProjects.length
             : _visibleProjects.isEmpty;
         if (reachedTarget) {
           break;
@@ -194,7 +205,7 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
     } finally {
       _isProcessingVisibility = false;
       final bool needsAnotherPass = widget.showProjects
-          ? _visibleProjects.length < widget.allProjects.length
+          ? _visibleProjects.length < _uniqueProjects.length
           : _visibleProjects.isNotEmpty;
       if (mounted && needsAnotherPass) {
         _processVisibilityChanges();
@@ -203,18 +214,28 @@ class _ProjectsOverlayPanelState extends State<ProjectsOverlayPanel> {
   }
 
   Future<void> _showProjectsOneByOne() async {
-    while (mounted &&
-        widget.showProjects &&
-        _visibleProjects.length < widget.allProjects.length) {
-      setState(() {
-        _visibleProjects.add(
-          VisibleProjectEntry(
-            project: widget.allProjects[_visibleProjects.length],
-          ),
-        );
-      });
+    while (mounted && widget.showProjects) {
+      final List<Project> projects = _uniqueProjects;
+      final Set<String> visibleProjectIds = _visibleProjects
+          .map((final VisibleProjectEntry entry) => entry.project.id)
+          .toSet();
+      Project? nextProject;
+      for (final Project project in projects) {
+        if (!visibleProjectIds.contains(project.id)) {
+          nextProject = project;
+          break;
+        }
+      }
 
-      if (_visibleProjects.length >= widget.allProjects.length) {
+      if (nextProject == null) {
+        break;
+      } else {
+        setState(() {
+          _visibleProjects.add(VisibleProjectEntry(project: nextProject!));
+        });
+      }
+
+      if (_visibleProjects.length >= _uniqueProjects.length) {
         break;
       }
 
