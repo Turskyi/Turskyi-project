@@ -242,7 +242,10 @@ class LocalDataSource {
         primaryWebsiteUrl: 'https://travelling.turskyi.com',
         fallbackWebsiteUrl:
             '${constants.kGooglePlayBaseUrl}io.github.turskyi.travellingpro',
-        supportedPlatforms: <PlatformType>{PlatformType.android},
+        supportedPlatforms: <PlatformType>{
+          PlatformType.android,
+          PlatformType.web,
+        },
       ),
       const Project(
         id: 'sensilence',
