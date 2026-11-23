@@ -8,11 +8,42 @@
  * - GET /health   : Checks URL availability.
  * - GET /ranking  : Aggregates lifetime download/user statistics across iOS, Android, and Web.
  *
- * Android data sources:
- * - GA4 (newUsers by platform)
+ * Data sources for /ranking:
+ * - GA4 (newUsers by platform) for web, Android and iOS apps that use Analytics.
  * - Google Play Console install stats CSVs from the Play Cloud Storage bucket
- *   (gs://pubsite_prod_<developerId>/stats/installs/). The bucket ID can be
- *   overridden with the PLAY_BUCKET_ID environment variable.
+ *   (gs://pubsite_prod_<developerId>/stats/installs/) for Android. The bucket ID
+ *   can be overridden with the PLAY_BUCKET_ID environment variable.
+ * - App Store Connect sales reports for iOS. Note: only the yearly reports
+ *   starting from 2025 and the last completed month of the current year are read.
+ *
+ * Maintenance: the app lists are at the bottom of this file (GA_PROPERTY_MAP and
+ * APP_METADATA_MAP). There are no environment variables for them, so edit this
+ * file and redeploy. For every app, the key must be the same id in both maps.
+ *
+ * To add a new app:
+ * 1. APP_METADATA_MAP: add `my_app: { androidPackage: 'com.example.app', appleId: '123456789' }`.
+ *    - androidPackage: Play Console, All apps, shown under the app name. It must
+ *      match exactly, because it is used in the CSV file name in the Play bucket.
+ *    - appleId: App Store Connect, the app, App Information, General Information,
+ *      Apple ID (numeric). Leave the field out if there is no iOS app.
+ * 2. GA_PROPERTY_MAP: add `my_app: { android: 'PROPERTY_ID', web: 'PROPERTY_ID' }`.
+ *    The property ID is in Google Analytics, Admin, Property settings. Use the same
+ *    ID for several platforms when they share one property. Skip a platform that
+ *    has no Analytics.
+ * 3. Make sure ranking@turskyi.iam.gserviceaccount.com is a Viewer on every GA4
+ *    property you list (Admin, Property access management), otherwise /ranking
+ *    logs a 403 for it.
+ *
+ * To add iOS to an app that did not have it before:
+ * 1. Add `appleId` to its entry in APP_METADATA_MAP. Sales are matched by Apple ID,
+ *    so downloads appear once App Store Connect reports sales for it.
+ * 2. If the iOS app also sends data to Google Analytics, add `ios: 'PROPERTY_ID'` to
+ *    its entry in GA_PROPERTY_MAP and give the service account access to that property.
+ * 3. Expect iOS to stay at 0 until the first report that includes the app exists.
+ *
+ * The KV cache keeps the highest value ever seen for each app and platform. If a
+ * number was wrong and you fix its source, delete the `last_successful_ranking`
+ * key in the RANKING_KV namespace so the ranking can go down.
  */
 export default {
   async fetch(request, env) {
@@ -157,15 +188,9 @@ export default {
         const subrequestsRef = { count: 0 };
         const debugLogs = [];
 
-        // Parse environment maps safely
-        const gaPropertyMap = parseJsonSafe(
-          env.GA_PROPERTY_MAP,
-          defaultGaPropertyMap
-        );
-        const appMetadataMap = parseJsonSafe(
-          env.APP_METADATA_MAP,
-          defaultAppMetadataMap
-        );
+        // App lists live in this file (see GA_PROPERTY_MAP and APP_METADATA_MAP below).
+        const gaPropertyMap = GA_PROPERTY_MAP;
+        const appMetadataMap = APP_METADATA_MAP;
 
         // Load previous successful ranking from KV if available (server-side monotonic protection)
         let previousAppsMap = {};
@@ -780,7 +805,7 @@ async function fetchPlayInstallStats(
 
 const DEFAULT_PLAY_BUCKET = 'pubsite_prod_8790223297246728168';
 
-const defaultGaPropertyMap = {
+const GA_PROPERTY_MAP = {
   weather_fit: { android: '431049413', web: '527741989' },
   life_coaching_ai: { android: '515588911', web: '515588911' },
   daoism_laozi_ai: { android: '446333120', web: '540496553' },
@@ -795,7 +820,7 @@ const defaultGaPropertyMap = {
   sensilence: { android: '276364738' },
 };
 
-const defaultAppMetadataMap = {
+const APP_METADATA_MAP = {
   weather_fit: {
     androidPackage: 'com.turskyi.weather_fit',
     appleId: '6743688355',
