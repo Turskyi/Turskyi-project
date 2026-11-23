@@ -7,6 +7,12 @@
  * - POST /support : Sends support emails using Resend.
  * - GET /health   : Checks URL availability.
  * - GET /ranking  : Aggregates lifetime download/user statistics across iOS, Android, and Web.
+ *
+ * Android data sources:
+ * - GA4 (newUsers by platform)
+ * - Google Play Console install stats CSVs from the Play Cloud Storage bucket
+ *   (gs://pubsite_prod_<developerId>/stats/installs/). The bucket ID can be
+ *   overridden with the PLAY_BUCKET_ID environment variable.
  */
 export default {
   async fetch(request, env) {
@@ -207,9 +213,10 @@ export default {
             uniquePropertiesAdd(uniquePropertyIds, gaProps.ios);
         }
 
-        // Fetch GA4 data and Play Developer Reporting API data in parallel
+        // Fetch GA4 data and Play Console install stats (Cloud Storage CSVs) in parallel
         const gaDataMap = {};
         const playInstallsMap = {};
+        const playBucket = env.PLAY_BUCKET_ID || DEFAULT_PLAY_BUCKET;
 
         if (googleAccessToken) {
           const gaFetches = Array.from(uniquePropertyIds).map(async (propId) => {
@@ -225,13 +232,14 @@ export default {
           const playFetches = Object.values(appMetadataMap).map(
             async (metadata) => {
               if (metadata.androidPackage) {
-                const installs = await fetchGooglePlayReportingApiInstalls(
+                const stats = await fetchPlayInstallStats(
                   googleAccessToken,
+                  playBucket,
                   metadata.androidPackage,
                   subrequestsRef,
                   debugLogs
                 );
-                playInstallsMap[metadata.androidPackage] = installs;
+                playInstallsMap[metadata.androidPackage] = stats;
               }
             }
           );
@@ -261,15 +269,17 @@ export default {
               rawIos += gaDataMap[gaProps.ios].ios || 0;
             }
 
-            // Check Google Play Developer Reporting API installs
-            if (
-              metadata.androidPackage &&
-              playInstallsMap[metadata.androidPackage] !== null &&
-              playInstallsMap[metadata.androidPackage] !== undefined
-            ) {
-              const playInstalls = playInstallsMap[metadata.androidPackage];
-              if (playInstalls > 0) {
-                rawAndroid = Math.max(rawAndroid, playInstalls);
+            // Check Play Console install stats (Cloud Storage CSV)
+            const play = metadata.androidPackage
+              ? playInstallsMap[metadata.androidPackage]
+              : null;
+            if (play) {
+              const playValue = Math.max(
+                play.totalUserInstalls || 0,
+                play.activeDeviceInstalls || 0
+              );
+              if (playValue > 0) {
+                rawAndroid = Math.max(rawAndroid, playValue);
               }
             }
 
@@ -318,7 +328,7 @@ export default {
               googleAccessToken !== null,
             ascSales: ascSalesResult.status === 'fulfilled',
           },
-          debugLogs: debugLogs.slice(0, 30),
+          debugLogs: debugLogs.slice(0, 60),
         };
 
         // Save to KV so future requests are protected against transient 502/0 drops
@@ -424,7 +434,7 @@ async function getGoogleAccessToken(saJson, subrequestsRef, debugLogs) {
     const claimSet = {
       iss: sa.client_email,
       scope:
-        'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/playdeveloperreporting',
+        'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/devstorage.read_only',
       aud: 'https://oauth2.googleapis.com/token',
       exp: now + 3600,
       iat: now,
@@ -673,67 +683,102 @@ async function fetchGA4Data(
   return { web: 0, android: 0, ios: 0 };
 }
 
-async function fetchGooglePlayReportingApiInstalls(
+/**
+ * Splits one CSV line into trimmed fields and strips surrounding quotes.
+ * The Play overview CSVs have no embedded commas, so a simple split is enough.
+ */
+function splitCsvLine(line) {
+  return line.split(',').map((s) => s.replace(/^"|"$/g, '').trim());
+}
+
+/**
+ * Reads the Play Console install stats overview CSV for one package from the
+ * Play Cloud Storage bucket. Tries the current month first, then the previous
+ * month. Requires the service account to have the Play Console permission
+ * "View app information and download bulk reports (read-only)" and the
+ * devstorage.read_only scope on the access token.
+ *
+ * Returns { totalUserInstalls, activeDeviceInstalls } taken from the last row
+ * of the file, or null when nothing could be read.
+ */
+async function fetchPlayInstallStats(
   accessToken,
+  bucket,
   packageName,
   subrequestsRef,
   debugLogs
 ) {
-  if (!accessToken || !packageName) return null;
-  try {
-    const now = new Date();
-    const endYear = now.getFullYear();
-    const endMonth = now.getMonth() + 1;
-    const endDay = now.getDate();
+  if (!accessToken || !bucket || !packageName) return null;
+  const now = new Date();
 
-    subrequestsRef.count++;
-    const url = `https://playdeveloperreporting.googleapis.com/v1beta/apps/${packageName}:queryInstallMetrics`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        metrics: ['USER_INSTALLED'],
-        timelineSpec: {
-          aggregationPeriod: 'DAILY',
-          startTime: { year: 2024, month: 1, day: 1 },
-          endTime: { year: endYear, month: endMonth, day: endDay },
-        },
-      }),
-    });
+  for (let back = 0; back < 2; back++) {
+    const d = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1)
+    );
+    const ym = `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, '0')}`;
+    const object = `stats/installs/installs_${packageName}_${ym}_overview.csv`;
+    const url = `https://storage.googleapis.com/storage/v1/b/${bucket}/o/${encodeURIComponent(object)}?alt=media`;
 
-    if (res.ok) {
-      const data = await res.json();
-      let totalInstalls = 0;
-      const rows = data.rows || data.metrics || [];
-      for (const row of rows) {
-        const vals = row.metricValues || row.values || [];
-        for (const v of vals) {
-          let n = 0;
-          if (typeof v === 'number') {
-            n = v;
-          } else if (typeof v === 'string') {
-            n = parseInt(v, 10) || 0;
-          } else if (v && typeof v === 'object') {
-            const valStr =
-              v.decimalValue?.value || v.integerValue?.value || v.value;
-            n = parseInt(valStr, 10) || 0;
-          }
-          totalInstalls += n;
-        }
+    try {
+      subrequestsRef.count++;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (res.status === 404) {
+        await res.text();
+        continue;
       }
-      return totalInstalls > 0 ? totalInstalls : null;
-    } else {
-      const errText = await res.text();
-      debugLogs.push(`Play API ${packageName} error: ${res.status} ${errText}`);
+
+      if (!res.ok) {
+        const errText = await res.text();
+        debugLogs.push(
+          `Play CSV ${packageName} ${ym} error: ${res.status} ${errText.slice(0, 200)}`
+        );
+        return null;
+      }
+
+      // The Play CSV files are UTF-16 with a byte order mark. Fall back to UTF-8 if not.
+      const buf = new Uint8Array(await res.arrayBuffer());
+      const isUtf16 = buf[0] === 0xff && buf[1] === 0xfe;
+      const text = new TextDecoder(isUtf16 ? 'utf-16le' : 'utf-8')
+        .decode(buf)
+        .replace(/^\uFEFF/, '');
+
+      const lines = text.split(/\r?\n/).filter((l) => l.trim());
+      if (lines.length < 2) {
+        debugLogs.push(`Play CSV ${packageName} ${ym}: file has no data rows`);
+        return null;
+      }
+
+      const header = splitCsvLine(lines[0]);
+      const totalIdx = header.indexOf('Total User Installs');
+      const activeIdx = header.indexOf('Active Device Installs');
+      const dateIdx = header.indexOf('Date');
+
+      const last = splitCsvLine(lines[lines.length - 1]);
+      const num = (i) => (i === -1 ? 0 : parseInt(last[i], 10) || 0);
+
+      const result = {
+        totalUserInstalls: num(totalIdx),
+        activeDeviceInstalls: num(activeIdx),
+      };
+
+      debugLogs.push(
+        `Play CSV ${packageName} ${ym}: date=${dateIdx === -1 ? '?' : last[dateIdx]} total=${result.totalUserInstalls} active=${result.activeDeviceInstalls}`
+      );
+      return result;
+    } catch (e) {
+      debugLogs.push(`Play CSV ${packageName} exception: ${e.message}`);
+      return null;
     }
-  } catch (e) {
-    debugLogs.push(`Play API ${packageName} exception: ${e.message}`);
   }
+
+  debugLogs.push(`Play CSV ${packageName}: no overview file found`);
   return null;
 }
+
+const DEFAULT_PLAY_BUCKET = 'pubsite_prod_8790223297246728168';
 
 const defaultGaPropertyMap = {
   weather_fit: { android: '431049413', web: '527741989' },
@@ -746,8 +791,7 @@ const defaultGaPropertyMap = {
   news_glance: { android: '429042593', web: '429042593' },
   mala_knyzhka: { android: '471305318', web: '547254127' },
   anartist_store: { android: '438752601', web: '561863322' },
-  composeship: { android: '560732955', web: '560732955' },
-  travelling: { android: '252238367', web: '252238367', ios: '252238367' },
+  travelling: { android: '252238367', web: '252238367' },
   sensilence: { android: '276364738' },
 };
 
@@ -791,9 +835,6 @@ const defaultAppMetadataMap = {
   anartist_store: {
     androidPackage: 'store.anartist.anartiststore',
     appleId: '6743679208',
-  },
-  composeship: {
-    androidPackage: 'com.composeship',
   },
   travelling: { androidPackage: 'ua.turskyi.travelling' },
   sensilence: { androidPackage: 'com.music.android.sensilence' },
